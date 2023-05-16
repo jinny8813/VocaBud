@@ -4,7 +4,7 @@
 
 header,
 footer {
-  background-color: #214200;
+  background-color: #2c4c01;
   color: white;
 }
 header .nav-link,
@@ -13,7 +13,7 @@ footer .nav-link {
 }
 header .nav-link:hover,
 footer .nav-link:hover {
-  background-color: #6a8824;
+  background-color: #628100;
   color: white;
 }
 
@@ -31,7 +31,7 @@ a:hover {
 }
 
 .bg_dark {
-  background-color: #214200;
+  background-color: #2c4c01;
 }
 
 .bg_light {
@@ -39,7 +39,7 @@ a:hover {
 }
 
 .btn {
-  background-color: #daaf45;
+  background-color: #dfc403;
   color: white;
   border: none;
 }
@@ -48,7 +48,7 @@ a:hover {
 .btn::after,
 .btn:focus,
 .btn:active:hover {
-  background-color: #c39421;
+  background-color: #c3ac00;
   color: white;
   border: none;
 }/*# sourceMappingURL=style.css.map */
