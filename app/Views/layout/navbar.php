@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbar">
       <ul class="navbar-nav">
         <li class="nav-item ">
-          <a class="nav-link p-3" href="#">書本列表</a>
+          <a class="nav-link p-3" href="<?= base_url('/books') ?>">書本列表</a>
         </li>
         <li class="nav-item ">
           <a class="nav-link p-3" href="#">所有單字</a>
