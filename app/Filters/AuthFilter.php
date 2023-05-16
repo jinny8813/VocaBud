@@ -11,7 +11,6 @@ class AuthFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         if (!session()->get('userData')) {
-            // Store the current URL in the session so we can redirect back after login
             session()->set('redirectURL', current_url());
             return redirect()->to('/');
         }

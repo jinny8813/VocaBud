@@ -33,6 +33,7 @@ $routes->set404Override();
 
 $routes->get('/', 'UserLogin::index');
 $routes->post('/login', 'UserLogin::login');
+$routes->post('/register', 'UserRegister::index');
 $routes->get('/logout', 'UserLogin::logout');
 
 $routes->get('/home', 'UserLogin::home', ['filter' => 'Auth']);
