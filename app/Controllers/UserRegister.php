@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UserModel;
+use App\Controllers\Collection;
 
 class UserRegister extends BaseController
 {
@@ -38,6 +39,10 @@ class UserRegister extends BaseController
                 'create_at'=>$date,
             ];
             $userModel->insert($values);
+
+            $user = $userModel->select("user_id")->where('email', $data['email'])->first();
+            $collection = new Collection();
+            $collection->create($user['user_id']);
 
             return $this->response->setStatusCode(200)->setJSON("OK");
         }
