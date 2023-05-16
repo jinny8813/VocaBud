@@ -28,14 +28,8 @@ class UserLogin extends BaseController
         $request = \Config\Services::request();
         $data = $request->getPost();
 
-        $email = $data['email'];
-        $password = $data['password'];
-        if($email == null || $password == null) {
-            return $this->response->setStatusCode(400)->setJSON("需帳號密碼進行登入");
-        }
-
         $userModel = new UserModel();
-        $userData = $userModel->where("email", $email)->where("password", $password)->first();
+        $userData = $userModel->where("email", $data['email'])->where("password", $data['password'])->first();
 
         if($userData) {
             session()->set("userData", $userData);

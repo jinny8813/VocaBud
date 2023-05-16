@@ -55,7 +55,7 @@
                                     <label for="email" class="form-label">電子信箱</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="email" name="email" class="form-control" placeholder="請輸入電子信箱">
+                                    <input type="email" name="email" class="form-control" placeholder="請輸入電子信箱" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -63,14 +63,14 @@
                                     <label for="password" class="form-label">密碼</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="password" name="password" class="form-control" placeholder="請輸入密碼">
+                                    <input type="password" name="password" class="form-control" placeholder="請輸入密碼" required>
                                 </div>
                             </div>
                             <div class="form-group d-flex justify-content-center">
                                 <button type="submit" name="submit" class="btn">送出</button>
                             </div>
                         </form>
-                        <div class="alert alert-danger text-center my-3 py-3 d-none" id="error">
+                        <div class="alert alert-danger text-center my-3 py-3 d-none" id="errorL">
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                                     <label for="email" class="form-label">電子信箱</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="email" name="email" class="form-control" placeholder="請輸入電子信箱">
+                                    <input type="email" name="email" class="form-control" placeholder="請輸入電子信箱" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -94,7 +94,7 @@
                                     <label for="password" class="form-label">密碼</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="password" name="password" class="form-control" placeholder="請輸入密碼">
+                                    <input type="password" name="password" class="form-control" placeholder="請輸入密碼" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -102,7 +102,7 @@
                                     <label for="cpassword" class="form-label">密碼驗證</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="password" name="cpassword" class="form-control" placeholder="密碼驗證">
+                                    <input type="password" name="cpassword" class="form-control" placeholder="密碼驗證" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -110,13 +110,15 @@
                                     <label for="nickname" class="form-label">暱稱</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="text" name="nickname" class="form-control" placeholder="請輸入密碼">
+                                    <input type="text" name="nickname" class="form-control" placeholder="請輸入密碼" required>
                                 </div>
                             </div>
                             <div class="form-group d-flex justify-content-center">
                                 <button type="submit" name="submit" class="btn btn-primary">送出</button>
                             </div>
                         </form>
+                        <div class="alert alert-danger text-center my-3 py-3 d-none" id="errorR">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -167,15 +169,14 @@
         istoLogin.classList.add('d-none');
       })
 
-    let baseUrl1="http://localhost/LetsgoVoc/login";
     let loginForm = document.getElementById("loginForm");
-    let error = document.getElementById("error");
+    let errorL = document.getElementById("errorL");
 
     loginForm.addEventListener("submit",(e) => {
         e.preventDefault();
-        error.classList.add('d-none');
+        errorL.classList.add('d-none');
         let formdata= new FormData(loginForm);
-        myLib1.POST(baseUrl1,formdata);
+        myLib1.POST("<?= base_url('/login') ?>",formdata);
     })
 
     let myLib1 = {
@@ -184,31 +185,32 @@
         .then((response) => {
             window.location.href = `<?= base_url('/home')?>`;
         }).catch((e) => {
-            error.innerHTML = JSON.stringify(e.response.data);
-            error.classList.remove("d-none");
+            errorL.innerHTML = JSON.stringify(e.response.data);
+            errorL.classList.remove("d-none");
             console.log(e.response.data);
         })
     },
     }
 
-    let baseUrl2="http://localhost/LetsgoVoc/register";
     let registerForm = document.getElementById("registerForm");
+    let errorR = document.getElementById("errorR");
 
     registerForm.addEventListener("submit",(e) => {
         e.preventDefault();
-        error.classList.add('d-none');
+        errorR.classList.add('d-none');
         formdata= new FormData(registerForm);
-        myLib2.POST(baseUrl2,formdata);
+        myLib2.POST("<?= base_url('/register') ?>",formdata);
     })
 
     let myLib2 = {
     POST: (url,formdata) => {
         axios.post(url,formdata)
         .then((response) => {
-            if(response.data!="OK"){
-                error.innerHTML = response.data.msg;
-                error.classList.remove("d-none");
-            }
+            window.location.href = `<?= base_url('/')?>`;
+        }).catch((e) => {
+            errorR.innerHTML = JSON.stringify(e.response.data);
+            errorR.classList.remove("d-none");
+            console.log(e.response.data);
         })
     },
     }
