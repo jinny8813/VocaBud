@@ -28,22 +28,22 @@
     <div class="container py-5">
         <div class="row justify-content-center my-3">
             <div class="col-md-10">
-
+                <?php foreach($books as $row):?>
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-3 d-flex align-items-center justify-content-center bg_dark_blue rounded-start">
-                            <p class="text-center">000</p>
+                            <div class="text-center">99%</div>
                         </div>
                         <div class="col-9 card-body">
                             <div class="fs-5">
-                                <a href="" class="a_black stretched-link">的個人主頁的個人主頁</a>
+                                <a href="" class="a_black stretched-link"><?= $row['book_title']?></a>
                             </div>
-                            <p class="ellipsis">的個人主頁的個人主頁的個人主頁的個人主頁的個人主頁的個人主頁</p>
-                            <div><i class="fa-fw fa-solid fa-swatchbook"></i>123</div>
+                            <p class="ellipsis"><?= $row['book_description']?></p>
+                            <div><i class="fa-fw fa-solid fa-swatchbook"></i>999</div>
                         </div>
                     </div>
                 </div>
-
+                <?php endforeach;?>
             </div>
         </div>
     </div>
