@@ -17,6 +17,10 @@ footer .nav-link:hover {
   color: white;
 }
 
+.my_title_img {
+  height: 5rem;
+}
+
 a {
   color: white;
   text-decoration: none;

@@ -217,8 +217,8 @@
 </script>
 
 <section>
-    <div class="img_h m-3 position-fixed bottom-0 end-0">
-        <a href="#" class="btn"><i class="fa-solid fa-arrow-up"></i></a>
+    <div class="m-3 position-fixed bottom-0 end-0">
+        <a href="#" class="btn p-2"><i class="fa-fw fa-solid fa-arrow-up"></i></a>
     </div>
 </section>
 
