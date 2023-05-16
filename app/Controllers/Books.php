@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+
 use CodeIgniter\API\ResponseTrait;
 use App\Models\BookModel;
 
@@ -15,6 +16,6 @@ class Books extends BaseController
         $bookModel = new BookModel();
         $data['books'] = $bookModel->where("user_id", $userData['user_id'])->findAll();
 
-        return view('pages/book_list',$data);
+        return view('pages/book_list', $data);
     }
 }

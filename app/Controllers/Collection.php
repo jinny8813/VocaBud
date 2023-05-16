@@ -13,7 +13,7 @@ class Collection extends BaseController
     {
         return view('pages/book_list');
     }
-    
+
     public function create($user_id)
     {
         date_default_timezone_set('Asia/Taipei');
