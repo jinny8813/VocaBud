@@ -10,7 +10,7 @@
                 <div class="position-relative">
                     <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-around align-items-center w-100">
                         <div>
-                            <a href="#" class="btn p-2"><i class="fa-fw fa-solid fa-hand-point-left"></i></a>
+                            <a href="<?= base_url('/books') ?>" class="btn p-2"><i class="fa-fw fa-solid fa-hand-point-left"></i></a>
                         </div>
                         <div class="card w-75">
                             <div class="card-body">
