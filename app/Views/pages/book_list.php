@@ -8,14 +8,14 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="position-relative">
-                    <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-between align-items-center w-100">
+                    <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-around align-items-center w-100">
                         <div class="card w-75">
                             <div class="card-body">
                                 <div class="text-center fs-3">書本列表</div>
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="btn p-2"><i class="fa-fw fa-solid fa-arrow-up"></i></a>
+                            <a href="#" class="btn p-2"><i class="fa-fw fa-solid fa-info"></i></a>
                         </div>
                         <div>
                             <a href="#" class="btn p-2"><i class="fa-fw fa-solid fa-plus"></i></a>

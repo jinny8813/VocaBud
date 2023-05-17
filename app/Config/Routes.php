@@ -37,7 +37,10 @@ $routes->post('/register', 'UserRegister::index');
 $routes->get('/logout', 'UserLogin::logout');
 
 $routes->get('/home', 'UserLogin::home', ['filter' => 'Auth']);
+
 $routes->get('/books', 'Books::index', ['filter' => 'Auth']);
+$routes->get('/books/new', 'Books::create', ['filter' => 'Auth']);
+$routes->post('/books', 'Books::store');
 
 /*
  * --------------------------------------------------------------------
