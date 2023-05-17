@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use App\Models\BookModel;
+use App\Models\CardModel;
 
 class Books extends BaseController
 {
@@ -44,5 +45,13 @@ class Books extends BaseController
         $bookModel->insert($values);
 
         return $this->response->setStatusCode(200)->setJSON("OK");
+    }
+
+    public function show($book_id)
+    {
+        $cardModel = new CardModel();
+        $data['cards'] = $cardModel->where("book_id", $book_id)->findAll();
+
+        return view('pages/book_per', $data);
     }
 }

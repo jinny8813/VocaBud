@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-9 card-body">
                             <div class="fs-5">
-                                <a href="" class="a_black stretched-link"><?= $row['book_title']?></a>
+                                <a href="<?= base_url('books/'.$row['book_id'])?>" class="a_black stretched-link"><?= $row['book_title']?></a>
                             </div>
                             <p class="ellipsis"><?= $row['book_description']?></p>
                             <div><i class="fa-fw fa-solid fa-swatchbook"></i>999</div>
