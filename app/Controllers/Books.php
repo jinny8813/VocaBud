@@ -52,6 +52,6 @@ class Books extends BaseController
         $cardModel = new CardModel();
         $data['cards'] = $cardModel->where("book_id", $book_id)->findAll();
 
-        return view('pages/book_per',$data);
+        return view('pages/book_per', $data);
     }
 }
