@@ -18,4 +18,31 @@ class Books extends BaseController
 
         return view('pages/book_list', $data);
     }
+
+    public function create()
+    {
+        return view('pages/book_create');
+    }
+
+    public function store()
+    {
+        date_default_timezone_set('Asia/Taipei');
+        $date = date('Y-m-d H:i:s');
+
+        $request = \Config\Services::request();
+        $data = $request->getPost();
+
+        $userData = session()->userData;
+
+        $values = [
+            'user_id'=>$userData['user_id'],
+            'book_title'=>$data['title'],
+            'book_description'=>$data['description'],
+            'create_at'=>$date,
+        ];
+        $bookModel = new BookModel();
+        $bookModel->insert($values);
+
+        return $this->response->setStatusCode(200)->setJSON("OK");
+    }
 }

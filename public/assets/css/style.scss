@@ -1,6 +1,6 @@
 $color-dark: #2c4c01;
 $color-green: #628100;
-$color-light: #f2f2f2;
+$color-light: #e8e8e8;
 $color-link: #dfc403;
 $color-link-hover: #c3ac00;
 $color-light-blue: #c9d1d4;
@@ -49,10 +49,6 @@ footer {
 .card {
   border: none;
   box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.2);
-}
-
-.card_bg_radius {
-  border-radius: 0;
 }
 
 .bg_dark {

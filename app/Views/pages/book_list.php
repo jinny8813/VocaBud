@@ -8,18 +8,35 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="position-relative">
-                    <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-between align-items-center w-100">
+                    <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-around align-items-center w-100">
                         <div class="card w-75">
                             <div class="card-body">
                                 <div class="text-center fs-3">書本列表</div>
                             </div>
                         </div>
                         <div>
-                            <a href="#" class="btn p-2"><i class="fa-fw fa-solid fa-arrow-up"></i></a>
+                            <a href="#" class="btn p-2" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="fa-fw fa-solid fa-info"></i></a>
                         </div>
                         <div>
-                            <a href="#" class="btn p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
+                            <a href="<?= base_url('/books/new') ?>" class="btn p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">使用說明</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>LetsgoVoc由書本長出字卡，也可以說是由字卡堆砌成書本。可以把書本視為一種分類~</p>
+                        <p>1. 書本的新增、列表、修改、刪除</p>
+                        <p>2. 字卡的新增、列表、修改、刪除</p>
+                        <p>3. 列表、單字可進行輪播翻卡練習</p>
+                        <p>4. 如需跨書本練習，可以至"所有單字"進行排序篩選</p>
                     </div>
                 </div>
             </div>
