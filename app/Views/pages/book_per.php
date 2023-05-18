@@ -11,7 +11,7 @@
                     <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-around align-items-center w-100">
                         <div class="card w-75">
                             <div class="card-body">
-                                <div class="text-center fs-3">書名</div>
+                                <div class="text-center fs-3"><?= esc($book_title)?></div>
                             </div>
                         </div>
                         <div>
@@ -28,7 +28,7 @@
     <div class="container py-5">
         <div class="row justify-content-center my-3">
             <div class="col-md-10">
-                
+                <?php foreach($cards as $row):?>
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-3 d-flex align-items-center justify-content-center bg_dark_blue rounded-start">
@@ -36,15 +36,15 @@
                         </div>
                         <div class="col-9 card-body">
                             <div class="fs-5">
-                                <strong><a href="" class="a_black stretched-link">title</a></strong><small> (verb)</small>
+                                <strong><a href="" class="a_black stretched-link"><?= $row['card_title']?></a></strong><small> (<?= $row['part_of_speech']?>)</small>
                             </div>
                             <div>
-                                /ti-tle/
+                                /<?= $row['card_pronunciation']?>/
                             </div>
                         </div>
                     </div>
                 </div>
-                
+                <?php endforeach;?>
             </div>
         </div>
     </div>
