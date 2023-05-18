@@ -65,13 +65,13 @@ class Cards extends BaseController
         return $this->response->setStatusCode(200)->setJSON($this->wordInfo($data1Array));
     }
 
-    function grab_json_definition_dictionary ($word, $ref, $key) 
+    public function grab_json_definition_dictionary($word, $ref, $key)
     {
         $uri = "https://dictionaryapi.com/api/v3/references/" . urlencode($ref) . "/json/" . urlencode($word) . "?key=" . urlencode($key);
         return file_get_contents($uri);
     }
 
-    function grab_json_definition_translation ($text) 
+    public function grab_json_definition_translation($text)
     {
         $endpoint = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=zh-Hant";
 
@@ -79,8 +79,8 @@ class Cards extends BaseController
         $dotenv->load();
         $apiKeyTranslation = $_ENV['API_KEY_Translation'];
 
-        $requestBody = array (
-            array (
+        $requestBody = array(
+            array(
                 'Text' => $text,
             ),
         );
@@ -104,16 +104,16 @@ class Cards extends BaseController
             $error = curl_error($ch);
             curl_close($ch);
             return $error;
-        }else{
+        } else {
             $tranText = json_decode($response);
             return $tranText[0]->translations[0]->text;
         }
     }
 
-    function wordInfo($dataArray)
+    public function wordInfo($dataArray)
     {
         $wordInfoArr = [];
-        for ($i=0;$i<count($dataArray);$i++){
+        for ($i=0;$i<count($dataArray);$i++) {
             $title = $dataArray[$i]->meta->id;
             $part_of_speech = $dataArray[$i]->fl;
             $pronunciation = $dataArray[$i]->hwi->hw;
