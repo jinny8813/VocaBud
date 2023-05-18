@@ -20,6 +20,34 @@ class Cards extends BaseController
         return view('pages/card_create');
     }
 
+    public function store()
+    {
+        date_default_timezone_set('Asia/Taipei');
+        $date = date('Y-m-d H:i:s');
+
+        $request = \Config\Services::request();
+        $data = $request->getPost();
+
+        $bookData = session()->bookData;
+
+        $values = [
+            'book_id'=>$bookData['book_id'],
+            'card_title'=>$data['title'],
+            'card_content'=>$data['content'],
+            'card_pronunciation'=>$data['pronunciation'],
+            'part_of_speech'=>$data['part_of_speech'],
+            'card_e_sentence'=>$data['e_sentence'],
+            'card_c_sentence'=>$data['c_sentence'],
+            'create_at'=>$date,
+            'card_state'=>0,
+            'card_star'=>0,
+        ];
+        $cardModel = new CardModel();
+        $cardModel->insert($values);
+
+        return $this->response->setStatusCode(200)->setJSON("OK");
+    }
+
     public function search()
     {
         $request = \Config\Services::request();

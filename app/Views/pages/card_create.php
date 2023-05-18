@@ -198,5 +198,22 @@
             });
         }
     }
+
+    document.getElementById("cardCreateForm").addEventListener("submit",(e) => {
+        e.preventDefault();
+        let formdata= new FormData(cardCreateForm);
+        myLib2.POST("<?= base_url('/cards') ?>",formdata);
+    })
+
+    let myLib2 = {
+        POST: (url,formdata) => {
+            axios.post(url,formdata)
+            .then((response) => {
+                console.log(response.data);
+            }).catch((e) => {
+                console.log(e.response.data);
+            })
+        },
+    }
 </script>
 <?= $this->endSection()?>

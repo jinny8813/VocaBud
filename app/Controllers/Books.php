@@ -49,9 +49,13 @@ class Books extends BaseController
 
     public function show($book_id)
     {
+        $bookModel = new BookModel();
+        $bookData = $bookModel->where("book_id", $book_id)->first();
+        session()->set("bookData", $bookData);
+
         $cardModel = new CardModel();
         $data['cards'] = $cardModel->where("book_id", $book_id)->findAll();
 
-        return view('pages/book_per', $data);
+        return view('pages/book_per', $data + session()->bookData);
     }
 }

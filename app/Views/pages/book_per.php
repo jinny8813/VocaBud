@@ -11,7 +11,7 @@
                     <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-around align-items-center w-100">
                         <div class="card w-75">
                             <div class="card-body">
-                                <div class="text-center fs-3">書名</div>
+                                <div class="text-center fs-3"><?= esc($book_title)?></div>
                             </div>
                         </div>
                         <div>
