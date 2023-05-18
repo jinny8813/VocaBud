@@ -16,8 +16,9 @@ class Cards extends BaseController
     }
 
     public function create()
-    {        
-        return view('pages/card_create');
+    {
+        $bookData = session()->bookData;
+        return view('pages/card_create', $bookData);
     }
 
     public function store()
