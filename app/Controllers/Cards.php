@@ -42,10 +42,43 @@ class Cards extends BaseController
         return file_get_contents($uri);
     }
 
-    function grab_json_definition_translation ($word, $ref, $key) 
+    function grab_json_definition_translation ($text) 
     {
-        $uri = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=zh-Hant&" . urlencode($ref) . "/json/" . urlencode($word) . "?key=" . urlencode($key);
-        return file_get_contents($uri);
+        $endpoint = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=zh-Hant";
+
+        $dotenv = Dotenv::createImmutable(ROOTPATH);
+        $dotenv->load();
+        $apiKeyTranslation = $_ENV['API_KEY_Translation'];
+
+        $requestBody = array (
+            array (
+                'Text' => $text,
+            ),
+        );
+        $content = json_encode($requestBody);
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $endpoint);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Ocp-Apim-Subscription-Key: ' . $apiKeyTranslation,
+            'Ocp-Apim-Subscription-Region: southeastasia',
+            'Content-Type: application/json'
+        ]);
+
+        $response = curl_exec($ch);
+
+        if (curl_errno($ch)) {
+            $error = curl_error($ch);
+            curl_close($ch);
+            return $error;
+        }else{
+            $tranText = json_decode($response);
+            return $tranText[0]->translations[0]->text;
+        }
     }
 
     function wordInfo($dataArray)
@@ -54,7 +87,8 @@ class Cards extends BaseController
         for ($i=0;$i<count($dataArray);$i++){
             $part_of_speech = $dataArray[$i]->fl;
             foreach ($dataArray[$i]->shortdef as $shortdef) {
-                array_push($wordInfoArr, [$part_of_speech, $shortdef]);
+                $translation = $this->grab_json_definition_translation($shortdef);
+                array_push($wordInfoArr, [$part_of_speech, $shortdef, $translation]);
             }
         }
         return $wordInfoArr;
