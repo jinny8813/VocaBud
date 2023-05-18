@@ -85,10 +85,12 @@ class Cards extends BaseController
     {
         $wordInfoArr = [];
         for ($i=0;$i<count($dataArray);$i++){
+            $title = $dataArray[$i]->meta->id;
             $part_of_speech = $dataArray[$i]->fl;
+            $pronunciation = $dataArray[$i]->hwi->hw;
             foreach ($dataArray[$i]->shortdef as $shortdef) {
                 $translation = $this->grab_json_definition_translation($shortdef);
-                array_push($wordInfoArr, [$part_of_speech, $shortdef, $translation]);
+                array_push($wordInfoArr, [$title, $part_of_speech, $pronunciation, $shortdef, $translation]);
             }
         }
         return $wordInfoArr;
