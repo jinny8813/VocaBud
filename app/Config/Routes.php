@@ -44,6 +44,7 @@ $routes->post('/books', 'Books::store', ['filter' => 'Auth']);
 $routes->get('/books/(:num)', 'Books::show/$1', ['filter' => 'Auth']);
 
 $routes->get('/cards/new', 'Cards::create', ['filter' => 'Auth']);
+$routes->post('/cards/search', 'Cards::search', ['filter' => 'Auth']);
 
 /*
  * --------------------------------------------------------------------
