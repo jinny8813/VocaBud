@@ -17,12 +17,12 @@ class Books extends BaseController
         $bookModel = new BookModel();
         $data['books'] = $bookModel->where("user_id", $userData['user_id'])->orderBy('book_id', 'DESC')->findAll();
 
-        return view('pages/book_list', $data);
+        return view('pages/books_list', $data);
     }
 
     public function create()
     {
-        return view('pages/book_create');
+        return view('pages/books_create');
     }
 
     public function store()
@@ -56,6 +56,6 @@ class Books extends BaseController
         $cardModel = new CardModel();
         $data['cards'] = $cardModel->where("book_id", $book_id)->orderBy('card_id', 'DESC')->findAll();
 
-        return view('pages/book_per', $data + session()->bookData);
+        return view('pages/perbook_list', $data + session()->bookData);
     }
 }
