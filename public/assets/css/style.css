@@ -56,13 +56,21 @@ footer .nav-link:hover {
 .bg_green {
   background-color: #628100;
   color: white;
-  border-radius: 0 0 50px 0;
-  box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 .bg_dark_blue {
   background-color: #505c58;
   color: white;
+}
+
+.bg_green_title {
+  border-radius: 0 0 40px 0;
+  box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
+.bg_green_pop {
+  border-radius: 40px 0 0 0;
+  box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 .btn {
@@ -85,7 +93,11 @@ footer .nav-link:hover {
   color: white;
   border: none;
 }
-.btn_low_key:hover, .btn_low_key:active, .btn_low_key:focus, .btn_low_key::after, .btn_low_key:active:hover {
+.btn_low_key:hover,
+.btn_low_key:active,
+.btn_low_key:focus,
+.btn_low_key::after,
+.btn_low_key:active:hover {
   background-color: transparent;
 }
 
@@ -103,4 +115,4 @@ footer .nav-link:hover {
   margin: 5px;
   border-radius: 20px;
   box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.2);
-}/*# sourceMappingURL=style.css.map */
+} /*# sourceMappingURL=style.css.map */
