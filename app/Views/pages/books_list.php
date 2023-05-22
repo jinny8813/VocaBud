@@ -1,7 +1,7 @@
 <?= $this->extend("layout/template")?>
 <?= $this->section('content')?>
 <section class="min-vh-100 bg_light">
-    <div class="container-fluid bg_green bg_green_title">
+    <div class="container-fluid bg_green">
         <div class="row justify-content-center">
             <div class="col-md-8 row justify-content-center align-items-center">
                 <div class="col-1 p-0">

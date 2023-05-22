@@ -1,7 +1,7 @@
 <?= $this->extend("layout/template")?>
 <?= $this->section('content')?>
 <section class="min-vh-100 bg_light">
-<div class="container-fluid bg_green bg_green_title">
+    <div class="container-fluid bg_green">
         <div class="row justify-content-center">
             <div class="col-md-8 row justify-content-center align-items-center">
                 <div class="col-1 p-0">
@@ -19,15 +19,14 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6 col-10 pb-4">
-                <div>- Collection ( 1/1 )</div>
-                <div>- Booklist ()</div>
+                <div class="ellipsis"><?= esc($book_description)?></div>
             </div>
         </div>
     </div>
 
     <div class="position-sticky top-0 z-3">
         <div class="position-relative">
-            <div class="position-absolute top-0 end-0 mt-3">
+            <div class="position-absolute top-0 end-0 mt-3 pt-5">
                 <button class="btn btn_the_biggest fs-4 p-2" id="bigBtn"><i class="fa-fw fa-solid fa-toolbox"></i></button>
                 <div id="groupBtn" class="d-none">
                     <div class="d-flex">
@@ -58,10 +57,7 @@
                         </div>
                         <div class="col-9 card-body">
                             <div class="fs-5">
-                                <strong><a href="" class="a_black stretched-link"><?= $row['card_title']?></a></strong><small> (<?= $row['part_of_speech']?>)</small>
-                            </div>
-                            <div>
-                                /<?= $row['card_pronunciation']?>/
+                                <strong><a href="" class="a_black stretched-link"><?= $row['card_title']?></a></strong><small> (<?= $row['part_of_speech']?>.)</small>
                             </div>
                         </div>
                     </div>

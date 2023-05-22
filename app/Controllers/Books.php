@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use App\Models\BookModel;
-use App\Models\CardModel;
 
 class Books extends BaseController
 {
