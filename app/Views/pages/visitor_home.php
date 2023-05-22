@@ -11,41 +11,20 @@
     <link rel="stylesheet" href="<?= base_url('../../public/assets/css/style.css') ?>" />
 </head>
 <body class="font-monospace">
-<header>
-  <nav class="navbar sticky-top navbar-expand-lg bg_dark">
-      <div class="img_h">
-        <a class="navbar-brand p-3" href="#" style="color:white"
-          ><img src="<?= base_url('../../public/assets/images/icon.png') ?>" class="h-100 px-2" />LetsgoVoc
-        </a>
-      </div>
-
-      <button class="navbar-toggler p-3" style="border: none;" data-bs-toggle="collapse" data-bs-target="#navbar">
-        <i class="fas fa-bars" style="color:white"></i>
-      </button>
-
-    <div class="collapse navbar-collapse justify-content-end" id="navbar">
-      <ul class="navbar-nav">
-        <li class="nav-item ">
-        <a class="nav-link p-3" href="#">關於我們</a>
-        </li>
-        <li class="nav-item ">
-        <a class="nav-link p-3" href="#">登入註冊</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</header>
 
 <section class="min-vh-100 bg_dark">
     <div class="container py-5">
-        <div class="row justify-content-center my-3">
-            <h2 class="text-center" style="color:white">GoVoc</h2>
-            <p class="text-center" style="color:white">Let's enjoy learning in an efficient way.</p>
-        </div>
+        <div class="row justify-content-center align-items-center py-5 my-5">
+            <div class="py-5 my-5" id="myTitle">
+                <h1 class="text-center mt-5 pt-5" style="color:white">LetsgoVoc</h1>
+                <p class="text-center" style="color:white">Let's enjoy learning in an efficient way.</p>
+                <div class="d-flex justify-content-center">
+                    <a class="btn btn-primary m-2 toLogin">登入</a>
+                    <a class="btn btn-primary m-2 toRegister">註冊</a>
+                </div>
+            </div>
 
-        <div class="row justify-content-center my-3">
-
-            <div class="col-md-8 my-3" id="isLogin">
+            <div class="col-md-8 my-3 d-none" id="isLogin">
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center fs-3 mb-3">登入</div>
@@ -123,12 +102,12 @@
                 </div>
             </div>
 
-            <div class="col-md-8 my-3" id="istoRegister">
+            <div class="col-md-8 my-3 d-none" id="istoRegister">
                 <div class="card">
                     <div class="card-body">
                         <p class="text-center">還沒有帳號嗎?現在就註冊一個吧!</p>
                         <div class="d-flex justify-content-center">
-                            <a id="toRegister" class="btn btn-primary">註冊</a>
+                            <a class="btn btn-primary toRegister">註冊</a>
                         </div>
                     </div>
                 </div>    
@@ -139,7 +118,7 @@
                     <div class="card-body">
                         <p class="text-center">已經有帳號!!回到登入頁面</p>
                         <div class="d-flex justify-content-center">
-                            <a id="toLogin" class="btn btn-primary">登入</a>
+                            <a class="btn btn-primary toLogin">登入</a>
                         </div>
                     </div>
                 </div>    
@@ -150,24 +129,29 @@
     </div>
 </section>
 <script>
+    let myTitle = document.getElementById("myTitle");
     let isLogin = document.getElementById("isLogin");
     let isRegister = document.getElementById("isRegister");
     let istoLogin = document.getElementById("istoLogin");
     let istoRegister = document.getElementById("istoRegister");
 
-    document.getElementById("toRegister").addEventListener("click",(e) => {
-        isRegister.classList.remove('d-none');
-        istoLogin.classList.remove('d-none');
-        isLogin.classList.add('d-none');
-        istoRegister.classList.add('d-none');
-      })
-
-    document.getElementById("toLogin").addEventListener("click",(e) => {
-        isLogin.classList.remove('d-none');
-        istoRegister.classList.remove('d-none');
-        isRegister.classList.add('d-none');
-        istoLogin.classList.add('d-none');
-      })
+    document.querySelectorAll(".toRegister").forEach(element => 
+        element.addEventListener("click",(e) => {
+            isRegister.classList.remove('d-none');
+            istoLogin.classList.remove('d-none');
+            isLogin.classList.add('d-none');
+            istoRegister.classList.add('d-none');
+            myTitle.classList.add('d-none');
+      }))
+    
+    document.querySelectorAll(".toLogin").forEach(element => 
+        element.addEventListener("click",(e) => {
+            isLogin.classList.remove('d-none');
+            istoRegister.classList.remove('d-none');
+            isRegister.classList.add('d-none');
+            istoLogin.classList.add('d-none');
+            myTitle.classList.add('d-none');
+      }))
 
     let loginForm = document.getElementById("loginForm");
     let errorL = document.getElementById("errorL");
@@ -216,19 +200,6 @@
     }
 </script>
 
-<section>
-    <div class="m-3 position-fixed bottom-0 end-0">
-        <a href="#" class="btn p-2"><i class="fa-fw fa-solid fa-arrow-up"></i></a>
-    </div>
-</section>
-
-<footer>
-    <div class="p-3 text-center">
-        <?php
-            echo "Copyright &copy; 2023-" . date("Y") . " LetsgoVoc";
-    ?>
-    </div>
-</footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js" integrity="sha512-uMtXmF28A2Ab/JJO2t/vYhlaa/3ahUOgj1Zf27M5rOo8/+fcTUVH0/E0ll68njmjrLqOBjXM3V9NiPFL5ywWPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
