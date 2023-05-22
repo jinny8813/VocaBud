@@ -40,10 +40,6 @@ class UserRegister extends BaseController
             ];
             $userModel->insert($values);
 
-            $user = $userModel->select("user_id")->where('email', $data['email'])->first();
-            $collection = new Collection();
-            $collection->create($user['user_id']);
-
             return $this->response->setStatusCode(200)->setJSON("OK");
         }
     }
