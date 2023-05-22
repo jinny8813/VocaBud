@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use App\Models\BookModel;
-use App\Models\CardModel;
 
 class Books extends BaseController
 {
@@ -17,12 +16,12 @@ class Books extends BaseController
         $bookModel = new BookModel();
         $data['books'] = $bookModel->where("user_id", $userData['user_id'])->orderBy('book_id', 'DESC')->findAll();
 
-        return view('pages/book_list', $data);
+        return view('pages/books_list', $data);
     }
 
     public function create()
     {
-        return view('pages/book_create');
+        return view('pages/books_create');
     }
 
     public function store()
@@ -45,17 +44,5 @@ class Books extends BaseController
         $bookModel->insert($values);
 
         return $this->response->setStatusCode(200)->setJSON("OK");
-    }
-
-    public function show($book_id)
-    {
-        $bookModel = new BookModel();
-        $bookData = $bookModel->where("book_id", $book_id)->first();
-        session()->set("bookData", $bookData);
-
-        $cardModel = new CardModel();
-        $data['cards'] = $cardModel->where("book_id", $book_id)->orderBy('card_id', 'DESC')->findAll();
-
-        return view('pages/book_per', $data + session()->bookData);
     }
 }

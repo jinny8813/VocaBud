@@ -59,6 +59,13 @@ footer {
   background-color: $color-light;
 }
 
+.bg_green {
+  background-color: $color-green;
+  color: white;
+  border-radius: 0 0 50px 0;
+  box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.2);
+}
+
 .bg_dark_blue {
   background-color: $color-dark-blue;
   color: white;
@@ -77,4 +84,33 @@ footer {
   background-color: $color-link-hover;
   color: white;
   border: none;
+}
+
+.btn_low_key {
+  background-color: transparent;
+  color: white;
+  border: none;
+  &:hover,
+  &:active,
+  &:focus,
+  &::after,
+  &:active:hover {
+    background-color: transparent;
+  }
+}
+
+.btn_the_biggest {
+  height: 50px;
+  width: 50px;
+  margin-bottom: 5px;
+  border-radius: 25px 0 25px 25px;
+  box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.btn_biggest_down {
+  height: 40px;
+  width: 40px;
+  margin: 5px;
+  border-radius: 20px;
+  box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.2);
 }

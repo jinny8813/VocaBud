@@ -1,28 +1,22 @@
 <?= $this->extend("layout/template")?>
 <?= $this->section('content')?>
 <section class="min-vh-100 bg_light">
-    <div class="w-100">
-        <img class="img-fluid" src="<?= base_url('../../public/assets/images/banner.jpg') ?>" alt="">
-    </div>
-    <div class="container">
+    <div class="container-fluid bg_green bg_green_title">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="position-relative">
-                    <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-around align-items-center w-100">
-                        <div>
-                            <a href="<?= base_url('/books/'.$book_id) ?>" class="btn p-2"><i class="fa-fw fa-solid fa-hand-point-left"></i></a>
-                        </div>
-                        <div class="card w-75">
-                            <div class="card-body">
-                                <div class="text-center fs-3">創建自己的卡片!</div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="col-md-8 row justify-content-center align-items-center">
+                <div class="col-1 p-0">
+                    <a href="<?= base_url('/perbook/'.$book_id) ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
+                </div>
+                <div class="col-10 pt-3 pb-4">
+                    <div class="fs-3 text-center">Let's Create cards</div>
+                </div>
+                <div class="col-1">
                 </div>
             </div>
         </div>
     </div>
-    <div class="container py-5">
+
+    <div class="container pb-5">
         <div class="row justify-content-center my-3">
             <div class="col-md-8 my-3">
                 <div class="card mb-3">
@@ -159,7 +153,7 @@
     document.getElementById("cardSearchForm").addEventListener("submit",(e) => {
         e.preventDefault();
         let formdata= new FormData(cardSearchForm);
-        myLib1.POST("<?= base_url('/cards/search') ?>",formdata);
+        myLib1.POST("<?= base_url('/perbook/search') ?>",formdata);
     })
 
     let myLib1 = {
@@ -202,14 +196,14 @@
     document.getElementById("cardCreateForm").addEventListener("submit",(e) => {
         e.preventDefault();
         let formdata= new FormData(cardCreateForm);
-        myLib2.POST("<?= base_url('/cards') ?>",formdata);
+        myLib2.POST("<?= base_url('/perbook') ?>",formdata);
     })
 
     let myLib2 = {
         POST: (url,formdata) => {
             axios.post(url,formdata)
             .then((response) => {
-                window.location.href = `<?= base_url('/books/'.$book_id)?>`;
+                window.location.href = `<?= base_url('/perbook/'.$book_id)?>`;
             }).catch((e) => {
                 console.log(e.response.data);
             })
