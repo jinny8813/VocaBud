@@ -1,31 +1,53 @@
 <?= $this->extend("layout/template")?>
 <?= $this->section('content')?>
 <section class="min-vh-100 bg_light">
-    <div class="w-100">
-        <img class="img-fluid" src="<?= base_url('../../public/assets/images/banner.jpg') ?>" alt="">
-    </div>
-    <div class="container">
+<div class="container-fluid bg_green bg_green_title">
         <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="position-relative">
-                    <div class="position-absolute top-100 start-50 translate-middle d-flex justify-content-around align-items-center w-100">
-                        <div class="card w-75">
-                            <div class="card-body">
-                                <div class="text-center fs-3"><?= esc($book_title)?></div>
-                            </div>
-                        </div>
-                        <div>
-                            <a href="#" class="btn p-2"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
-                        </div>
-                        <div>
-                            <a href="<?= base_url('/cards/new') ?>" class="btn p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
-                        </div>
+            <div class="col-md-8 row justify-content-center align-items-center">
+                <div class="col-1 p-0">
+                    <a href="<?= base_url('/books')?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
+                </div>
+                <div class="col-1 p-0">
+                    <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-info"></i></a>
+                </div>
+                <div class="col-8 p-3">
+                    <div class="fs-3 text-center"><?= esc($book_title)?></div>
+                </div>
+                <div class="col-2">
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-10 pb-4">
+                <div>- Collection ( 1/1 )</div>
+                <div>- Booklist ()</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-sticky top-0 z-3">
+        <div class="position-relative">
+            <div class="position-absolute top-0 end-0 mt-3">
+                <button class="btn btn_the_biggest fs-4 p-2" id="bigBtn"><i class="fa-fw fa-solid fa-toolbox"></i></button>
+                <div id="groupBtn" class="d-none">
+                    <div class="d-flex">
+                        <a href="<?= base_url('perbook/new')?>" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
+                    </div>
+                    <div class="d-flex">
+                        <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
+                    </div>
+                    <div class="d-flex">
+                        <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-eye"></i></a>
+                    </div>
+                    <div class="d-flex">
+                        <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-play"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container py-5">
+
+    <div class="container py-3">
         <div class="row justify-content-center my-3">
             <div class="col-md-10">
                 <?php foreach($cards as $row):?>
@@ -49,4 +71,10 @@
         </div>
     </div>
 </section>
+<script>
+    let groupBtn = document.getElementById("groupBtn");
+    document.getElementById("bigBtn").addEventListener("click",(e) => {
+        groupBtn.classList.toggle("d-none");
+    })
+</script>
 <?= $this->endSection()?>

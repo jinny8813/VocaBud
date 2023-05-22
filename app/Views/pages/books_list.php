@@ -31,13 +31,10 @@
                 <button class="btn btn_the_biggest fs-4 p-2" id="bigBtn"><i class="fa-fw fa-solid fa-toolbox"></i></button>
                 <div id="groupBtn" class="d-none">
                     <div class="d-flex">
-                        <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-toolbox"></i></a>
+                        <a href="<?= base_url('/books/new') ?>" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
                     </div>
                     <div class="d-flex">
-                        <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-toolbox"></i></a>
-                    </div>
-                    <div class="d-flex">
-                        <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-toolbox"></i></a>
+                        <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-up-down-left-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -55,7 +52,7 @@
                         </div>
                         <div class="col-9 card-body">
                             <div class="fs-5">
-                                <a href="<?= base_url('books/'.$row['book_id'])?>" class="a_black stretched-link"><?= $row['book_title']?></a>
+                                <strong><a href="<?= base_url('perbook/'.$row['book_id'])?>" class="a_black stretched-link"><?= $row['book_title']?></a></strong>
                             </div>
                             <p class="ellipsis"><?= $row['book_description']?></p>
                             <div><i class="fa-fw fa-solid fa-swatchbook"></i>999</div>

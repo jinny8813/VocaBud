@@ -41,11 +41,11 @@ $routes->get('/home', 'UserLogin::home', ['filter' => 'Auth']);
 $routes->get('/books', 'Books::index', ['filter' => 'Auth']);
 $routes->get('/books/new', 'Books::create', ['filter' => 'Auth']);
 $routes->post('/books', 'Books::store', ['filter' => 'Auth']);
-$routes->get('/books/(:num)', 'Books::show/$1', ['filter' => 'Auth']);
 
-$routes->get('/cards/new', 'Cards::create', ['filter' => 'Auth']);
-$routes->post('/cards/search', 'Cards::search', ['filter' => 'Auth']);
-$routes->post('/cards', 'Cards::store', ['filter' => 'Auth']);
+$routes->get('/perbook/(:num)', 'PerBook::index/$1', ['filter' => 'Auth']);
+$routes->get('/perbook/new', 'PerBook::create', ['filter' => 'Auth']);
+$routes->post('/perbook/search', 'PerBook::search', ['filter' => 'Auth']);
+$routes->post('/perbook', 'PerBook::store', ['filter' => 'Auth']);
 
 /*
  * --------------------------------------------------------------------

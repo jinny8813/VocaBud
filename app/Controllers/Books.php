@@ -46,16 +46,4 @@ class Books extends BaseController
 
         return $this->response->setStatusCode(200)->setJSON("OK");
     }
-
-    public function show($book_id)
-    {
-        $bookModel = new BookModel();
-        $bookData = $bookModel->where("book_id", $book_id)->first();
-        session()->set("bookData", $bookData);
-
-        $cardModel = new CardModel();
-        $data['cards'] = $cardModel->where("book_id", $book_id)->orderBy('card_id', 'DESC')->findAll();
-
-        return view('pages/perbook_list', $data + session()->bookData);
-    }
 }
