@@ -103,6 +103,14 @@
                                 </div>
                                 <div class="form-group row mb-3">
                                     <div class="col-3">
+                                        <label for="e_content" class="form-label">卡片英譯</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="e_content" id="e_content" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <div class="col-3">
                                         <label for="e_sentence" class="form-label">英/造句</label>
                                     </div>
                                     <div class="col-9">
@@ -160,13 +168,13 @@
         POST: (url,formdata) => {
             axios.post(url,formdata)
             .then((response) => {
-                innerMsg(response.data);
                 console.log(response.data);
+                innerMsg(response.data);
                 cardCreateDict.classList.remove('d-none');
                 cardCreate.classList.remove('d-none');
                 dict.classList.remove('d-none');
             }).catch((e) => {
-                console.log(e.response.data);
+                console.log(e);
             })
         },
     }
@@ -174,11 +182,10 @@
     function innerMsg(data){
         let radioGroup = document.getElementById("radioGroup");
         radioGroup.innerHTML = "";
-        for(let i = 0; i < Object.keys(data).length; i++){
+        for(let i = 0; i < Object.keys(data.def).length; i++){
             let mytext = `<div class="form-check">
-                            <input type="radio" class="form-check-input" name="theWord" id="${i}" value=${data[i]}>
+                            <input type="radio" class="form-check-input" name="theWord" id="${i}">
                             (${i+1}). <strong>${data.word}</strong> <small>(${data.def[i][0]}.)</small></br>
-                            /${data.pron}/</br>
                             ${data.def[i][1]}</br></div>`;
             $(radioGroup).append(mytext);
 
@@ -188,6 +195,7 @@
                     document.getElementById("part_of_speech").value = data.def[i][0];
                     document.getElementById("pronunciation").value = data.pron;
                     document.getElementById("content").value = data.trans;
+                    document.getElementById("e_content").value = data.def[i][1];
                     document.getElementById("e_sentence").value = data.eg;
             });
         }

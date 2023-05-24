@@ -52,13 +52,14 @@
                 <?php foreach($cards as $row):?>
                 <div class="card mb-3">
                     <div class="row g-0">
-                        <div class="col-3 d-flex align-items-center justify-content-center bg_dark_blue rounded-start">
+                        <div class="col-2 d-flex align-items-center justify-content-center bg_dark_blue rounded-start">
                             <div class="text-center">New</div>
                         </div>
-                        <div class="col-9 card-body">
+                        <div class="col-10 card-body">
                             <div class="fs-5">
-                                <strong><a href="" class="a_black stretched-link"><?= $row['card_title']?></a></strong><small> (<?= $row['part_of_speech']?>.)</small>
+                                <strong><a href="" class="a_black stretched-link"><?= $row['card_title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
                             </div>
+                            <div><?= $row['card_pronunciation']?></div>
                         </div>
                     </div>
                 </div>

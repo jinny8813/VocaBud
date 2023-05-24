@@ -42,6 +42,7 @@ class PerBook extends BaseController
             'book_id'=>$bookData['book_id'],
             'card_title'=>$data['title'],
             'card_content'=>$data['content'],
+            'card_e_content'=>$data['e_content'],
             'card_pronunciation'=>$data['pronunciation'],
             'part_of_speech'=>$data['part_of_speech'],
             'card_e_sentence'=>$data['e_sentence'],
