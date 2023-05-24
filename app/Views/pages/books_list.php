@@ -27,7 +27,7 @@
 
     <div class="position-sticky top-0 z-3">
         <div class="position-relative">
-            <div class="position-absolute top-0 end-0 mt-3">
+            <div class="position-absolute top-0 end-0 mt-3 pt-5">
                 <button class="btn btn_the_biggest fs-4 p-2" id="bigBtn"><i class="fa-fw fa-solid fa-toolbox"></i></button>
                 <div id="groupBtn" class="d-none">
                     <div class="d-flex">

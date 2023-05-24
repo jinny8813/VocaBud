@@ -153,7 +153,7 @@
     document.getElementById("cardSearchForm").addEventListener("submit",(e) => {
         e.preventDefault();
         let formdata= new FormData(cardSearchForm);
-        myLib1.POST("<?= base_url('/perbook/search') ?>",formdata);
+        myLib1.POST("<?= base_url('/dictionary') ?>",formdata);
     })
 
     let myLib1 = {
@@ -161,6 +161,7 @@
             axios.post(url,formdata)
             .then((response) => {
                 innerMsg(response.data);
+                console.log(response.data);
                 cardCreateDict.classList.remove('d-none');
                 cardCreate.classList.remove('d-none');
                 dict.classList.remove('d-none');
@@ -176,19 +177,18 @@
         for(let i = 0; i < Object.keys(data).length; i++){
             let mytext = `<div class="form-check">
                             <input type="radio" class="form-check-input" name="theWord" id="${i}" value=${data[i]}>
-                            (${i+1}). <strong>${data[i][0]}</strong> <small>(${data[i][1]}.)</small></br>
-                            /${data[i][2]}/</br>
-                            ${data[i][3]}</br>
-                            ${data[i][4]}</br></div>`;
+                            (${i+1}). <strong>${data.word}</strong> <small>(${data.def[i][0]}.)</small></br>
+                            /${data.pron}/</br>
+                            ${data.def[i][1]}</br></div>`;
             $(radioGroup).append(mytext);
 
             let wordid=document.getElementById(i);
-            wordid.addEventListener('click', function () {
-                document.getElementById("title").value = data[i][0];
-                document.getElementById("part_of_speech").value = data[i][1];
-                document.getElementById("pronunciation").value = data[i][2];
-                document.getElementById("e_sentence").value = data[i][3];
-                document.getElementById("c_sentence").value = data[i][4];
+                wordid.addEventListener('click', function () {
+                    document.getElementById("title").value = data.word;
+                    document.getElementById("part_of_speech").value = data.def[i][0];
+                    document.getElementById("pronunciation").value = data.pron;
+                    document.getElementById("content").value = data.trans;
+                    document.getElementById("e_sentence").value = data.eg;
             });
         }
     }
