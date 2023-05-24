@@ -13,7 +13,10 @@
                 <div class="col-8 p-3">
                     <div class="fs-3 text-center"><?= esc($book_title)?></div>
                 </div>
-                <div class="col-2">
+                <div class="col-1">
+                </div>
+                <div class="col-1 p-1">
+                    <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
                 </div>
             </div>
         </div>
@@ -31,9 +34,6 @@
                 <div id="groupBtn" class="d-none">
                     <div class="d-flex">
                         <a href="<?= base_url('perbook/new')?>" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
-                    </div>
-                    <div class="d-flex">
-                        <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
                     </div>
                     <div class="d-flex">
                         <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-eye"></i></a>

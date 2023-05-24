@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Exceptions\FrameworkException;
 use Dotenv\Dotenv;
 
 class Dictionary extends BaseController
@@ -14,18 +15,13 @@ class Dictionary extends BaseController
         $request = \Config\Services::request();
         $data = $request->getPost();
 
-        $dotenv = Dotenv::createImmutable(ROOTPATH);
-        $dotenv->load();
-        $apiKeyWordnik = $_ENV['API_KEY_Wordnik'];
-
-        $dataArray['def'] = $this->getWordnikDefinition($data['word'], $apiKeyWordnik);
+        $dataArray['def'] = $this->getWordnikDefinition($data['word']);
         $data1['def'] = $this->wordInfo(json_decode($dataArray['def']));
-
-        $data1['pron'] = $this->getWordnikPronunciations($data['word'], $apiKeyWordnik);
-        $data1['trans'] = $this->getMicrosoftTranslation($data['word']);
-
         $dataText['eg'] = $this->getExampleSentences($data['word']);
         $data1['eg'] = $this->wordEg($dataText['eg']);
+
+        $data1['pron'] = $this->getWordnikPronunciations($data['word']);
+        $data1['trans'] = $this->getMicrosoftTranslation($data['word']);
 
         $data1['word'] = $data['word'];
 
@@ -49,26 +45,32 @@ class Dictionary extends BaseController
     public function wordInfo($dataArray)
     {
         $wordInfoArr = [];
-        for ($i=0;$i<count($dataArray);$i++){
-            if(isset($dataArray[$i]->partOfSpeech) && isset($dataArray[$i]->text)){
-                $part_of_speech = $dataArray[$i]->partOfSpeech;
-                $definition = $dataArray[$i]->text;
-                array_push($wordInfoArr, [$part_of_speech, $definition]);
-            }          
+        for ($i=0;$i<count($dataArray[0]->shortdef);$i++){
+            $part_of_speech = $dataArray[0]->fl;
+            $definition = $dataArray[0]->shortdef[$i];
+            array_push($wordInfoArr, [$part_of_speech, $definition]);     
         }
         return $wordInfoArr;
     }
 
-    public function getWordnikPronunciations($word, $key)
+    public function getWordnikPronunciations($word)
     {
-        $uri = "https://api.wordnik.com/v4/word.json/" . $word . "/pronunciations?useCanonical=false&typeFormat=IPA&limit=1&api_key=" . $key;
+        $dotenv = Dotenv::createImmutable(ROOTPATH);
+        $dotenv->load();
+        $apiKeyWordnik = $_ENV['API_KEY_Wordnik'];
+
+        $uri = "https://api.wordnik.com/v4/word.json/" . $word . "/pronunciations?useCanonical=false&typeFormat=IPA&limit=1&api_key=" . $apiKeyWordnik;
         $response = json_decode(file_get_contents($uri));
         return $response[0]->raw;
     }
 
-    public function getWordnikDefinition($word, $key)
+    public function getWordnikDefinition($word)
     {
-        $uri = "https://api.wordnik.com/v4/word.json/" . $word . "/definitions?limit=200&includeRelated=false&sourceDictionaries=ahd-5&useCanonical=false&includeTags=false&api_key=" . $key;
+        $dotenv = Dotenv::createImmutable(ROOTPATH);
+        $dotenv->load();
+        $apiKeyWebster = $_ENV['API_KEY_Dictionary'];
+
+        $uri = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" . $word . "?key=" . $apiKeyWebster;
         return file_get_contents($uri);
     }
 

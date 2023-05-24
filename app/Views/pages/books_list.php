@@ -13,7 +13,10 @@
                 <div class="col-8 p-3">
                     <div class="fs-3 text-center">BooksCollection</div>
                 </div>
-                <div class="col-2">
+                <div class="col-1">
+                </div>
+                <div class="col-1 p-1">
+                    <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
                 </div>
             </div>
         </div>
