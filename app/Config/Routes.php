@@ -46,7 +46,12 @@ $routes->get('/perbook/(:num)', 'PerBook::index/$1', ['filter' => 'Auth']);
 $routes->get('/perbook/new', 'PerBook::create', ['filter' => 'Auth']);
 $routes->post('/perbook', 'PerBook::store', ['filter' => 'Auth']);
 
-$routes->post('/dictionary', 'Dictionary::index', ['filter' => 'Auth']);
+$routes->post('/perbook/dictionary', 'Dictionary::index', ['filter' => 'Auth']);
+
+$routes->get('/quizlets', 'Quizlets::index', ['filter' => 'Auth']);
+$routes->get('/quizlets/new', 'Quizlets::create', ['filter' => 'Auth']);
+$routes->post('/quizlets/generate', 'Quizlets::generateQuiz', ['filter' => 'Auth']);
+$routes->get('/quizlets/quizzing', 'Quizlets::runQuiz', ['filter' => 'Auth']);
 
 /*
  * --------------------------------------------------------------------

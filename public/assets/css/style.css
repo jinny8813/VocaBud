@@ -69,6 +69,7 @@ footer .nav-link:hover {
   background-color: #dfc403;
   color: white;
   border: none;
+  box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 .btn:hover,
@@ -103,4 +104,8 @@ footer .nav-link:hover {
   margin: 5px;
   border-radius: 20px;
   box-shadow: 1px 2px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.showCards {
+  height: 60vh;
 }/*# sourceMappingURL=style.css.map */
