@@ -143,7 +143,7 @@
         POST: (url,formdata) => {
             axios.post(url,formdata)
             .then((response) => {
-                window.location.href = `<?= base_url('/quizlets/quizzing')?>`;
+                window.location.href = `<?= base_url('/quizlets/flashcard')?>`;
             }).catch((e) => {
                 console.log(e);
             })

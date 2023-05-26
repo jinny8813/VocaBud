@@ -18,13 +18,17 @@
 
     <div class="container pb-5">
         <div class="row justify-content-center my-3">
-            <div class="col-md-8 my-3">
+            <div class="col-md-8 mb-2">
+                <div class="text-center fs-5" id="theIndex">0 / 50</div>
+                <div class="text-center d-none" id="theId"></div>
+            </div>
+            <div class="col-md-8 mb-3">
                 <div class="card showCards" id="frontCard">
                     <div class="card-body row align-items-center">
                         <div class="col-12">
-                            <h5 class="card-title text-center fs-1" id="frontTitle">00000</h5>
-                            <div class="text-center ellipsis small" id="partOfSpeech">1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</div>
-                            <div class="text-center ellipsis small" id="pronunciation">222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+                            <h5 class="card-title text-center fs-1" id="frontTitle"></h5>
+                            <div class="text-center ellipsis small" id="partOfSpeech"></div>
+                            <div class="text-center ellipsis small" id="pronunciation"></div>
                         </div>
                     </div>
                 </div>
@@ -32,8 +36,9 @@
                     <div class="card-body row align-items-center">
                         <div class="col-12">
                             <h5 class="card-title text-center fs-1" id="backContent"></h5>
-                            <div class="text-center ellipsis small" id="e_sentence">11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111</div>
-                            <div class="text-center ellipsis small" id="c_sentence">22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222</div>
+                            <div class="text-center ellipsis small" id="e_content"></div>
+                            <div class="text-center ellipsis small" id="e_sentence"></div>
+                            <div class="text-center ellipsis small" id="c_sentence"></div>
                         </div>
                     </div>
                 </div>
@@ -42,7 +47,7 @@
                 <div class="row g-0 justify-content-center mb-3" id="flipCard">
                     <a href="#" class="btn col" style="background-color: #d6d2c8; color:black">翻卡</a>
                 </div>
-                <div class="row g-0 justify-content-center mb-3" id="theChoice">
+                <div class="row g-0 justify-content-center mb-3 d-none" id="theChoice">
                     <button class="btn me-3 col" style="background-color: #7781de;" id="theChoice1">忘記</button>
                     <button class="btn mx-3 col" style="background-color: #63afd9;" id="theChoice2">模糊</button>
                     <button class="btn ms-3 col" style="background-color: #5ec7b4;" id="theChoice3">熟悉</button>
@@ -52,6 +57,91 @@
     </div>
 </section>
 <script>
-    
+    const bigArr=<?php echo json_encode($cards); ?>;
+    let len =Object.keys(bigArr).length;
+
+    let currentIndex=0;
+    const theIndex = document.getElementById('theIndex');
+    const theId = document.getElementById('theId');
+
+    const frontCard = document.getElementById('frontCard');
+    const frontTitle = document.getElementById('frontTitle');
+    const partOfSpeech = document.getElementById('partOfSpeech');
+    const pronunciation = document.getElementById('pronunciation');
+
+    const backCard = document.getElementById('backCard');
+    const backContent = document.getElementById('backContent');
+    const e_content = document.getElementById('e_content');
+    const e_sentence = document.getElementById('e_sentence');
+    const c_sentence = document.getElementById('c_sentence');
+
+    const flipCard = document.getElementById('flipCard');
+    const theChoice = document.getElementById('theChoice');
+    const theChoice1 = document.getElementById('theChoice1');
+    const theChoice2 = document.getElementById('theChoice2');
+    const theChoice3 = document.getElementById('theChoice3');
+
+    flipCard.addEventListener('click', () => {
+        frontCard.classList.add('d-none');
+        backCard.classList.remove('d-none');
+        flipCard.classList.add('d-none');
+        theChoice.classList.remove('d-none');
+    })
+
+    theChoice1.addEventListener('click', () => {
+        storeSelection(theId.textContent,theChoice1.textContent);
+    })
+
+    theChoice2.addEventListener('click', () => {
+        storeSelection(theId.textContent,theChoice2.textContent);
+    })
+
+    theChoice3.addEventListener('click', () => {
+        storeSelection(theId.textContent,theChoice3.textContent);
+    })
+
+    function storeSelection(id,answer){
+        let formdata= new FormData();
+        formdata.append('card_id',id);
+        formdata.append('answer',answer);
+        myLib1.POST("<?= base_url('/quizlets/flashcard') ?>",formdata);
+    }
+
+    let myLib1 = {
+        POST: (url,formdata) => {
+            axios.post(url,formdata)
+            .then((response) => {
+                if(currentIndex>=len){
+                    window.location.href = `<?= base_url('/quizlets')?>`;
+                }else{
+                    setNext();
+                }
+            }).catch((e) => {
+                console.log(e.response.data);
+            })
+        },
+    }
+
+    function setNext(){
+        frontCard.classList.remove('d-none');
+        backCard.classList.add('d-none');
+        flipCard.classList.remove('d-none');
+        theChoice.classList.add('d-none');
+
+        theIndex.innerText = currentIndex+1;
+        theId.innerText = bigArr[currentIndex]['card_id'];
+
+        frontTitle.innerText = bigArr[currentIndex]['card_title'];
+        partOfSpeech.innerText = bigArr[currentIndex]['part_of_speech'];
+        pronunciation.innerText = bigArr[currentIndex]['card_pronunciation'];
+        backContent.innerText = bigArr[currentIndex]['card_content'];
+        e_content.innerText = bigArr[currentIndex]['card_e_content'];
+        e_sentence.innerText = bigArr[currentIndex]['card_e_sentence'];
+        c_sentence.innerText = bigArr[currentIndex]['card_c_sentence'];
+
+        currentIndex++;
+    }
+
+    setNext()
 </script>
 <?= $this->endSection()?>

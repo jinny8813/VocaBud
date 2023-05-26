@@ -51,7 +51,9 @@ $routes->post('/perbook/dictionary', 'Dictionary::index', ['filter' => 'Auth']);
 $routes->get('/quizlets', 'Quizlets::index', ['filter' => 'Auth']);
 $routes->get('/quizlets/new', 'Quizlets::create', ['filter' => 'Auth']);
 $routes->post('/quizlets/generate', 'Quizlets::generateQuiz', ['filter' => 'Auth']);
-$routes->get('/quizlets/quizzing', 'Quizlets::runQuiz', ['filter' => 'Auth']);
+
+$routes->get('/quizlets/flashcard', 'Flashcard::index', ['filter' => 'Auth']);
+$routes->post('/quizlets/flashcard', 'Flashcard::store', ['filter' => 'Auth']);
 
 /*
  * --------------------------------------------------------------------
