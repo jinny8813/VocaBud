@@ -85,6 +85,7 @@ footer .nav-link:hover {
   background-color: transparent;
   color: white;
   border: none;
+  box-shadow: none;
 }
 .btn_low_key:hover, .btn_low_key:active, .btn_low_key:focus, .btn_low_key::after, .btn_low_key:active:hover {
   background-color: transparent;
@@ -108,4 +109,33 @@ footer .nav-link:hover {
 
 .showCards {
   height: 60vh;
+}
+
+.card-inner {
+  perspective: 1000px;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.card-front {
+  transform: rotateY(0deg);
+}
+
+.card-back {
+  transform: rotateY(180deg);
 }/*# sourceMappingURL=style.css.map */

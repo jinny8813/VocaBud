@@ -23,23 +23,31 @@
                 <div class="text-center d-none" id="theId"></div>
             </div>
             <div class="col-md-8 mb-3">
-                <div class="card showCards" id="frontCard">
-                    <div class="card-body row align-items-center">
-                        <div class="col-12">
-                            <h5 class="card-title text-center fs-1" id="frontTitle"></h5>
-                            <div class="text-center ellipsis small" id="partOfSpeech"></div>
-                            <div class="text-center ellipsis small" id="pronunciation"></div>
+                <div class="card-inner" id="flip-card">
+                    <div class="card-front" id="frontCard">
+                        <div class="card showCards">
+                            <div class="card-body row align-items-center">
+                                <div class="col-12">
+                                    <h5 class="card-title text-center fs-1" id="frontTitle"></h5>
+                                    <div class="text-center ellipsis small" id="partOfSpeech"></div>
+                                    <div class="text-center ellipsis small" id="pronunciation"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="card showCards d-none" id="backCard">
-                    <div class="card-body row align-items-center">
-                        <div class="col-12">
-                            <h5 class="card-title text-center fs-1" id="backContent"></h5>
-                            <div class="text-center ellipsis small" id="e_content"></div>
-                            <div class="text-center ellipsis small" id="e_sentence"></div>
-                            <div class="text-center ellipsis small" id="c_sentence"></div>
+                    <div class="card-back" id="backCard">
+                        <div class="card showCards">
+                            <div class="card-body row align-items-center">
+                                <div class="col-12">
+                                    <h5 class="card-title text-center fs-1" id="backContent"></h5>
+                                    <div class="text-center ellipsis small" id="e_content"></div>
+                                    <div class="text-center ellipsis small" id="e_sentence"></div>
+                                    <div class="text-center ellipsis small" id="c_sentence"></div>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <div class="showCards">
                     </div>
                 </div>
             </div>
@@ -82,8 +90,8 @@
     const theChoice3 = document.getElementById('theChoice3');
 
     flipCard.addEventListener('click', () => {
-        frontCard.classList.add('d-none');
         backCard.classList.remove('d-none');
+        document.getElementById('flip-card').classList.add('flipped');
         flipCard.classList.add('d-none');
         theChoice.classList.remove('d-none');
     })
@@ -123,7 +131,6 @@
     }
 
     function setNext(){
-        frontCard.classList.remove('d-none');
         backCard.classList.add('d-none');
         flipCard.classList.remove('d-none');
         theChoice.classList.add('d-none');
@@ -138,6 +145,8 @@
         e_content.innerText = bigArr[currentIndex]['card_e_content'];
         e_sentence.innerText = bigArr[currentIndex]['card_e_sentence'];
         c_sentence.innerText = bigArr[currentIndex]['card_c_sentence'];
+
+        document.getElementById('flip-card').classList.remove('flipped');
 
         currentIndex++;
     }
