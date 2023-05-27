@@ -138,4 +138,17 @@ footer .nav-link:hover {
 
 .card-back {
   transform: rotateY(180deg);
+}
+
+.dot {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 1.25rem;
+  padding-top: 0.3rem;
+  border: solid #7781de;
+}
+
+.dot-fill {
+  background-color: #7781de;
+  color: white;
 }/*# sourceMappingURL=style.css.map */

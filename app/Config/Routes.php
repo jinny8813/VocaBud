@@ -55,6 +55,8 @@ $routes->post('/quizlets/generate', 'Quizlets::generateQuiz', ['filter' => 'Auth
 $routes->get('/quizlets/flashcard', 'Flashcard::index', ['filter' => 'Auth']);
 $routes->post('/quizlets/flashcard', 'Flashcard::store', ['filter' => 'Auth']);
 
+$routes->get('/statistics', 'Statistics::index', ['filter' => 'Auth']);
+$routes->post('/statistics', 'Statistics::changeDaily', ['filter' => 'Auth']);
 /*
  * --------------------------------------------------------------------
  * Additional Routing
