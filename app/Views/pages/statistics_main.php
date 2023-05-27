@@ -22,7 +22,7 @@
     <div class="container py-3">
         <div class="row justify-content-center mb-3">
             <div class="col-md-6 col-10">
-                <input type="date" class="form-control" id="changeDate" name="date">
+                <input type="date" class="form-control input_card" id="changeDate" name="date">
             </div>
         </div>
         <div class="row justify-content-center mb-3">
@@ -47,7 +47,7 @@
             <div class="col-md-8 col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="mb-2"><small>學習打卡日曆</small></div>
+                        <div class="mb-2"><small>本月學習打卡紀錄</small></div>
                         <div id="calender">
                             <div class="row justify-content-center">
                                 <div class="col text-center">mon</div>
@@ -195,7 +195,6 @@
                     <div class="col text-center">sun</div>
                 </div>`;
         let weekday = 1;
-        console.log(data[0].date);
         let first = new Date(data[0].date);
         while(weekday != first.getDay()){
             if(weekday == 1)

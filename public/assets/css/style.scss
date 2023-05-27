@@ -151,6 +151,10 @@ footer {
   transform: rotateY(180deg);
 }
 
+.input_card {
+  border: none;
+  box-shadow: 1px 4px 10px 0px rgba(0, 0, 0, 0.2);
+}
 .dot {
   height: 2.5rem;
   width: 2.5rem;

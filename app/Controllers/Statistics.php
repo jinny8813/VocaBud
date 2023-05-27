@@ -38,7 +38,7 @@ class Statistics extends BaseController
         $data1['weekly_log_count'] = $eventlogModel->getRangeLogCount($userData['user_id'],$dateSub7,$date);
 
         $eventlogModel = new EventlogModel();
-        $data1['the_month_log_count'] = $eventlogModel->getRangeLogCount($userData['user_id'],'2023-05-01','2023-05-31');
+        $data1['the_month_log_count'] = $eventlogModel->getRangeLogCount($userData['user_id'],date("Y-m-01", strtotime($date)),date("Y-m-t", strtotime($date)));
 
         return $data1;
     }
