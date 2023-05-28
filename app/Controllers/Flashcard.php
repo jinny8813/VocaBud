@@ -37,39 +37,26 @@ class Flashcard extends BaseController
 
         $cardModel = new CardModel();
         $state = $cardModel->where('card_id', $data['card_id'])->findAll();
-        $update_state=-1;
-        if($state[0]['card_state']==0){
-            $update_state=5;
-            switch($data['answer']){
-                case "忘記":
-                    $update_state=$update_state-4;
-                    break;
-                case "模糊":
-                    $update_state=$update_state-2;
-                    break;
-                case "熟悉":
-                    $update_state=$update_state+3;
-                    break;
-                }
-        }else{
-            $update_state=$state[0]['card_state'];
-            switch($data['answer']){
-                case "忘記":
-                    $update_state=$update_state-2;
-                    break;
-                case "模糊":
-                    $update_state=$update_state-1;
-                    break;
-                case "熟悉":
-                    $update_state=$update_state+1;
-                    break;
-            }
-            if($update_state>=10){
-                $update_state=10;
-            }else if($update_state<=1){
-                $update_state=1;
-            }
+        $update_state = $state[0]['card_state'];
+
+        switch($data['answer']){
+            case 3:
+                $update_state = round($update_state/4);
+                break;
+            case 2:
+                $update_state = round($update_state/2);
+                break;
+            case 1:
+                $update_state = $update_state + 1;
+                break;
         }
+
+        if($update_state >= 100){
+            $update_state = 100;
+        }else if($update_state <= 1){
+                $update_state = 1;
+        }
+
         $cardModel->where('card_id', $data['card_id'])
                 ->set('card_state', $update_state)
                 ->set('last_quiztime', $date)

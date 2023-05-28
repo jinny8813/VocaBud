@@ -97,15 +97,15 @@
     })
 
     theChoice1.addEventListener('click', () => {
-        storeSelection(theId.textContent,theChoice1.textContent);
+        storeSelection(theId.textContent,3);
     })
 
     theChoice2.addEventListener('click', () => {
-        storeSelection(theId.textContent,theChoice2.textContent);
+        storeSelection(theId.textContent,2);
     })
 
     theChoice3.addEventListener('click', () => {
-        storeSelection(theId.textContent,theChoice3.textContent);
+        storeSelection(theId.textContent,1);
     })
 
     function storeSelection(id,answer){
