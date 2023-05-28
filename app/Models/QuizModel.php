@@ -93,9 +93,9 @@ class QuizModel extends Model
                     ->get()
                     ->getResult();
         
-        $old_amount = $select_amount - count($query['newcard']);
+        $old_amount_maxdate = $select_amount / 10 - count($query['newcard']);
 
-        $temp = "
+        $temp1 = "
                 select c.card_id
                 FROM cards c
                 join (SELECT card_id, MAX(create_at) as maxdate, AVG(choose) as avg_choose
@@ -103,19 +103,40 @@ class QuizModel extends Model
                     GROUP BY card_id) e on c.card_id = e.card_id
                 WHERE {$whereBook}
                 GROUP BY c.card_id
-                ORDER BY c.card_state, e.maxdate, e.avg_choose DESC
-                LIMIT {$old_amount}
+                ORDER BY e.maxdate, c.card_state, e.avg_choose DESC
+                LIMIT {$old_amount_maxdate}
             ";
-        $query['oldcard'] = $db->query($temp)->getResult();
+        $query['oldcard_maxdate'] = $db->query($temp1)->getResult();
 
-        $whereCard = array();
+        $obj_card = array();
+        foreach($query['oldcard_maxdate'] as $row){
+            array_push($obj_card, $row->card_id);
+        }
+        $where_not_card_id=implode( ',', $obj_card);
+
+        $old_amount_state = $select_amount - count($query['newcard']) - count($query['oldcard_maxdate']);
+
+        $temp2 = "
+                select c.card_id
+                FROM cards c
+                join (SELECT card_id, MAX(create_at) as maxdate, AVG(choose) as avg_choose
+                    FROM eventlog
+                    GROUP BY card_id) e on c.card_id = e.card_id
+                WHERE {$whereBook}
+                AND c.card_id NOT IN ({$where_not_card_id})
+                GROUP BY c.card_id
+                ORDER BY c.card_state, e.maxdate, e.avg_choose DESC
+                LIMIT {$old_amount_state}
+            ";
+        $query['oldcard_state'] = $db->query($temp2)->getResult();
+
         foreach($query['newcard'] as $row){
-            array_push($whereCard, $row->card_id);
+            array_push($obj_card, $row->card_id);
         }
-        foreach($query['oldcard'] as $row){
-            array_push($whereCard, $row->card_id);
+        foreach($query['oldcard_state'] as $row){
+            array_push($obj_card, $row->card_id);
         }
-        $str_card_id=implode( ',', $whereCard );
+        $str_card_id=implode( ',', $obj_card);
 
         $builder2 = $db->table('cards c');
         $data = $builder2

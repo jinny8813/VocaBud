@@ -52,8 +52,9 @@
                 <?php foreach($cards as $row):?>
                 <div class="card mb-3">
                     <div class="row g-0">
-                        <div class="col-2 d-flex align-items-center justify-content-center bg_dark_blue rounded-start">
-                            <div class="text-center">New</div>
+                        <div class="col-2 d-flex align-items-center justify-content-center rounded-start cardBgColor">
+                            <div class="d-none stateDNone"><?= $row['card_state']?></div>
+                            <div class="text-center cardState" style="color: white;"></div>
                         </div>
                         <div class="col-10 card-body">
                             <div class="fs-5">
@@ -73,5 +74,32 @@
     document.getElementById("bigBtn").addEventListener("click",(e) => {
         groupBtn.classList.toggle("d-none");
     })
+
+    let cardBgColor = document.querySelectorAll(".cardBgColor");
+    let cardState = document.querySelectorAll(".cardState");
+    let stateDNone = document.querySelectorAll(".stateDNone");
+
+    stateDNone.forEach((item, index) => {
+        let number = parseInt(item.textContent);
+        if (number >= 1 && number <= 3) {
+            cardBgColor[index].style.backgroundColor = "#A68AE0";
+            cardState[index].innerText = "F";
+        } else if (number >= 4 && number <= 10) {
+            cardBgColor[index].style.backgroundColor = "#7781DE";
+            cardState[index].innerText = "D";
+        } else if (number >= 11 && number <= 25) {
+            cardBgColor[index].style.backgroundColor = "#63AFD9";
+            cardState[index].innerText = "C";
+        } else if (number >= 26 && number <= 50) {
+            cardBgColor[index].style.backgroundColor = "#5EC7B4";
+            cardState[index].innerText = "B";
+        } else if (number >= 51 && number <= 100) {
+            cardBgColor[index].style.backgroundColor = "#717098";
+            cardState[index].innerText = "A";
+        } else {
+            cardBgColor[index].style.backgroundColor = "#97DA78";
+            cardState[index].innerText = "New";
+        }
+    });
 </script>
 <?= $this->endSection()?>
