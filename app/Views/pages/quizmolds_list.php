@@ -26,43 +26,28 @@
     </div>
 
     <div class="container py-3">
-        <div class="row justify-content-center my-3">
-            <div class="col-md-10">
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-8 col-12">
+                <div class="fs-5 mb-2">翻卡測驗/flashcard quiz</div>
+            </div>
+            <div class="col-md-4 col-6">
                 <div class="card">
                     <div class="card-body">
-                        <div class="text-center py-5"><a href="<?= base_url('/quizlets/new') ?>" class="a_black stretched-link">建立新測驗</a></div>
-                    </div>
-                </div> 
-            </div>
-        </div>
-    </div>
-
-    <div class="container py-3">
-        <div class="row justify-content-center my-3">
-            <div class="col-md-10">
-                
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-3 d-flex align-items-center justify-content-center bg_dark_blue rounded-start">
-                            <div class="text-center">99%</div>
-                        </div>
-                        <div class="col-9 card-body">
-                            <div class="fs-5">
-                                <strong><a href="" class="a_black stretched-link"></a></strong>
-                            </div>
-                            <p class="ellipsis"></p>
-                        </div>
+                        <div class="text-center py-3"><a href="<?= base_url('/quizlets/new') ?>" class="a_black stretched-link">翻卡-系統出題</a></div>
                     </div>
                 </div>
-                
+            </div>
+            <div class="col-md-4 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center py-3"><a href="<?= base_url('/quizlets/new') ?>" class="a_black stretched-link">翻卡-自定義</a></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 <script>
-    let groupBtn = document.getElementById("groupBtn");
-    document.getElementById("bigBtn").addEventListener("click",(e) => {
-        groupBtn.classList.toggle("d-none");
-    })
+    
 </script>
 <?= $this->endSection()?>

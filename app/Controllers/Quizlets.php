@@ -38,8 +38,11 @@ class Quizlets extends BaseController
         $data = $request->getPost();
 
         $quizModel=new QuizModel();
-        $data1['cards'] = $quizModel->getNewQuiz($date,$data['select_book'],$data['select_old'],$data['select_wrong'],$data['select_state'],$data['select_amount']);
-
+        if($data['main_way'] == "self"){
+            $data1['cards'] = $quizModel->getSelfQuiz($date,$data['select_book'],$data['select_old'],$data['select_wrong'],$data['select_state'],$data['select_amount']);
+        }else{
+            $data1['cards'] = $quizModel->getSystemQuiz($data['select_book'], $data['select_amount']);
+        }
 
         if (count($data1['cards'])==0){
             $this->response->setStatusCode(200)->setJSON("OK");

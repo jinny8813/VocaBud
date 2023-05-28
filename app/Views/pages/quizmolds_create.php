@@ -16,13 +16,32 @@
         </div>
     </div>
 
-    <div class="container pb-5">
-        <div class="row justify-content-center my-3">
+    <div class="container py-3">
+        <div class="row justify-content-center mb-3">
             <div class="col-md-8 my-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="text-center fs-3 mb-3">創建測驗</div>
-                        <form id="quizCreateForm">
+                <form id="quizMainForm">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="text-center fs-3 mb-3">建立翻卡測驗吧</div>
+                            <div class="fs-5 mb-2">1. 選擇出題方式</div>
+                            <div class="form-group row mb-3">
+                                <div class="col-3">
+                                    <label for="" class="form-label">出題方式</label>
+                                </div>
+                                <div class="col-9">
+                                    <input class="form-check-input" type="radio" name="main_way" id="main_way1" value="system" required>
+                                    <label class="form-check-label" for="main_way1">系統出題</label>
+                                    <br>
+                                    <input class="form-check-input" type="radio" name="main_way" id="main_way2" value="self">
+                                    <label class="form-check-label" for="main_way2">自定義題目</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="fs-5 mb-2">2. 詳細設定</div>
                             <div class="form-group row mb-3">
                                 <div class="col-3">
                                     <label for="title" class="form-label">選擇書本</label>
@@ -83,7 +102,12 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <div class="fs-5 mb-2">3. 選擇數量並送出</div>
                             <div class="form-group row mb-3">
                                 <div class="col-3">
                                     <label for="select_amount" class="form-label">測驗數量</label>
@@ -93,48 +117,47 @@
                                         <option value="10">10</option>
                                         <option value="20">20</option>
                                         <option value="50">50</option>
+                                        <option value="100">100</option>
+                                        <option value="200">200</option>
+                                        <option value="500">500</option>
                                     </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-3">
-                                <div class="col-3">
-                                    <label for="" class="form-label">隨機補足</label>
-                                </div>
-                                <div class="col-9">
-                                    <input class="form-check-input" type="radio" name="add_random" id="add_random1" checked value="no">
-                                    <label class="form-check-label" for="add_random1">不補足，有多少測驗多少</label>
-                                    <br>
-                                    <input class="form-check-input" type="radio" name="add_random" id="add_random2" disabled value="random">
-                                    <label class="form-check-label" for="add_random2">隨機補足至選擇之測驗數量</label>
                                 </div>
                             </div>
                             <div class="form-group d-flex justify-content-center">
                                 <button type="submit" name="submit" class="btn">送出</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
+
             </div>
         </div>
     </div>
 </section>
 <script>
-    let quizCreateForm = document.getElementById("quizCreateForm");
+    let quizMainForm = document.getElementById("quizMainForm");
 
-    quizCreateForm.addEventListener("submit",(e) => {
+    quizMainForm.addEventListener("submit",(e) => {
+        let formdata = new FormData(quizMainForm);
+
         let select_book = new Array();
-        $.each($("input[name='book_group']:checked"), function() {
-            select_book.push(parseInt($(this).val()));
-        });
-        if(select_book.length==0){
-            document.getElementById('bookError').classList.remove('d-none');
+        if(formdata.get('main_way') == "self"){
+            $.each($("input[name='book_group']:checked"), function() {
+                select_book.push(parseInt($(this).val()));
+            });
+            if(select_book.length==0){
+                document.getElementById('bookError').classList.remove('d-none');
+            }else{
+                document.getElementById('bookError').classList.add('d-none');
+            }
         }else{
-            document.getElementById('bookError').classList.add('d-none');
+            $.each($("input[name='book_group']"), function() {
+                select_book.push(parseInt($(this).val()));
+            });
         }
-        e.preventDefault();
 
-        let formdata= new FormData(quizCreateForm);
+        e.preventDefault();
+        console.log(select_book);
         formdata.append("select_book", select_book.toString());
         myLib1.POST("<?= base_url('/quizlets/generate') ?>",formdata);
     })

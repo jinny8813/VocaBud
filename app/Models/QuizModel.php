@@ -4,12 +4,7 @@ use CodeIgniter\Model;
 
 class QuizModel extends Model
 {
-    protected $table = 'quizzes';
-    protected $primarykey = 'quiz_id';
-
-    protected $allowedFields = ['quiz_id','user_id','select_book','select_old','select_wrong','select_state','select_amount','add_random','quiz_list','create_at'];
-
-    public function getNewQuiz($date,$book_id,$select_old,$select_wrong,$select_state,$select_amount){
+    public function getSelfQuiz($date,$book_id,$select_old,$select_wrong,$select_state,$select_amount){
         $wherebook="c.book_id IN ({$book_id})";
         switch ($select_state){
             case "差":
@@ -81,6 +76,54 @@ class QuizModel extends Model
         foreach($query as $row){
             array_push($data,(array)$row);
         }
+        return $data;
+    }
+
+    public function getSystemQuiz($book_id, $select_amount)
+    {
+        $whereBook="c.book_id IN ({$book_id})";
+        $new_amount = $select_amount / 5;
+
+        $db = \Config\Database::connect();
+        $builder1 = $db->table('cards c');
+        $query['newcard'] = $builder1->select("c.card_id")
+                    ->where($whereBook)
+                    ->whereIn('c.card_state', [0])
+                    ->limit($new_amount)
+                    ->get()
+                    ->getResult();
+        
+        $old_amount = $select_amount - count($query['newcard']);
+
+        $temp = "
+                select c.card_id
+                FROM cards c
+                join (SELECT card_id, MAX(create_at) as maxdate, AVG(choose) as avg_choose
+                    FROM eventlog
+                    GROUP BY card_id) e on c.card_id = e.card_id
+                WHERE {$whereBook}
+                GROUP BY c.card_id
+                ORDER BY c.card_state, e.maxdate, e.avg_choose DESC
+                LIMIT {$old_amount}
+            ";
+        $query['oldcard'] = $db->query($temp)->getResult();
+
+        $whereCard = array();
+        foreach($query['newcard'] as $row){
+            array_push($whereCard, $row->card_id);
+        }
+        foreach($query['oldcard'] as $row){
+            array_push($whereCard, $row->card_id);
+        }
+        $str_card_id=implode( ',', $whereCard );
+
+        $builder2 = $db->table('cards c');
+        $data = $builder2
+                    ->where("c.card_id IN ({$str_card_id})")
+                    ->orderBy('title', 'RANDOM')
+                    ->get()
+                    ->getResult();
+
         return $data;
     }
 }
