@@ -12,6 +12,8 @@ class EventlogModel extends Model
     public function getRangeLogCount($user_id,$start,$end){
         $db = \Config\Database::connect();
 
+        // localhost MariaDB
+
         $query = "
                 WITH RECURSIVE temp_table AS (
                     SELECT DATE_ADD('" . $start . "', INTERVAL 0 DAY) AS date
@@ -26,6 +28,8 @@ class EventlogModel extends Model
                 GROUP BY temp_table.date
                 ORDER BY temp_table.date;
             ";
+
+        // cpanel MySQL 5.7 version =="
 
         $data = $db->query($query)->getResult();
 
