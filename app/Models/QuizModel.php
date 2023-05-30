@@ -82,69 +82,122 @@ class QuizModel extends Model
     public function getSystemQuiz($book_id, $select_amount)
     {
         $whereBook="c.book_id IN ({$book_id})";
-        $new_amount = $select_amount / 5;
 
         $db = \Config\Database::connect();
-        $builder1 = $db->table('cards c');
-        $query['newcard'] = $builder1->select("c.card_id")
-                    ->where($whereBook)
-                    ->whereIn('c.card_state', [0])
-                    ->limit($new_amount)
-                    ->get()
-                    ->getResult();
+        $temp =  "
+                    select c.card_id
+                    FROM cards c
+                    WHERE {$whereBook}
+                    AND c.card_state IN (0)
+                ";
+        $temp_query['id_new_cards'] = $db->query($temp)->getResult();
+        $id_new_cards = $this->toCardIdStr($temp_query['id_new_cards']);
+        $temp =  "
+                    select c.card_id
+                    FROM cards c
+                    join (SELECT card_id
+                    FROM eventlog) e on c.card_id = e.card_id
+                    WHERE {$whereBook}
+                    GROUP BY c.card_id
+                ";
+        $temp_query['id_old_cards'] = $db->query($temp)->getResult();
+        $id_old_cards = $this->toCardIdStr($temp_query['id_old_cards']);
         
-        $old_amount_maxdate = $select_amount / 10 - count($query['newcard']);
+        $select_cards_id = "";
+        $amount_old_cards = 0;
+        $finally_cards = $select_amount;
+        if($select_amount >= count($temp_query['id_old_cards']) / 10){
+            $amount_maxdate = $select_amount / 10;
 
-        $temp1 = "
-                select c.card_id
-                FROM cards c
-                join (SELECT card_id, MAX(create_at) as maxdate, AVG(choose) as avg_choose
+            $temp = "
+                    select c.card_id
+                    FROM cards c
+                    join (SELECT card_id, MAX(create_at) as maxdate, AVG(choose) as avg_choose
                     FROM eventlog
                     GROUP BY card_id) e on c.card_id = e.card_id
-                WHERE {$whereBook}
-                GROUP BY c.card_id
-                ORDER BY e.maxdate, c.card_state, e.avg_choose DESC
-                LIMIT {$old_amount_maxdate}
-            ";
-        $query['oldcard_maxdate'] = $db->query($temp1)->getResult();
+                    WHERE c.card_id IN ({$id_old_cards})
+                    GROUP BY c.card_id
+                    ORDER BY e.maxdate, c.card_state, e.avg_choose DESC
+                    LIMIT {$amount_maxdate}
+                ";
+            $temp_query['old_maxdate'] = $db->query($temp)->getResult();
+            $id_old_maxdate = $this->toCardIdStr($temp_query['old_maxdate']);
 
-        $obj_card = array();
-        foreach($query['oldcard_maxdate'] as $row){
-            array_push($obj_card, $row->card_id);
-        }
-        $where_not_card_id=implode( ',', $obj_card);
+            $amount_state = $select_amount * 4 / 5;
 
-        $old_amount_state = $select_amount - count($query['newcard']) - count($query['oldcard_maxdate']);
-
-        $temp2 = "
-                select c.card_id
-                FROM cards c
-                join (SELECT card_id, MAX(create_at) as maxdate, AVG(choose) as avg_choose
+            $temp = "
+                    select c.card_id
+                    FROM cards c
+                    join (SELECT card_id, MAX(create_at) as maxdate, AVG(choose) as avg_choose
                     FROM eventlog
                     GROUP BY card_id) e on c.card_id = e.card_id
-                WHERE {$whereBook}
-                AND c.card_id NOT IN ({$where_not_card_id})
-                GROUP BY c.card_id
-                ORDER BY c.card_state, e.maxdate, e.avg_choose DESC
-                LIMIT {$old_amount_state}
-            ";
-        $query['oldcard_state'] = $db->query($temp2)->getResult();
+                    WHERE c.card_id IN ({$id_old_cards})
+                    AND c.card_id NOT IN ({$id_old_maxdate})
+                    GROUP BY c.card_id
+                    ORDER BY c.card_state, e.maxdate, e.avg_choose DESC
+                    LIMIT {$amount_state}
+                ";
+            $temp_query['old_state'] = $db->query($temp)->getResult();
+            $id_old_state = $this->toCardIdStr($temp_query['old_state']);
 
-        foreach($query['newcard'] as $row){
-            array_push($obj_card, $row->card_id);
+            $select_cards_id = $select_cards_id . $id_old_maxdate . "," . $id_old_state;
+            $amount_old_cards = $amount_old_cards + count($temp_query['old_maxdate']) + count($temp_query['old_state']);
         }
-        foreach($query['oldcard_state'] as $row){
-            array_push($obj_card, $row->card_id);
-        }
-        $str_card_id=implode( ',', $obj_card);
 
-        $builder2 = $db->table('cards c');
-        $data = $builder2
-                    ->where("c.card_id IN ({$str_card_id})")
-                    ->orderBy('title', 'RANDOM')
-                    ->get()
-                    ->getResult();
+        $finally_cards = $finally_cards - $amount_old_cards;
+
+        if(count($temp_query['id_new_cards']) < 1){
+            $temp = "
+                    select c.card_id
+                    FROM cards c
+                    join (SELECT card_id, MAX(create_at) as maxdate, AVG(choose) as avg_choose
+                    FROM eventlog) e on c.card_id = e.card_id
+                    WHERE c.card_id IN ({$id_old_cards})
+                    AND c.card_id NOT IN ({$select_cards_id})
+                    GROUP BY c.card_id
+                    ORDER BY RAND()
+                    LIMIT {$finally_cards}
+                ";
+            $temp_query['finally_cards'] = $db->query($temp)->getResult();
+            $id_finally_cards = $this->toCardIdStr($temp_query['finally_cards']);
+            
+            if(empty($id_finally_cards) === false)
+                $select_cards_id = $select_cards_id . "," . $id_finally_cards;
+        }else{
+            $temp =  "
+                    select c.card_id
+                    FROM cards c
+                    WHERE c.card_id IN ({$id_new_cards})
+                    ORDER BY RAND()
+                    LIMIT {$finally_cards}
+                ";
+            $temp_query['finally_cards'] = $db->query($temp)->getResult();
+            $id_finally_cards = $this->toCardIdStr($temp_query['finally_cards']);
+
+            if($finally_cards == $select_amount)
+                $select_cards_id = $select_cards_id . $id_finally_cards;
+            else
+                $select_cards_id = $select_cards_id . "," . $id_finally_cards;
+        }
+
+        $temp =  "
+                    select *
+                    FROM cards c
+                    WHERE c.card_id IN ({$select_cards_id})
+                    ORDER BY RAND()
+                ";
+        $data = $db->query($temp)->getResult();
 
         return $data;
+    }
+
+    public function toCardIdStr($sql_result)
+    {
+        $arr= array();
+        foreach($sql_result as $row){
+            array_push($arr, $row->card_id);
+        }
+        $str=implode( ',', $arr);
+        return $str;
     }
 }

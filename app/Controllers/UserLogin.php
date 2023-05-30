@@ -27,7 +27,7 @@ class UserLogin extends BaseController
         $data1['userData'] = session()->userData;
 
         $eventlogModel = new EventlogModel();
-        $data1['the_week_log_count'] = $eventlogModel->getRangeLogCount($data1['userData']['user_id'], date('Y-m-d', strtotime("monday 0 week")), date('Y-m-d', strtotime("sunday 0 week")));
+        $data1['the_week_log_count'] = $eventlogModel->getRangeLogCount($data1['userData']['user_id'], date('Y-m-d', strtotime("monday -1 week")), date('Y-m-d', strtotime("sunday 0 week")));
 
         return view('pages/user_home', $data1);
     }

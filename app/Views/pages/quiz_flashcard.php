@@ -53,7 +53,7 @@
             </div>
             <div class="col-md-8 mb-3">
                 <div class="row g-0 justify-content-center mb-3" id="flipCard">
-                    <a href="#" class="btn col" style="background-color: #d6d2c8; color:black">翻卡</a>
+                    <a href="#" class="btn col" style="background-color: #C2B79E; color:black">翻卡</a>
                 </div>
                 <div class="row g-0 justify-content-center mb-3 d-none" id="theChoice">
                     <button class="btn me-3 col" style="background-color: #7781de;" id="theChoice1">忘記</button>

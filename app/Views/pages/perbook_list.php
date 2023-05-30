@@ -82,7 +82,7 @@
     stateDNone.forEach((item, index) => {
         let number = parseInt(item.textContent);
         if (number >= 1 && number <= 3) {
-            cardBgColor[index].style.backgroundColor = "#A68AE0";
+            cardBgColor[index].style.backgroundColor = "#A78DDE";
             cardState[index].innerText = "F";
         } else if (number >= 4 && number <= 10) {
             cardBgColor[index].style.backgroundColor = "#7781DE";
@@ -94,10 +94,10 @@
             cardBgColor[index].style.backgroundColor = "#5EC7B4";
             cardState[index].innerText = "B";
         } else if (number >= 51 && number <= 100) {
-            cardBgColor[index].style.backgroundColor = "#717098";
+            cardBgColor[index].style.backgroundColor = "#95CD7B";
             cardState[index].innerText = "A";
         } else {
-            cardBgColor[index].style.backgroundColor = "#97DA78";
+            cardBgColor[index].style.backgroundColor = "#C2B79E";
             cardState[index].innerText = "New";
         }
     });
