@@ -161,7 +161,7 @@
     document.getElementById("cardSearchForm").addEventListener("submit",(e) => {
         e.preventDefault();
         let formdata= new FormData(cardSearchForm);
-        myLib1.POST("<?= base_url('/dictionary') ?>",formdata);
+        myLib1.POST("<?= base_url('/perbook/dictionary') ?>",formdata);
     })
 
     let myLib1 = {
