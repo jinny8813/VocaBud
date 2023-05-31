@@ -26,10 +26,12 @@
     </div>
 
     <div class="container py-3">
-        <div class="row justify-content-center mb-3">
+        <div class="row justify-content-center">
             <div class="col-md-8 col-12">
                 <div class="fs-5 mb-2">翻卡測驗/flashcard quiz</div>
             </div>
+        </div>
+        <div class="row justify-content-center mb-3">
             <div class="col-md-4 col-6">
                 <div class="card">
                     <div class="card-body">
