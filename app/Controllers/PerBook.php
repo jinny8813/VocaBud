@@ -18,8 +18,15 @@ class PerBook extends BaseController
         $bookData = $bookModel->where("b_id", $b_id)->first();
         session()->set("bookData", $bookData);
 
-        $cardModel = new CardModel();
-        $data['cards'] = $cardModel->where("b_id", $b_id)->orderBy('c_id', 'DESC')->findAll();
+        $db = \Config\Database::connect();
+        $temp =  "
+                    SELECT * 
+                    FROM cards c
+                    JOIN state s ON c.c_id = s.c_id
+                    WHERE c.b_id = 1
+                    AND s.u_id = 21
+                ";
+        $data['cards'] = $db->query($temp)->getResultArray();
 
         return view('pages/perbook_list', $data + session()->bookData);
     }

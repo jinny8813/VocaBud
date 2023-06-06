@@ -7,10 +7,16 @@
                 <div class="col-1 p-0">
                     <a href="<?= base_url('/') ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
                 </div>
-                <div class="col-10 pt-3 pb-4">
+                <div class="col-1 p-0">
+                    <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-info"></i></a>
+                </div>
+                <div class="col-8 p-3">
                     <div class="fs-3 text-center">單字卡</div>
                 </div>
                 <div class="col-1">
+                </div>
+                <div class="col-1 p-1">
+                    <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
                 </div>
             </div>
         </div>

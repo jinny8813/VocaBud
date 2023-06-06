@@ -53,8 +53,7 @@
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-2 d-flex align-items-center justify-content-center rounded-start cardBgColor">
-                            <div class="d-none stateDNone"></div>
-                            <div class="text-center cardState" style="color: white;"></div>
+                            <div class="text-center cardState" style="color: white;"><?= $row['grade']?></div>
                         </div>
                         <div class="col-10 card-body">
                             <div class="fs-5">
@@ -76,28 +75,28 @@
 
     let cardBgColor = document.querySelectorAll(".cardBgColor");
     let cardState = document.querySelectorAll(".cardState");
-    let stateDNone = document.querySelectorAll(".stateDNone");
 
-    stateDNone.forEach((item, index) => {
-        let number = parseInt(item.textContent);
-        if (number >= 1 && number <= 3) {
-            cardBgColor[index].style.backgroundColor = "#A78DDE";
-            cardState[index].innerText = "F";
-        } else if (number >= 4 && number <= 10) {
-            cardBgColor[index].style.backgroundColor = "#7781DE";
-            cardState[index].innerText = "D";
-        } else if (number >= 11 && number <= 25) {
-            cardBgColor[index].style.backgroundColor = "#63AFD9";
-            cardState[index].innerText = "C";
-        } else if (number >= 26 && number <= 50) {
-            cardBgColor[index].style.backgroundColor = "#5EC7B4";
-            cardState[index].innerText = "B";
-        } else if (number >= 51 && number <= 100) {
-            cardBgColor[index].style.backgroundColor = "#95CD7B";
-            cardState[index].innerText = "A";
-        } else {
-            cardBgColor[index].style.backgroundColor = "#C2B79E";
-            cardState[index].innerText = "New";
+    cardState.forEach((item, index) => {
+        let grade = item.textContent;
+        switch(grade){
+            case "A":
+                cardBgColor[index].style.backgroundColor = "#E6E164";
+                break;
+            case "B":
+                cardBgColor[index].style.backgroundColor = "#95CD7B";
+                break;
+            case "C":
+                cardBgColor[index].style.backgroundColor = "#5EC7B4";
+                break;
+            case "D":
+                cardBgColor[index].style.backgroundColor = "#63AFD9";
+                break;
+            case "F":
+                cardBgColor[index].style.backgroundColor = "#7781DE";
+                break;
+            case "New":
+                cardBgColor[index].style.backgroundColor = "#B686DB";
+                break;
         }
     });
 </script>
