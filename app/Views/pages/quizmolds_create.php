@@ -48,7 +48,7 @@
                                 </div>
                                 <div class="col-9">
                                     <?php foreach($books as $row):?>
-                                    <div class="form-check"><input class="form-check-input" type="checkbox" name="book_group" value="<?= $row['book_id']?>"><?= $row['book_title']?></div>
+                                    <div class="form-check"><input class="form-check-input" type="checkbox" name="book_group" value="<?= $row['b_id']?>"><?= $row['title']?></div>
                                     <?php endforeach;?>
                                     <span id="bookError" class="text-danger d-none" >請選擇至少一個書本</span>
                                 </div>

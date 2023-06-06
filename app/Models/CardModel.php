@@ -7,6 +7,6 @@ use CodeIgniter\Model;
 class CardModel extends Model
 {
     protected $table = 'cards';
-    protected $allowedFields = ['card_id','book_id','card_title','card_content','card_state','create_at',
-                'card_pronunciation','card_e_sentence','card_c_sentence','part_of_speech','card_e_content','last_quiztime'];
+    protected $allowedFields = ['c_id','b_id','title','content','create_at',
+                'pronunciation','e_sentence','c_sentence','part_of_speech','e_content','uuidv4', 'delete_at'];
 }

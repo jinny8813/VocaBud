@@ -97,21 +97,21 @@
     })
 
     theChoice1.addEventListener('click', () => {
-        storeSelection(theId.textContent,3);
-    })
-
-    theChoice2.addEventListener('click', () => {
-        storeSelection(theId.textContent,2);
-    })
-
-    theChoice3.addEventListener('click', () => {
         storeSelection(theId.textContent,1);
     })
 
-    function storeSelection(id,answer){
+    theChoice2.addEventListener('click', () => {
+        storeSelection(theId.textContent,3);
+    })
+
+    theChoice3.addEventListener('click', () => {
+        storeSelection(theId.textContent,5);
+    })
+
+    function storeSelection(id,score){
         let formdata= new FormData();
-        formdata.append('card_id',id);
-        formdata.append('answer',answer);
+        formdata.append('s_id',id);
+        formdata.append('score',score);
         myLib1.POST("<?= base_url('/quizlets/flashcard') ?>",formdata);
     }
 
@@ -136,15 +136,15 @@
         theChoice.classList.add('d-none');
 
         theIndex.innerText = currentIndex+1;
-        theId.innerText = bigArr[currentIndex]['card_id'];
+        theId.innerText = bigArr[currentIndex]['s_id'];
 
-        frontTitle.innerText = bigArr[currentIndex]['card_title'];
+        frontTitle.innerText = bigArr[currentIndex]['title'];
         partOfSpeech.innerText = bigArr[currentIndex]['part_of_speech'];
-        pronunciation.innerText = bigArr[currentIndex]['card_pronunciation'];
-        backContent.innerText = bigArr[currentIndex]['card_content'];
-        e_content.innerText = bigArr[currentIndex]['card_e_content'];
-        e_sentence.innerText = bigArr[currentIndex]['card_e_sentence'];
-        c_sentence.innerText = bigArr[currentIndex]['card_c_sentence'];
+        pronunciation.innerText = bigArr[currentIndex]['pronunciation'];
+        backContent.innerText = bigArr[currentIndex]['content'];
+        e_content.innerText = bigArr[currentIndex]['e_content'];
+        e_sentence.innerText = bigArr[currentIndex]['e_sentence'];
+        c_sentence.innerText = bigArr[currentIndex]['c_sentence'];
 
         document.getElementById('flip-card').classList.remove('flipped');
 

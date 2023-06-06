@@ -6,6 +6,6 @@ class DatesModel extends Model
 {
     protected $table = 'dates';
 
-    protected $allowedFields = ['date_id', 'date'];
+    protected $allowedFields = ['d_id', 'date'];
 
 }

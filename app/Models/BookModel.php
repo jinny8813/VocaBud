@@ -7,5 +7,5 @@ use CodeIgniter\Model;
 class BookModel extends Model
 {
     protected $table = 'books';
-    protected $allowedFields = ['book_id','user_id','book_title','book_description','create_at'];
+    protected $allowedFields = [ 'b_id', 'uuidv4', 'u_id', 'title', 'description', 'manifest', 'create_at', 'delete_at'];
 }

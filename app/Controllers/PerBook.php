@@ -5,20 +5,21 @@ namespace App\Controllers;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\BookModel;
 use App\Models\CardModel;
-use Dotenv\Dotenv;
+use App\Models\StateModel;
+use App\Models\ManifestModel;
 
 class PerBook extends BaseController
 {
     use ResponseTrait;
 
-    public function index($book_id)
+    public function index($b_id)
     {
         $bookModel = new BookModel();
-        $bookData = $bookModel->where("book_id", $book_id)->first();
+        $bookData = $bookModel->where("b_id", $b_id)->first();
         session()->set("bookData", $bookData);
 
         $cardModel = new CardModel();
-        $data['cards'] = $cardModel->where("book_id", $book_id)->orderBy('card_id', 'DESC')->findAll();
+        $data['cards'] = $cardModel->where("b_id", $b_id)->orderBy('c_id', 'DESC')->findAll();
 
         return view('pages/perbook_list', $data + session()->bookData);
     }
@@ -39,19 +40,44 @@ class PerBook extends BaseController
         $bookData = session()->bookData;
 
         $values = [
-            'book_id'=>$bookData['book_id'],
-            'card_title'=>$data['title'],
-            'card_content'=>$data['content'],
-            'card_e_content'=>$data['e_content'],
-            'card_pronunciation'=>$data['pronunciation'],
+            'b_id'=>$bookData['b_id'],
+            'title'=>$data['title'],
+            'content'=>$data['content'],
+            'e_content'=>$data['e_content'],
+            'pronunciation'=>$data['pronunciation'],
             'part_of_speech'=>$data['part_of_speech'],
-            'card_e_sentence'=>$data['e_sentence'],
-            'card_c_sentence'=>$data['c_sentence'],
+            'e_sentence'=>$data['e_sentence'],
+            'c_sentence'=>$data['c_sentence'],
             'create_at'=>$date,
-            'card_state'=>0,
+            'uuidv4'=>$this->guidv4(),
         ];
         $cardModel = new CardModel();
         $cardModel->insert($values);
+
+        $thecard = $cardModel->where("b_id", $bookData['b_id'])->where("title", $data['title'])->where("create_at", $date)->first();
+        $manifestModel = new ManifestModel();
+        $theusers = $manifestModel->where("b_id", $bookData['b_id'])->where("type", "readonly")->findAll();
+
+        $manifestModel = new StateModel();
+        $values = [
+            'u_id'=>session()->userData['u_id'],
+            'c_id'=>$thecard['c_id'],
+            'state'=>0,
+            'grade'=>"New",
+            'create_at'=>$date,
+        ];
+        $manifestModel->insert($values);
+        
+        for($i=0; $i<count($theusers);$i++){
+            $values = [
+                'u_id'=>$theusers[$i]['u_id'],
+                'c_id'=>$thecard['c_id'],
+                'state'=>0,
+                'grade'=>"New",
+                'create_at'=>$date,
+            ];
+            $manifestModel->insert($values);
+        }
 
         return $this->response->setStatusCode(200)->setJSON("OK");
     }

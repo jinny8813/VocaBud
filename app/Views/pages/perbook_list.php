@@ -11,7 +11,7 @@
                     <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-info"></i></a>
                 </div>
                 <div class="col-8 p-3">
-                    <div class="fs-3 text-center"><?= esc($book_title)?></div>
+                    <div class="fs-3 text-center"><?= esc($title)?></div>
                 </div>
                 <div class="col-1">
                 </div>
@@ -22,7 +22,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6 col-10 pb-4">
-                <div class="ellipsis"><?= esc($book_description)?></div>
+                <div class="ellipsis"><?= esc($description)?></div>
             </div>
         </div>
     </div>
@@ -53,14 +53,13 @@
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-2 d-flex align-items-center justify-content-center rounded-start cardBgColor">
-                            <div class="d-none stateDNone"><?= $row['card_state']?></div>
+                            <div class="d-none stateDNone"></div>
                             <div class="text-center cardState" style="color: white;"></div>
                         </div>
                         <div class="col-10 card-body">
                             <div class="fs-5">
-                                <strong><a href="" class="a_black stretched-link"><?= $row['card_title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
+                                <strong><a href="" class="a_black stretched-link"><?= $row['title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
                             </div>
-                            <div><?= $row['card_pronunciation']?></div>
                         </div>
                     </div>
                 </div>

@@ -14,7 +14,7 @@ class Books extends BaseController
         $userData = session()->userData;
 
         $bookModel = new BookModel();
-        $data['books'] = $bookModel->where("user_id", $userData['user_id'])->orderBy('book_id', 'DESC')->findAll();
+        $data['books'] = $bookModel->where("u_id", $userData['u_id'])->orderBy('b_id', 'DESC')->findAll();
 
         return view('pages/books_list', $data);
     }
@@ -35,9 +35,9 @@ class Books extends BaseController
         $userData = session()->userData;
 
         $values = [
-            'user_id'=>$userData['user_id'],
-            'book_title'=>$data['title'],
-            'book_description'=>$data['description'],
+            'u_id'=>$userData['u_id'],
+            'title'=>$data['title'],
+            'description'=>$data['description'],
             'create_at'=>$date,
         ];
         $bookModel = new BookModel();

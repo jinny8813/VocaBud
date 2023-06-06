@@ -55,9 +55,9 @@
                         </div>
                         <div class="col-9 card-body">
                             <div class="fs-5">
-                                <strong><a href="<?= base_url('perbook/'.$row['book_id'])?>" class="a_black stretched-link"><?= $row['book_title']?></a></strong>
+                                <strong><a href="<?= base_url('perbook/'.$row['b_id'])?>" class="a_black stretched-link"><?= $row['title']?></a></strong>
                             </div>
-                            <p class="ellipsis"><?= $row['book_description']?></p>
+                            <p class="ellipsis"><?= $row['description']?></p>
                             <div><i class="fa-fw fa-solid fa-swatchbook"></i>999</div>
                         </div>
                     </div>

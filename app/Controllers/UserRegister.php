@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UserModel;
-use App\Controllers\Collection;
 
 class UserRegister extends BaseController
 {
@@ -34,9 +33,12 @@ class UserRegister extends BaseController
 
             $values = [
                 'email'=>$data['email'],
-                'password'=>$data['password'],
+                'password_hash'=> password_hash( $data['password'], PASSWORD_DEFAULT),
                 'nickname'=>$data['nickname'],
                 'create_at'=>$date,
+                'uuidv4'=> $this->guidv4(),
+                'goal'=> 0,
+                'lasting'=> 30,
             ];
             $userModel->insert($values);
 
