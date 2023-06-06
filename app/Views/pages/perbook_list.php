@@ -16,7 +16,7 @@
                 <div class="col-1">
                 </div>
                 <div class="col-1 p-1">
-                    <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
+                    <a href="<?= base_url('/perbook/'.$b_id.'/edit')?>" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
                 </div>
             </div>
         </div>

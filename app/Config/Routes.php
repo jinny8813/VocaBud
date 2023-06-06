@@ -45,6 +45,8 @@ $routes->post('/books', 'Books::store', ['filter' => 'Auth']);
 $routes->get('/perbook/(:num)', 'PerBook::index/$1', ['filter' => 'Auth']);
 $routes->get('/perbook/new', 'PerBook::create', ['filter' => 'Auth']);
 $routes->post('/perbook', 'PerBook::store', ['filter' => 'Auth']);
+$routes->get('/perbook/(:num)/edit', 'PerBook::edit/$1', ['filter' => 'Auth']);
+$routes->put('/perbook/(:num)', 'PerBook::update/$1', ['filter' => 'Auth']);
 
 $routes->post('/perbook/dictionary', 'Dictionary::index', ['filter' => 'Auth']);
 

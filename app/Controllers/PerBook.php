@@ -88,4 +88,23 @@ class PerBook extends BaseController
 
         return $this->response->setStatusCode(200)->setJSON("OK");
     }
+
+    public function edit()
+    {
+        return view('pages/perbook_edit', session()->bookData);
+    }
+
+    public function update($b_id)
+    {
+        $request = \Config\Services::request();
+        $data = $request->getJSON(true);
+
+        $bookModel = new BookModel();
+        $bookModel->where('b_id', $b_id)
+                    ->set('title', $data['title'])
+                    ->set('description', $data['description'])
+                    ->update();
+
+        return $this->response->setStatusCode(200)->setJSON("OK");
+    }
 }
