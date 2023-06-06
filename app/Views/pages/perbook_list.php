@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-10 card-body">
                             <div class="fs-5">
-                                <strong><a href="" class="a_black stretched-link"><?= $row['title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
+                                <strong><a href="<?= base_url('percard/'.$row['c_id'])?>" class="a_black stretched-link"><?= $row['title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
                             </div>
                         </div>
                     </div>
