@@ -31,10 +31,56 @@ class FlashcardModel extends Model
 
         $all_cards_id = "";
         if(count($query['id_new_cards']) + count($query['id_old_cards']) <= $select_amount){
-            $all_cards_id = $all_cards_id . $str_id_new_cards . "," . $str_id_old_cards;
+            if(empty($str_id_old_cards) == true){
+                $all_cards_id = $all_cards_id . $str_id_new_cards;
+            }else if(empty($str_id_new_cards) == true){
+                $all_cards_id = $all_cards_id . $str_id_old_cards;
+            }else{
+                $all_cards_id = $all_cards_id . $str_id_new_cards . "," . $str_id_old_cards;
+            }
         }else{
-            if(count($query['id_old_cards']) <= $select_amount * 0.8){
-                $select_amount_new_cards = $select_amount - count($query['id_old_cards']);
+            if(empty($str_id_old_cards) == true){
+                $temp =  "
+                            select c.c_id
+                            FROM cards c
+                            WHERE c.c_id IN ({$str_id_new_cards})
+                            ORDER BY RAND()
+                            LIMIT {$select_amount}
+                        ";
+                $temp_query['finally_new_cards'] = $db->query($temp)->getResult();
+                $str_id_finally_new_cards = $this->toCardIdStr($temp_query['finally_new_cards']);
+
+                $all_cards_id = $all_cards_id . $str_id_finally_new_cards;
+            }else if(empty($str_id_new_cards) == true){
+                $select_amount_old_cards_maxdate = $select_amount * 0.1;
+                $select_amount_old_cards_state = $select_amount - $select_amount_old_cards_maxdate;
+                $temp = "
+                            select s.c_id
+                            FROM state s
+                            join (SELECT s_id, MAX(create_at) as maxdate, AVG(score) as avg_score
+                            FROM eventlog
+                            GROUP BY s_id) e on s.s_id = e.s_id
+                            WHERE s.c_id IN ({$str_id_old_cards})
+                            ORDER BY e.maxdate, s.state, e.avg_score DESC
+                            LIMIT {$select_amount_old_cards_maxdate}
+
+                            UNION
+
+                            select s.c_id
+                            FROM state s
+                            join (SELECT s_id, MAX(create_at) as maxdate, AVG(score) as avg_score
+                            FROM eventlog
+                            GROUP BY s_id) e on s.s_id = e.s_id
+                            WHERE s.c_id IN ({$str_id_old_cards})
+                            ORDER BY s.state, e.maxdate, e.avg_score DESC
+                            LIMIT {$select_amount_old_cards_state}
+                        ";
+                $temp_query['finally_old_cards'] = $db->query($temp)->getResult();
+                $str_id_finally_old_cards = $this->toCardIdStr($temp_query['finally_old_cards']);
+
+                $all_cards_id = $all_cards_id . $str_id_finally_old_cards;
+            }else{
+                $select_amount_new_cards = $select_amount * 0.2;
                 $temp =  "
                             select c.c_id
                             FROM cards c
@@ -45,9 +91,8 @@ class FlashcardModel extends Model
                 $temp_query['finally_new_cards'] = $db->query($temp)->getResult();
                 $str_id_finally_new_cards = $this->toCardIdStr($temp_query['finally_new_cards']);
 
-                $all_cards_id = $all_cards_id . $str_id_finally_new_cards . "," . $str_id_old_cards;
-            }else{
                 $select_amount_old_cards_maxdate = $select_amount * 0.1;
+                $select_amount_old_cards_state = $select_amount - $select_amount_old_cards_maxdate - $select_amount_new_cards;
                 $temp = "
                             select s.c_id
                             FROM state s
@@ -57,57 +102,22 @@ class FlashcardModel extends Model
                             WHERE s.c_id IN ({$str_id_old_cards})
                             ORDER BY e.maxdate, s.state, e.avg_score DESC
                             LIMIT {$select_amount_old_cards_maxdate}
+
+                            UNION
+
+                            select s.c_id
+                            FROM state s
+                            join (SELECT s_id, MAX(create_at) as maxdate, AVG(score) as avg_score
+                            FROM eventlog
+                            GROUP BY s_id) e on s.s_id = e.s_id
+                            WHERE s.c_id IN ({$str_id_old_cards})
+                            ORDER BY s.state, e.maxdate, e.avg_score DESC
+                            LIMIT {$select_amount_old_cards_state}
                         ";
-                $temp_query['maxdate_old_cards'] = $db->query($temp)->getResult();
-                $str_id_maxdate_old_cards = $this->toCardIdStr($temp_query['maxdate_old_cards']);
+                $temp_query['finally_old_cards'] = $db->query($temp)->getResult();
+                $str_id_finally_old_cards = $this->toCardIdStr($temp_query['finally_old_cards']);
 
-                if(empty($str_id_finally_new_cards) === true){
-                    $select_amount_old_cards_state = $select_amount - $select_amount_old_cards_maxdate;
-                    $temp = "
-                                select s.c_id
-                                FROM state s
-                                join (SELECT s_id, MAX(create_at) as maxdate, AVG(score) as avg_score
-                                FROM eventlog
-                                GROUP BY s_id) e on s.s_id = e.s_id
-                                WHERE s.c_id IN ({$str_id_old_cards})
-                                AND s.c_id NOT IN ({$str_id_maxdate_old_cards})
-                                ORDER BY s.state, e.maxdate, e.avg_score DESC
-                                LIMIT {$select_amount_old_cards_state}
-                            ";
-                    $temp_query['state_old_cards'] = $db->query($temp)->getResult();
-                    $str_id_state_old_cards = $this->toCardIdStr($temp_query['state_old_cards']);
-
-                    $all_cards_id = $all_cards_id . $str_id_maxdate_old_cards . "," . $str_id_state_old_cards;
-                }
-                else{
-                    $select_amount_new_cards = $select_amount * 0.2;
-                    $temp =  "
-                                select c.c_id
-                                FROM cards c
-                                WHERE c.c_id IN ({$str_id_new_cards})
-                                ORDER BY RAND()
-                                LIMIT {$select_amount_new_cards}
-                            ";
-                    $temp_query['finally_new_cards'] = $db->query($temp)->getResult();
-                    $str_id_finally_new_cards = $this->toCardIdStr($temp_query['finally_new_cards']);
-
-                    $select_amount_old_cards_state = $select_amount - $select_amount_new_cards - $select_amount_old_cards_maxdate;
-                    $temp = "
-                                select s.c_id
-                                FROM state s
-                                join (SELECT s_id, MAX(create_at) as maxdate, AVG(score) as avg_score
-                                FROM eventlog
-                                GROUP BY s_id) e on s.s_id = e.s_id
-                                WHERE s.c_id IN ({$str_id_old_cards})
-                                AND s.c_id NOT IN ({$str_id_maxdate_old_cards})
-                                ORDER BY s.state, e.maxdate, e.avg_score DESC
-                                LIMIT {$select_amount_old_cards_state}
-                            ";
-                    $temp_query['state_old_cards'] = $db->query($temp)->getResult();
-                    $str_id_state_old_cards = $this->toCardIdStr($temp_query['state_old_cards']);
-
-                    $all_cards_id = $all_cards_id . $str_id_finally_new_cards . "," . $str_id_maxdate_old_cards . "," . $str_id_state_old_cards;
-                }
+                $all_cards_id = $all_cards_id . $str_id_finally_new_cards . "," . $str_id_finally_old_cards;
             }
         }
 

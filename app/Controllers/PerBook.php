@@ -14,6 +14,8 @@ class PerBook extends BaseController
 
     public function index($b_id)
     {
+        $userData = session()->userData;
+
         $bookModel = new BookModel();
         $bookData = $bookModel->where("b_id", $b_id)->first();
         session()->set("bookData", $bookData);
@@ -23,8 +25,8 @@ class PerBook extends BaseController
                     SELECT * 
                     FROM cards c
                     JOIN state s ON c.c_id = s.c_id
-                    WHERE c.b_id = 1
-                    AND s.u_id = 21
+                    WHERE c.b_id = {$b_id}
+                    AND s.u_id = {$userData['u_id']}
                 ";
         $data['cards'] = $db->query($temp)->getResultArray();
 
