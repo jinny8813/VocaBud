@@ -61,6 +61,9 @@ $routes->post('/quizlets/flashcard', 'Flashcard::store', ['filter' => 'Auth']);
 
 $routes->get('/statistics', 'Statistics::index', ['filter' => 'Auth']);
 $routes->post('/statistics', 'Statistics::changeDaily', ['filter' => 'Auth']);
+
+$routes->post('/keep', 'Keep::toggleKeep', ['filter' => 'Auth']);
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

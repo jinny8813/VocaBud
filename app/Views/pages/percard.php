@@ -29,11 +29,13 @@
                     <div class="position-absolute" style="top:0; right:20px; width: 50px;height: 140px;
                                                             background-color: #505c58; color:white; z-index:10;
                                                             border-radius: 0px 0px 25px 25px;">
-                        <div class="fs-5 text-center mt-3"><i class="fa-solid fa-star"></i></div>
+                        <div class="d-none" id="keepingState"><?= esc($keep)?></div>
+                        <div class="fs-5 text-center mt-3"><button class="btn btn_low_key p-0" id="keepingStar"><i class="fa-solid fa-star"></i></button></div>
                         <div class="fs-5 text-center mt-2">A</div>
                         <div class="fs-5 text-center mt-2">99%</div>
                     </div>
                     <div class="card-body">
+                        <div class="d-none" id="theId"><?= esc($card['c_id'])?></div>
                         <div class="fs-1"><?= esc($card['title'])?></div>
                         <hr class="m-0" style="color:gray">
                         <div style="color:#C2C2C2"><small>pronunciation</small></div>
@@ -80,6 +82,39 @@
     </div>
 </section>
 <script>
+    let keepingStar = document.getElementById("keepingStar");
+    let keepingState = document.getElementById("keepingState");
 
+    if(keepingState.textContent == "white"){
+        keepingStar.style.color = "white";
+    }else{
+        keepingStar.style.color = "#dfc403";
+    }
+
+
+    keepingStar.addEventListener("click",(e) => {
+        e.preventDefault();
+        let formdata= new FormData();
+        formdata.append("c_id", theId.textContent);
+
+        if (keepingState.textContent == "white") {
+            formdata.append("keeping", true);
+        } else {
+            formdata.append("keeping", false);
+        }
+
+        myLib1.POST("<?= base_url('/keep') ?>",formdata);
+    })
+
+    let myLib1 = {
+        POST: (url,formdata) => {
+            axios.post(url,formdata)
+            .then((response) => {
+                location.reload();
+            }).catch((e) => {
+                console.log(e.response.data);
+            })
+        },
+    }
 </script>
 <?= $this->endSection()?>
