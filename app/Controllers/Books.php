@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use App\Models\BookModel;
+use App\Models\KeepModel;
 
 class Books extends BaseController
 {
@@ -13,8 +14,26 @@ class Books extends BaseController
     {
         $userData = session()->userData;
 
-        $bookModel = new BookModel();
-        $data['books'] = $bookModel->where("u_id", $userData['u_id'])->orderBy('b_id', 'DESC')->findAll();
+        $db = \Config\Database::connect();
+        $temp =  "
+                    SELECT count(c.c_id) count, AVG(s.state) avg
+                    FROM keep k
+                    LEFT JOIN cards c ON k.c_id = c.c_id
+                    LEFT JOIN state s ON c.c_id = s.c_id
+                    WHERE k.u_id = {$userData['u_id']}
+                ";
+        $data['keep'] = $db->query($temp)->getResultArray();
+
+        $temp =  "
+                    SELECT b.*,count(c.c_id) count, AVG(s.state) avg
+                    FROM books b
+                    LEFT JOIN cards c ON b.b_id = c.b_id
+                    LEFT JOIN state s ON c.c_id = s.c_id
+                    WHERE b.u_id = {$userData['u_id']}
+                    GROUP BY c.b_id
+                    ORDER BY b.b_id DESC;
+                ";
+        $data['books'] = $db->query($temp)->getResultArray();
 
         return view('pages/books_list', $data);
     }

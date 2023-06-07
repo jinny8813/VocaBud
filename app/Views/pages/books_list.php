@@ -11,7 +11,7 @@
                     <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-info"></i></a>
                 </div>
                 <div class="col-8 p-3">
-                    <div class="fs-3 text-center">BooksCollection</div>
+                    <div class="fs-3 text-center">書本&收藏</div>
                 </div>
                 <div class="col-2">
                 </div>
@@ -44,18 +44,32 @@
     <div class="container py-3">
         <div class="row justify-content-center my-3">
             <div class="col-md-10">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-3 d-flex align-items-center justify-content-center bg_dark_blue rounded-start">
+                            <div class="text-center"><?= round($keep[0]['avg'], 1) . "%"?></div>
+                        </div>
+                        <div class="col-9 card-body">
+                            <div class="fs-5">
+                                <strong><a href="" class="a_black stretched-link">我的收藏</a></strong>
+                            </div>
+                            <p class="ellipsis">收藏(星星)字卡都在這裡歐~</p>
+                            <div><i class="fa-fw fa-solid fa-swatchbook"></i> <?= esc($keep[0]['count'])?></div>
+                        </div>
+                    </div>
+                </div>
                 <?php foreach($books as $row):?>
                 <div class="card mb-3">
                     <div class="row g-0">
                         <div class="col-3 d-flex align-items-center justify-content-center bg_dark_blue rounded-start">
-                            <div class="text-center">99%</div>
+                            <div class="text-center"><?= round($row['avg'], 1) . "%"?></div>
                         </div>
                         <div class="col-9 card-body">
                             <div class="fs-5">
                                 <strong><a href="<?= base_url('perbook/'.$row['b_id'])?>" class="a_black stretched-link"><?= $row['title']?></a></strong>
                             </div>
                             <p class="ellipsis"><?= $row['description']?></p>
-                            <div><i class="fa-fw fa-solid fa-swatchbook"></i>999</div>
+                            <div><i class="fa-fw fa-solid fa-swatchbook"></i> <?= $row['count']?></div>
                         </div>
                     </div>
                 </div>
