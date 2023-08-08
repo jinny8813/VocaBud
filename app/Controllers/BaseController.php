@@ -38,10 +38,17 @@ abstract class BaseController extends Controller
     protected $helpers = [];
 
     /**
+     * userData in session
+     *
+     * @var array|null
+     */
+    protected ?array $userData = null;
+
+    /**
      * Be sure to declare properties for any property fetch you initialized.
      * The creation of dynamic property is deprecated in PHP 8.2.
      */
-    // protected $session;
+    protected $session;
 
     /**
      * Constructor.
@@ -54,12 +61,20 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
 
         // E.g.: $this->session = \Config\Services::session();
+        $this->session = \Config\Services::session();
     }
 
-    public function guidv4($data = null) {
+    /**
+     * to generate Universally Unique Identifier
+     *
+     * @param null
+     * @return string
+     */
+    public function getUuid($data = null)
+    {
         $data = $data ?? random_bytes(16);
         assert(strlen($data) == 16);
-    
+
         $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
         $data[8] = chr(ord($data[8]) & 0x3f | 0x80);
 

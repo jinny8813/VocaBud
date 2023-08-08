@@ -10,8 +10,7 @@
         "ext-json": "*",
         "ext-mbstring": "*",
         "laminas/laminas-escaper": "^2.9",
-        "psr/log": "^1.1",
-        "vlucas/phpdotenv": "^5.5"
+        "psr/log": "^1.1"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",

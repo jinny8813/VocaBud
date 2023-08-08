@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8 row justify-content-center align-items-center">
                 <div class="col-1 p-0">
-                    <a href="<?= base_url('/perbook/'.$b_id) ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
+                    <a href="<?= base_url('/books') ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
                 </div>
                 <div class="col-10 pt-3 pb-4">
-                    <div class="fs-3 text-center">修改書本資料</div>
+                    <div class="fs-3 text-center">創建書本</div>
                 </div>
                 <div class="col-1">
                 </div>
@@ -22,13 +22,13 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center fs-3 mb-3">創建書本</div>
-                        <form id="bookEditForm">
+                        <form id="bookCreateForm">
                             <div class="form-group row mb-3">
                                 <div class="col-3">
                                     <label for="title" class="form-label">書本標題</label>
                                 </div>
                                 <div class="col-9">
-                                    <input type="text" name="title" class="form-control" value="<?= esc($title)?>" required>
+                                    <input type="text" name="title" class="form-control" placeholder="請輸入標題" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-3">
@@ -36,7 +36,7 @@
                                     <label for="description" class="form-label">書本描述</label>
                                 </div>
                                 <div class="col-9">
-                                    <textarea name="description" class="form-control" rows="8" required><?= esc($description)?></textarea>
+                                    <textarea name="description" class="form-control" placeholder="請輸入描述" rows="8" required></textarea>
                                 </div>
                             </div>
                             <div class="form-group d-flex justify-content-center">
@@ -50,21 +50,32 @@
     </div>
 </section>
 <script>
-    let bookEditForm = document.getElementById("bookEditForm");
+    let bookCreateForm = document.getElementById("bookCreateForm");
 
-    bookEditForm.addEventListener("submit",(e) => {
+    bookCreateForm.addEventListener("submit",(e) => {
         e.preventDefault();
-        let formdata= new FormData(bookEditForm);
-        myLib1.PUT("<?= base_url('/perbook/'.$b_id) ?>", JSON.stringify(Object.fromEntries(formdata)));
+        let formdata = new FormData(bookCreateForm);
+        bookCreateComponent.POST("<?= base_url('/books') ?>",formdata);
     })
 
-    let myLib1 = {
-        PUT: (url,data) => {
-            axios.put(url,data)
+    let bookCreateComponent = {
+        POST: (url,formdata) => {
+            axios.post(url, formdata)
             .then((response) => {
-                window.location.href = `<?= base_url('/perbook/'.$b_id)?>`;
-            }).catch((e) => {
-                console.log(e.response.data);
+                Swal.fire({
+                    icon: 'success',
+                    title: '成功',
+                    text: '您好，即將為您重新轉跳'
+                }).then(function(result) {
+                    window.location.href = `<?= base_url('/books')?>`;
+                })
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.response.data.status + ' 錯誤',
+                    text: error.response.data.messages
+                })
             })
         },
     }
