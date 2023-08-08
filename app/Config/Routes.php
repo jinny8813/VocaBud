@@ -36,34 +36,63 @@ $routes->post('/login', 'UserLogin::login');
 $routes->post('/register', 'UserRegister::index');
 $routes->get('/logout', 'UserLogin::logout');
 
-$routes->get('/home', 'UserLogin::home', ['filter' => 'Auth']);
+// $routes->get('/home', 'UserLogin::home', ['filter' => 'Auth']);
 
-$routes->get('/books', 'Books::index', ['filter' => 'Auth']);
-$routes->get('/books/new', 'Books::create', ['filter' => 'Auth']);
-$routes->post('/books', 'Books::store', ['filter' => 'Auth']);
+// $routes->get('/books', 'Books::index', ['filter' => 'Auth']);
+// $routes->get('/books/new', 'Books::create', ['filter' => 'Auth']);
+// $routes->post('/books', 'Books::store', ['filter' => 'Auth']);
 
-$routes->get('/perbook/(:num)', 'PerBook::index/$1', ['filter' => 'Auth']);
-$routes->get('/perbook/new', 'PerBook::create', ['filter' => 'Auth']);
-$routes->post('/perbook', 'PerBook::store', ['filter' => 'Auth']);
-$routes->get('/perbook/(:num)/edit', 'PerBook::edit/$1', ['filter' => 'Auth']);
-$routes->put('/perbook/(:num)', 'PerBook::update/$1', ['filter' => 'Auth']);
+// $routes->get('/perbook/(:num)', 'PerBook::index/$1', ['filter' => 'Auth']);
+// $routes->get('/perbook/new', 'PerBook::create', ['filter' => 'Auth']);
+// $routes->post('/perbook', 'PerBook::store', ['filter' => 'Auth']);
+// $routes->get('/perbook/(:num)/edit', 'PerBook::edit/$1', ['filter' => 'Auth']);
+// $routes->put('/perbook/(:num)', 'PerBook::update/$1', ['filter' => 'Auth']);
 
-$routes->post('/perbook/dictionary', 'Dictionary::index', ['filter' => 'Auth']);
+// $routes->post('/perbook/dictionary', 'Dictionary::index', ['filter' => 'Auth']);
 
-$routes->get('/percard/(:num)', 'PerCard::index/$1', ['filter' => 'Auth']);
+// $routes->get('/percard/(:num)', 'PerCard::index/$1', ['filter' => 'Auth']);
 
-$routes->get('/quizlets', 'Quizlets::index', ['filter' => 'Auth']);
-$routes->get('/quizlets/new', 'Quizlets::create', ['filter' => 'Auth']);
-$routes->post('/quizlets/generate', 'Quizlets::generateQuiz', ['filter' => 'Auth']);
+// $routes->get('/quizlets', 'Quizlets::index', ['filter' => 'Auth']);
+// $routes->get('/quizlets/new', 'Quizlets::create', ['filter' => 'Auth']);
+// $routes->post('/quizlets/generate', 'Quizlets::generateQuiz', ['filter' => 'Auth']);
 
-$routes->get('/quizlets/flashcard', 'Flashcard::index', ['filter' => 'Auth']);
-$routes->post('/quizlets/flashcard', 'Flashcard::store', ['filter' => 'Auth']);
+// $routes->get('/quizlets/flashcard', 'Flashcard::index', ['filter' => 'Auth']);
+// $routes->post('/quizlets/flashcard', 'Flashcard::store', ['filter' => 'Auth']);
 
-$routes->get('/statistics', 'Statistics::index', ['filter' => 'Auth']);
-$routes->post('/statistics', 'Statistics::changeDaily', ['filter' => 'Auth']);
+// $routes->get('/statistics', 'Statistics::index', ['filter' => 'Auth']);
+// $routes->post('/statistics', 'Statistics::changeDaily', ['filter' => 'Auth']);
 
-$routes->post('/keep', 'Keep::toggleKeep', ['filter' => 'Auth']);
+// $routes->post('/keep', 'Keep::toggleKeep', ['filter' => 'Auth']);
 
+$routes->group('/', ['filter' => 'Auth'], function ($routes) {
+    $routes->get('/home', 'UserLogin::home');
+
+    $routes->get('/books', 'Books::index');
+    $routes->get('/books/new', 'Books::create');
+    $routes->post('/books', 'Books::store');
+
+    $routes->get('/perbook/(:num)', 'PerBook::index/$1');
+    $routes->get('/perbook/new', 'PerBook::create');
+    $routes->post('/perbook', 'PerBook::store');
+    $routes->get('/perbook/(:num)/edit', 'PerBook::edit/$1');
+    $routes->put('/perbook/(:num)', 'PerBook::update/$1');
+
+    $routes->post('/perbook/dictionary', 'Dictionary::index');
+
+    $routes->get('/percard/(:num)', 'PerCard::index/$1');
+
+    $routes->get('/quizlets', 'Quizlets::index');
+    $routes->get('/quizlets/new', 'Quizlets::create');
+    $routes->post('/quizlets/generate', 'Quizlets::generateQuiz');
+
+    $routes->get('/quizlets/flashcard', 'Flashcard::index');
+    $routes->post('/quizlets/flashcard', 'Flashcard::store');
+
+    $routes->get('/statistics', 'Statistics::index');
+    $routes->post('/statistics', 'Statistics::changeDaily');
+
+    $routes->post('/keep', 'Keep::toggleKeep');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

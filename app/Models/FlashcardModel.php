@@ -55,6 +55,7 @@ class FlashcardModel extends Model
                 $select_amount_old_cards_maxdate = $select_amount * 0.1;
                 $select_amount_old_cards_state = $select_amount - $select_amount_old_cards_maxdate;
                 $temp = "
+                            (
                             select s.c_id
                             FROM state s
                             join (SELECT s_id, MAX(create_at) as maxdate, AVG(score) as avg_score
@@ -63,9 +64,9 @@ class FlashcardModel extends Model
                             WHERE s.c_id IN ({$str_id_old_cards})
                             ORDER BY e.maxdate, s.state, e.avg_score DESC
                             LIMIT {$select_amount_old_cards_maxdate}
-
+                            )
                             UNION
-
+                            (
                             select s.c_id
                             FROM state s
                             join (SELECT s_id, MAX(create_at) as maxdate, AVG(score) as avg_score
@@ -74,6 +75,7 @@ class FlashcardModel extends Model
                             WHERE s.c_id IN ({$str_id_old_cards})
                             ORDER BY s.state, e.maxdate, e.avg_score DESC
                             LIMIT {$select_amount_old_cards_state}
+                            )
                         ";
                 $temp_query['finally_old_cards'] = $db->query($temp)->getResult();
                 $str_id_finally_old_cards = $this->toCardIdStr($temp_query['finally_old_cards']);
@@ -94,6 +96,7 @@ class FlashcardModel extends Model
                 $select_amount_old_cards_maxdate = $select_amount * 0.1;
                 $select_amount_old_cards_state = $select_amount - $select_amount_old_cards_maxdate - $select_amount_new_cards;
                 $temp = "
+                            (
                             select s.c_id
                             FROM state s
                             join (SELECT s_id, MAX(create_at) as maxdate, AVG(score) as avg_score
@@ -102,9 +105,9 @@ class FlashcardModel extends Model
                             WHERE s.c_id IN ({$str_id_old_cards})
                             ORDER BY e.maxdate, s.state, e.avg_score DESC
                             LIMIT {$select_amount_old_cards_maxdate}
-
+                            )
                             UNION
-
+                            (
                             select s.c_id
                             FROM state s
                             join (SELECT s_id, MAX(create_at) as maxdate, AVG(score) as avg_score
@@ -113,6 +116,7 @@ class FlashcardModel extends Model
                             WHERE s.c_id IN ({$str_id_old_cards})
                             ORDER BY s.state, e.maxdate, e.avg_score DESC
                             LIMIT {$select_amount_old_cards_state}
+                            )
                         ";
                 $temp_query['finally_old_cards'] = $db->query($temp)->getResult();
                 $str_id_finally_old_cards = $this->toCardIdStr($temp_query['finally_old_cards']);

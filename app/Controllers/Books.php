@@ -58,6 +58,7 @@ class Books extends BaseController
             'title'=>$data['title'],
             'description'=>$data['description'],
             'create_at'=>$date,
+            'uuidv4'=>$this->guidv4(),
         ];
         $bookModel = new BookModel();
         $bookModel->insert($values);
