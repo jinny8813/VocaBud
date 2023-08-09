@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
+use PhpParser\Node\Stmt\TryCatch;
 
 class Dictionary extends BaseController
 {
@@ -14,13 +15,22 @@ class Dictionary extends BaseController
         $word = $data['word'];
 
         $returnData['def'] = $this->getWordnikDefinition($word);
+
+        if($returnData['def'] === null){
+            return $this->fail("查無此單字", 404);
+        }
+
         $returnData['eg'] = $this->getExampleSentences($word);
         $returnData['pron'] = $this->getWordnikPronunciations($word);
         $returnData['trans'] = $this->getMicrosoftTranslation($word);
 
         $returnData['word'] = $word;
 
-        return $this->response->setStatusCode(200)->setJSON($returnData);
+        return $this->respond([
+            "status" => true,
+            "data"   => $returnData,
+            "msg"    => "查詢成功"
+        ]);
     }
 
     public function getWordnikPronunciations($word)
@@ -39,14 +49,19 @@ class Dictionary extends BaseController
 
         $uri = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" . $word . "?key=" . $apiKeyWebster;
 
-        $dataArray = json_decode(file_get_contents($uri));
+        $apiResponse = file_get_contents($uri);
+        $dataArray = json_decode($apiResponse);
 
         $wordInfoArr = [];
 
-        for ($i=0;$i<count($dataArray[0]->shortdef);$i++){
-            $part_of_speech = $dataArray[0]->fl;
-            $definition = $dataArray[0]->shortdef[$i];
-            array_push($wordInfoArr, [$part_of_speech, $definition]);     
+        try{
+            for ($i=0;$i<count($dataArray[0]->shortdef);$i++){
+                $part_of_speech = $dataArray[0]->fl;
+                $definition = $dataArray[0]->shortdef[$i];
+                array_push($wordInfoArr, [$part_of_speech, $definition]);     
+            }
+        }catch(\Exception $e){
+            return null;
         }
 
         return $wordInfoArr;
