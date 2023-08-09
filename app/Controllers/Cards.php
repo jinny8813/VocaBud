@@ -107,17 +107,47 @@ class Cards extends BaseController
         return view('pages/percard_edit', $cardData);
     }
 
-    public function update($b_id)
+    public function update($uuidv4)
     {
-        $request = \Config\Services::request();
-        $data = $request->getJSON(true);
+        $data = $this->request->getJSON(true);
 
-        $bookModel = new BookModel();
-        $bookModel->where('b_id', $b_id)
-                    ->set('title', $data['title'])
-                    ->set('description', $data['description'])
-                    ->update();
+        $cardsModel = new CardsModel();
+        $verifyCardData = $cardsModel->where("uuidv4", $uuidv4)->first();
 
-        return $this->response->setStatusCode(200)->setJSON("OK");
+        if($verifyCardData === null){
+            return $this->fail("查無此字卡", 404);
+        }
+
+        $title          = $data['title'];
+        $content        = $data['content'];
+        $e_content      = $data['e_content'];
+        $pronunciation  = $data['pronunciation'];
+        $part_of_speech = $data['part_of_speech'];
+        $e_sentence     = $data['e_sentence'];
+        $c_sentence     = $data['c_sentence'];
+
+        if($title === null || $content === null) {
+            return $this->fail("標題內容是必要欄位", 404);
+        }
+
+        if($title === " " || $content === " ") {
+            return $this->fail("標題內容是必要欄位", 404);
+        }
+
+        $updateValues = [
+            'title'          => $title,
+            'content'        => $content,
+            'e_content'      => $e_content,
+            'pronunciation'  => $pronunciation,
+            'part_of_speech' => $part_of_speech,
+            'e_sentence'     => $e_sentence,
+            'c_sentence'     => $c_sentence,
+        ];
+        $cardsModel->update($verifyCardData['c_id'], $updateValues);
+
+        return $this->respond([
+            "status" => true,
+            "msg"    => "字卡修改成功"
+        ]);
     }
 }

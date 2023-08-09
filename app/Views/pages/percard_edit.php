@@ -102,9 +102,20 @@
         PUT: (url,data) => {
             axios.put(url,data)
             .then((response) => {
-                window.location.href = `<?= base_url('/percard/'.$uuidv4) ?>`;
-            }).catch((e) => {
-                console.log(e.response.data);
+                Swal.fire({
+                    icon: 'success',
+                    title: '成功',
+                    text: '您好，即將為您重新轉跳'
+                }).then(function(result) {
+                    window.location.href = `<?= base_url('/percard/'.$uuidv4) ?>`;
+                })
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.response.data.status + ' 錯誤',
+                    text: error.response.data.messages
+                })
             })
         },
     }
