@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class BooksModel extends Model
 {
-    protected $table            = 'users';
-    protected $primaryKey       = 'u_id';
+    protected $table            = 'books';
+    protected $primaryKey       = 'b_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'u_id','uuidv4', 'email', 'password_hash', 'nickname','goal', 'lasting', 'created_at', 'updated_at', 'deleted_at'
+        'b_id', 'uuidv4', 'u_id', 'title', 'description', 'manifest', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     // Dates

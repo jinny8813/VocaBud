@@ -31,12 +31,26 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 // $routes->get('/', 'Home::index');
 
-$routes->get('/', 'UserLogin::index');
-$routes->post('/login', 'UserLogin::login');
-$routes->get('/logout', 'UserLogin::logout');
+$routes->get('/', 'VisitorManage::index');
+$routes->get('/login', 'VisitorManage::index');
+$routes->post('/login', 'VisitorManage::login');
+$routes->post('/register', 'VisitorManage::register');
+$routes->get('/logout', 'VisitorManage::logout');
 
-$routes->get('/home', 'UserLogin::home', ['filter' => 'Auth']);
+$routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
 
+$routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
+    $routes->get('/home', 'MemberManage::index');
+
+    $routes->get('/books', 'Books::index');
+    $routes->get('/books/new', 'Books::renderCreatePage');
+    $routes->post('/books', 'Books::create');
+    $routes->get('/perbook/(:uuid)', 'Books::perBook/$1');
+
+    $routes->get('/perbook', 'Cards::index');
+    $routes->get('/perbook/new', 'Cards::renderCreatePage');
+    $routes->post('/perbook', 'Cards::create');
+});
 /*
  * --------------------------------------------------------------------
  * Additional Routing

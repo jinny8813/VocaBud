@@ -4,16 +4,16 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class StateModel extends Model
 {
-    protected $table            = 'users';
-    protected $primaryKey       = 'u_id';
+    protected $table            = 'state';
+    protected $primaryKey       = 's_id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'u_id','uuidv4', 'email', 'password_hash', 'nickname','goal', 'lasting', 'created_at', 'updated_at', 'deleted_at'
+        's_id', 'u_id', 'c_id', 'state', 'grade', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     // Dates
