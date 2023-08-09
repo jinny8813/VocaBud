@@ -16,7 +16,7 @@
                 <div class="col-1">
                 </div>
                 <div class="col-1 p-1">
-                    <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
+                    <a href="<?= base_url('/percard/'.$uuidv4.'/edit') ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
                 </div>
             </div>
         </div>
@@ -35,18 +35,17 @@
                         <div class="fs-5 text-center mt-2">99%</div>
                     </div>
                     <div class="card-body">
-                        <div class="d-none" id="theId"><?= esc($card['c_id'])?></div>
-                        <div class="fs-1"><?= esc($card['title'])?></div>
+                        <div class="fs-1"><?= esc($title)?></div>
                         <hr class="m-0" style="color:gray">
                         <div style="color:#C2C2C2"><small>pronunciation</small></div>
-                        <div class="fs-5"><?= esc($card['pronunciation'])?></div>
+                        <div class="fs-5"><?= esc($pronunciation)?></div>
                         <hr class="m-0" style="color:gray">
                         <div style="color:#C2C2C2"><small>definition</small></div>
-                        <div class="fs-5">(<?= esc($card['part_of_speech'])?>.) <?= esc($card['content'])?></div>
-                        <div><?= esc($card['e_content'])?></div>
+                        <div class="fs-5">(<?= esc($part_of_speech)?>.) <?= esc($content)?></div>
+                        <div><?= esc($e_content)?></div>
                         <hr class="m-0" style="color:gray">
                         <div style="color:#C2C2C2"><small>examples</small></div>
-                        <div><?= esc($card['e_sentence'])?></div>
+                        <div><?= esc($e_sentence)?></div>
                     </div>
                 </div>
                 <div class="position-relative">

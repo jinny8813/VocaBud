@@ -88,14 +88,36 @@ class Cards extends BaseController
         $bookData = $this->session->bookData;
 
         $cardsModel = new CardsModel();
-        $data['card'] = $cardsModel->where("uuidv4", $uuidv4)->first();
+        $cardData = $cardsModel->where("uuidv4", $uuidv4)->first();
 
         if($bookData === null) {
             return redirect()->to("/books");
-        }else if($data['card'] === null) {
+        }else if($cardData === null) {
             return redirect()->to("/perbook");
         }
 
-        return view('pages/percard', $data);
+        return view('pages/percard', $cardData);
+    }
+
+    public function renderUpdatePage($uuidv4)
+    {
+        $cardsModel = new CardsModel();
+        $cardData = $cardsModel->where("uuidv4", $uuidv4)->first();
+
+        return view('pages/percard_edit', $cardData);
+    }
+
+    public function update($b_id)
+    {
+        $request = \Config\Services::request();
+        $data = $request->getJSON(true);
+
+        $bookModel = new BookModel();
+        $bookModel->where('b_id', $b_id)
+                    ->set('title', $data['title'])
+                    ->set('description', $data['description'])
+                    ->update();
+
+        return $this->response->setStatusCode(200)->setJSON("OK");
     }
 }
