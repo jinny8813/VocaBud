@@ -29,7 +29,7 @@ class Cards extends BaseController
     {
         $data = $this->request->getPost();
         $userData = $this->session->userData;
-        $bookData = session()->bookData;
+        $bookData = $this->session->bookData;
 
         $u_id           = $userData['u_id'];
         $b_id           = $bookData['b_id'];
@@ -81,5 +81,21 @@ class Cards extends BaseController
             "status" => true,
             "msg"    => "字卡建立成功"
         ]);
+    }
+
+    public function perCard($uuidv4)
+    {
+        $bookData = $this->session->bookData;
+
+        $cardsModel = new CardsModel();
+        $data['card'] = $cardsModel->where("uuidv4", $uuidv4)->first();
+
+        if($bookData === null) {
+            return redirect()->to("/books");
+        }else if($data['card'] === null) {
+            return redirect()->to("/perbook");
+        }
+
+        return view('pages/percard', $data);
     }
 }

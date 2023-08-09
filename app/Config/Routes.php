@@ -50,6 +50,7 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('/perbook', 'Cards::index');
     $routes->get('/perbook/new', 'Cards::renderCreatePage');
     $routes->post('/perbook', 'Cards::create');
+    $routes->get('/percard/(:uuid)', 'Cards::perCard/$1');
 
     $routes->post('/dictionary', 'Dictionary::index');
 });
