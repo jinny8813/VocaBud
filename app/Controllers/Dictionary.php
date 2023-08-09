@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
-use Dotenv\Dotenv;
 
 class Dictionary extends BaseController
 {
@@ -26,8 +25,6 @@ class Dictionary extends BaseController
 
     public function getWordnikPronunciations($word)
     {
-        $dotenv = Dotenv::createImmutable(ROOTPATH);
-        $dotenv->load();
         $apiKeyWordnik = $_ENV['API_KEY_Wordnik'];
 
         $uri = "https://api.wordnik.com/v4/word.json/" . $word . "/pronunciations?useCanonical=false&typeFormat=IPA&limit=1&api_key=" . $apiKeyWordnik;
@@ -38,8 +35,6 @@ class Dictionary extends BaseController
 
     public function getWordnikDefinition($word)
     {
-        $dotenv = Dotenv::createImmutable(ROOTPATH);
-        $dotenv->load();
         $apiKeyWebster = $_ENV['API_KEY_Dictionary'];
 
         $uri = "https://www.dictionaryapi.com/api/v3/references/collegiate/json/" . $word . "?key=" . $apiKeyWebster;
@@ -61,8 +56,6 @@ class Dictionary extends BaseController
     {
         $endpoint = "https://api.cognitive.microsofttranslator.com/translate?api-version=3.0&from=en&to=zh-Hant";
 
-        $dotenv = Dotenv::createImmutable(ROOTPATH);
-        $dotenv->load();
         $apiKeyTranslation = $_ENV['API_KEY_Translation'];
 
         $content = array(
@@ -95,8 +88,6 @@ class Dictionary extends BaseController
     {
         $endpoint = "https://api.openai.com/v1/completions";
 
-        $dotenv = Dotenv::createImmutable(ROOTPATH);
-        $dotenv->load();
         $apiKeyChatGPT = $_ENV['API_KEY_ChatGPT'];
 
         $headers = array(
