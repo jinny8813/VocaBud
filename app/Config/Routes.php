@@ -45,11 +45,16 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('/books', 'Books::index');
     $routes->get('/books/new', 'Books::renderCreatePage');
     $routes->post('/books', 'Books::create');
-    $routes->get('/perbook/(:uuid)', 'Books::perBook/$1');
 
+    $routes->get('/perbook/(:uuid)', 'Books::perBook/$1');
     $routes->get('/perbook', 'Cards::index');
     $routes->get('/perbook/new', 'Cards::renderCreatePage');
     $routes->post('/perbook', 'Cards::create');
+
+    $routes->get('/percard/(:uuid)', 'Cards::perCard/$1');
+    $routes->get('/percard/(:uuid)/edit', 'Cards::renderUpdatePage/$1');
+    $routes->put('/percard/(:uuid)', 'Cards::update/$1');
+    $routes->delete('/percard/(:uuid)', 'Cards::delete/$1');
 
     $routes->post('/dictionary', 'Dictionary::index');
 });
