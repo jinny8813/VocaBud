@@ -54,6 +54,7 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('/percard/(:uuid)', 'Cards::perCard/$1');
     $routes->get('/percard/(:uuid)/edit', 'Cards::renderUpdatePage/$1');
     $routes->put('/percard/(:uuid)', 'Cards::update/$1');
+    $routes->delete('/percard/(:uuid)', 'Cards::delete/$1');
 
     $routes->post('/dictionary', 'Dictionary::index');
 });

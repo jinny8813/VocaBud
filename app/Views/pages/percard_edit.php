@@ -80,9 +80,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group d-flex justify-content-center">
-                                    <button type="submit" name="submit" class="btn">送出</button>
+                                    <button type="submit" name="submit" class="btn">修改</button>
                                 </div>
                         </form>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <button id="deleteCardBtn" class="btn">刪除字卡</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -111,6 +115,36 @@
                 })
             })
             .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.response.data.status + ' 錯誤',
+                    text: error.response.data.messages
+                })
+            })
+        },
+    }
+
+    let deleteCardBtn = document.getElementById("deleteCardBtn");
+
+    deleteCardBtn.addEventListener("click",(e) => {
+        e.preventDefault();
+        cardDeleteComponent.Delete("<?= base_url('/percard/'.$uuidv4) ?>");
+    })
+
+    let cardDeleteComponent = {
+        Delete: (url) => {
+            axios.delete(url)
+            .then((response) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '成功',
+                    text: '您好，即將為您重新轉跳'
+                }).then(function(result) {
+                    window.location.href = `<?= base_url('/perbook') ?>`;
+                })
+            })
+            .catch((error) => {
+                console.log(error);
                 Swal.fire({
                     icon: 'error',
                     title: error.response.data.status + ' 錯誤',

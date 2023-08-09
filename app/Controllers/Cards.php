@@ -150,4 +150,21 @@ class Cards extends BaseController
             "msg"    => "字卡修改成功"
         ]);
     }
+
+    public function delete($uuidv4)
+    {
+        $cardsModel = new CardsModel();
+        $verifyCardData = $cardsModel->where("uuidv4", $uuidv4)->first();
+
+        if($verifyCardData === null){
+            return $this->fail("查無此字卡", 404);
+        }
+
+        $cardsModel->delete($verifyCardData['c_id']);
+
+        return $this->respond([
+            "status" => true,
+            "msg"    => "字卡刪除成功"
+        ]);
+    }
 }
