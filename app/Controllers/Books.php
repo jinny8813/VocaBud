@@ -147,6 +147,9 @@ class Books extends BaseController
 
         $booksModel->delete($verifyBookData['b_id']);
 
+        $cardsModel = new CardsModel();
+        $cardsModel->where('b_id', $verifyBookData['b_id'])->delete();
+
         return $this->respond([
             "status" => true,
             "msg"    => "書本刪除成功"
