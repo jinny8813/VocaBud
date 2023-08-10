@@ -45,11 +45,11 @@ class Books extends BaseController
         $description = $data['description'];
 
         if($title === null || $description === null) {
-            return $this->fail("需帳號密碼進行註冊", 404);
+            return $this->fail("標題內容是必要欄位", 404);
         }
 
         if($title === " " || $description === " ") {
-            return $this->fail("需帳號密碼進行註冊", 404);
+            return $this->fail("標題內容是必要欄位", 404);
         }
 
         $values = [
@@ -100,5 +100,39 @@ class Books extends BaseController
         $bookData = $this->session->bookData;
 
         return view('pages/perbook_edit', $bookData);
+    }
+
+    public function update($uuidv4)
+    {
+        $data = $this->request->getJSON(true);
+
+        $booksModel = new BooksModel();
+        $verifyBookData = $booksModel->where("uuidv4", $uuidv4)->first();
+
+        if($verifyBookData === null){
+            return $this->fail("查無此書本", 404);
+        }
+
+        $title       = $data['title'];
+        $description = $data['description'];
+
+        if($title === null || $description === null) {
+            return $this->fail("標題內容是必要欄位", 404);
+        }
+
+        if($title === " " || $description === " ") {
+            return $this->fail("標題內容是必要欄位", 404);
+        }
+
+        $updateValues = [
+            'title'       => $title,
+            'description' => $description,
+        ];
+        $booksModel->update($verifyBookData['b_id'], $updateValues);
+
+        return $this->respond([
+            "status" => true,
+            "msg"    => "書本修改成功"
+        ]);
     }
 }

@@ -55,16 +55,27 @@
     bookEditForm.addEventListener("submit",(e) => {
         e.preventDefault();
         let formdata= new FormData(bookEditForm);
-        myLib1.PUT("<?= base_url('/perbook/'.$b_id) ?>", JSON.stringify(Object.fromEntries(formdata)));
+        bookEditComponent.PUT("<?= base_url('/perbook/'.$uuidv4) ?>", JSON.stringify(Object.fromEntries(formdata)));
     })
 
-    let myLib1 = {
+    let bookEditComponent = {
         PUT: (url,data) => {
             axios.put(url,data)
             .then((response) => {
-                window.location.href = `<?= base_url('/perbook/'.$b_id)?>`;
-            }).catch((e) => {
-                console.log(e.response.data);
+                Swal.fire({
+                    icon: 'success',
+                    title: '成功',
+                    text: '您好，即將為您重新轉跳'
+                }).then(function(result) {
+                    window.location.href = `<?= base_url('/perbook/'.$uuidv4) ?>`;
+                })
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.response.data.status + ' 錯誤',
+                    text: error.response.data.messages
+                })
             })
         },
     }
