@@ -43,6 +43,10 @@
                                 <button type="submit" name="submit" class="btn">修改</button>
                             </div>
                         </form>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <button id="deleteBookBtn" class="btn">刪除書本及內所有字卡</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -71,6 +75,36 @@
                 })
             })
             .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.response.data.status + ' 錯誤',
+                    text: error.response.data.messages
+                })
+            })
+        },
+    }
+
+    let deleteBookBtn = document.getElementById("deleteBookBtn");
+
+    deleteBookBtn.addEventListener("click",(e) => {
+        e.preventDefault();
+        bookDeleteComponent.Delete("<?= base_url('/perbook/'.$uuidv4) ?>");
+    })
+
+    let bookDeleteComponent = {
+        Delete: (url) => {
+            axios.delete(url)
+            .then((response) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '成功',
+                    text: '您好，即將為您重新轉跳'
+                }).then(function(result) {
+                    window.location.href = `<?= base_url('/books') ?>`;
+                })
+            })
+            .catch((error) => {
+                console.log(error);
                 Swal.fire({
                     icon: 'error',
                     title: error.response.data.status + ' 錯誤',

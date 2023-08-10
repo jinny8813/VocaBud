@@ -135,4 +135,21 @@ class Books extends BaseController
             "msg"    => "書本修改成功"
         ]);
     }
+
+    public function delete($uuidv4)
+    {
+        $booksModel = new BooksModel();
+        $verifyBookData = $booksModel->where("uuidv4", $uuidv4)->first();
+
+        if($verifyBookData === null){
+            return $this->fail("查無此書本", 404);
+        }
+
+        $booksModel->delete($verifyBookData['b_id']);
+
+        return $this->respond([
+            "status" => true,
+            "msg"    => "書本刪除成功"
+        ]);
+    }
 }

@@ -49,6 +49,7 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('/perbook/(:uuid)', 'Books::perBook/$1');
     $routes->get('/perbook/(:uuid)/edit', 'Books::renderUpdatePage/$1');
     $routes->put('/perbook/(:uuid)', 'Books::update/$1');
+    $routes->delete('/perbook/(:uuid)', 'Books::delete/$1');
 
     $routes->get('/perbook', 'Cards::index');
     $routes->get('/perbook/new', 'Cards::renderCreatePage');
