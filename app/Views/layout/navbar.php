@@ -19,7 +19,7 @@
           <a class="nav-link p-3" href="#">所有單字</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link p-3" href="#">翻卡測驗</a>
+          <a class="nav-link p-3" href="<?= base_url('/quizlets') ?>">測驗大廳</a>
         </li>
         <li class="nav-item ">
           <a class="nav-link p-3" href="#">統計分析</a>
