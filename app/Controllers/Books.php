@@ -84,12 +84,21 @@ class Books extends BaseController
         $b_id = $bookData['b_id'];
 
         $cardsModel = new CardsModel();
-        $data['cards'] = $cardsModel ->join('state', 'cards.c_id = state.c_id')
+        $cardData['cards'] = $cardsModel ->join('state', 'cards.c_id = state.c_id')
                                     ->where('cards.b_id', $b_id)
                                     ->where('state.u_id', $u_id)
                                     ->orderBy('cards.c_id', 'DESC')
                                     ->findAll();
 
-        return view('pages/perbook_list', $data + $bookData);
+        $data = array_merge($bookData, $cardData);
+
+        return view('pages/perbook_list', $data);
+    }
+
+    public function renderUpdatePage($uuidv4)
+    {
+        $bookData = $this->session->bookData;
+
+        return view('pages/perbook_edit', $bookData);
     }
 }
