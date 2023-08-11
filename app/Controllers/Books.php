@@ -23,7 +23,7 @@ class Books extends BaseController
                                     ->join('cards', 'books.b_id = cards.b_id', 'left')
                                     ->join('state', 'cards.c_id = state.c_id', 'left')
                                     ->where('books.u_id', $u_id)
-                                    ->where('cards.deleted_at !=', null)
+                                    ->where('cards.deleted_at', null)
                                     ->groupBy('books.b_id')
                                     ->orderBy('books.b_id', 'DESC')
                                     ->findAll();
@@ -110,7 +110,7 @@ class Books extends BaseController
         $booksModel = new BooksModel();
         $verifyBookData = $booksModel->where("uuidv4", $uuidv4)->first();
 
-        if($verifyBookData === null){
+        if($verifyBookData === null) {
             return $this->fail("查無此書本", 404);
         }
 
@@ -142,7 +142,7 @@ class Books extends BaseController
         $booksModel = new BooksModel();
         $verifyBookData = $booksModel->where("uuidv4", $uuidv4)->first();
 
-        if($verifyBookData === null){
+        if($verifyBookData === null) {
             return $this->fail("查無此書本", 404);
         }
 

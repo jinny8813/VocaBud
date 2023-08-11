@@ -16,7 +16,7 @@ class Dictionary extends BaseController
 
         $returnData['def'] = $this->getWordnikDefinition($word);
 
-        if($returnData['def'] === null){
+        if($returnData['def'] === null) {
             return $this->fail("查無此單字", 404);
         }
 
@@ -39,7 +39,7 @@ class Dictionary extends BaseController
 
         $uri = "https://api.wordnik.com/v4/word.json/" . $word . "/pronunciations?useCanonical=false&typeFormat=IPA&limit=1&api_key=" . $apiKeyWordnik;
         $response = json_decode(file_get_contents($uri));
-        
+
         return $response[0]->raw;
     }
 
@@ -54,13 +54,13 @@ class Dictionary extends BaseController
 
         $wordInfoArr = [];
 
-        try{
-            for ($i=0;$i<count($dataArray[0]->shortdef);$i++){
+        try {
+            for ($i=0;$i<count($dataArray[0]->shortdef);$i++) {
                 $part_of_speech = $dataArray[0]->fl;
                 $definition = $dataArray[0]->shortdef[$i];
-                array_push($wordInfoArr, [$part_of_speech, $definition]);     
+                array_push($wordInfoArr, [$part_of_speech, $definition]);
             }
-        }catch(\Exception $e){
+        } catch(\Exception $e) {
             return null;
         }
 
@@ -132,8 +132,8 @@ class Dictionary extends BaseController
 
         $wordEgArr = [];
 
-        for ($i=0;$i<count($dataText);$i++){
-            if(empty(substr($dataText[$i], 3))==false){
+        for ($i=0;$i<count($dataText);$i++) {
+            if(empty(substr($dataText[$i], 3))==false) {
                 array_push($wordEgArr, substr($dataText[$i], 3));
             }
         }

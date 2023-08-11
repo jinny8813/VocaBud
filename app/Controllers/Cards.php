@@ -92,7 +92,7 @@ class Cards extends BaseController
 
         if($bookData === null) {
             return redirect()->to("/books");
-        }else if($cardData === null) {
+        } elseif($cardData === null) {
             return redirect()->to("/perbook");
         }
 
@@ -114,7 +114,7 @@ class Cards extends BaseController
         $cardsModel = new CardsModel();
         $verifyCardData = $cardsModel->where("uuidv4", $uuidv4)->first();
 
-        if($verifyCardData === null){
+        if($verifyCardData === null) {
             return $this->fail("查無此字卡", 404);
         }
 
@@ -156,7 +156,7 @@ class Cards extends BaseController
         $cardsModel = new CardsModel();
         $verifyCardData = $cardsModel->where("uuidv4", $uuidv4)->first();
 
-        if($verifyCardData === null){
+        if($verifyCardData === null) {
             return $this->fail("查無此字卡", 404);
         }
 

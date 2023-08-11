@@ -42,10 +42,10 @@
                                 </div>
                                 <div class="col-9">
                                     <input class="form-check-input" type="radio" name="quiz_type" id="quiz_type1" value="flashcard" required>
-                                    <label class="form-check-label" for="main_way1">翻卡</label>
+                                    <label class="form-check-label" for="quiz_type1">翻卡</label>
                                     <br>
                                     <input class="form-check-input" type="radio" name="quiz_type" id="quiz_type2" value="spelling" disabled>
-                                    <label class="form-check-label" for="main_way2">拼字</label>
+                                    <label class="form-check-label" for="quiz_type2">拼字</label>
                                 </div>
                             </div>
                         </div>
@@ -169,7 +169,8 @@
         }
 
         e.preventDefault();
-        formdata.append("select_book", select_book.toString());
+        console.log(select_book);
+        formdata.append("select_book", select_book);
         quizCreateComponent.POST("<?= base_url('/quizlets/new') ?>",formdata);
     })
 
@@ -177,6 +178,7 @@
         POST: (url,formdata) => {
             axios.post(url,formdata)
             .then((response) => {
+                console.log(response);
                 Swal.fire({
                     icon: 'success',
                     title: '成功',
@@ -186,6 +188,7 @@
                 })
             })
             .catch((error) => {
+                console.log(error);
                 Swal.fire({
                     icon: 'error',
                     title: error.response.data.status + ' 錯誤',

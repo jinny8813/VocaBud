@@ -137,6 +137,8 @@
                     icon: 'error',
                     title: error.response.data.status + ' 錯誤',
                     text: error.response.data.messages
+                }).then(function(result) {
+                    window.location.href = `<?= base_url('/quizlets')?>`;
                 })
             })
         },
