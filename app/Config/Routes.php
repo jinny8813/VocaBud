@@ -61,6 +61,12 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->delete('/percard/(:uuid)', 'Cards::delete/$1');
 
     $routes->post('/dictionary', 'Dictionary::index');
+
+    $routes->get('/quizlets', 'Quizlets::index');
+    $routes->get('/quizlets/new', 'Quizlets::renderCreatePage');
+    $routes->post('/quizlets/new', 'Quizlets::createQuiz');
+    $routes->get('/quizlets/quizzing', 'Quizlets::renderQuizzingPage');
+    $routes->post('/quizlets/quizzing', 'Quizlets::store');
 });
 /*
  * --------------------------------------------------------------------
