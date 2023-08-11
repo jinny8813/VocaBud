@@ -48,11 +48,11 @@ class Quizlets extends BaseController
         $subQueryBooks = $booksModel->select('b_id')->where('u_id', $u_id)->findAll();
         $b_ids = array_column($subQueryBooks, 'b_id');
 
-        $cardsModel = new CardsModel;
+        $cardsModel = new CardsModel();
         $subQueryCards = $cardsModel->select('c_id')->whereIn('b_id', $b_ids)->findAll();
         $c_ids = array_column($subQueryCards, 'c_id');
-        
-        $stateModel = new StateModel;
+
+        $stateModel = new StateModel();
         $query['newcards'] = $stateModel->select('cards.c_id')
                                         ->join('cards', 'cards.c_id = state.c_id')
                                         ->where('state.u_id', $u_id)
@@ -87,9 +87,11 @@ class Quizlets extends BaseController
                                         ->limit($select_amount * 6/10)
                                         ->find();
 
-        $select_c_ids = array_merge(array_column($query['newcards'], 'c_id'),
-                                    array_column($query['oldcards_date'], 'c_id'), 
-                                    array_column($query['oldcards_state'], 'c_id'));
+        $select_c_ids = array_merge(
+            array_column($query['newcards'], 'c_id'),
+            array_column($query['oldcards_date'], 'c_id'),
+            array_column($query['oldcards_state'], 'c_id')
+        );
 
         $query['randoms'] = $stateModel->select('cards.c_id')
                             ->join('cards', 'cards.c_id = state.c_id')
@@ -99,9 +101,11 @@ class Quizlets extends BaseController
                             ->orderBy('title', 'RANDOM')
                             ->limit($select_amount - count($select_c_ids))
                             ->find();
-        $all_c_ids = array_merge(array_column($query['newcards'], 'c_id'),
-                    array_column($query['randoms'], 'c_id'));
-       
+        $all_c_ids = array_merge(
+            array_column($query['newcards'], 'c_id'),
+            array_column($query['randoms'], 'c_id')
+        );
+
         $quizData['cards'] = $cardsModel->select('*')
                                         ->join('state', 'cards.c_id = state.c_id')
                                         ->whereIn('cards.c_id', $all_c_ids)
@@ -119,7 +123,7 @@ class Quizlets extends BaseController
     {
         $quizData = $this->session->quizData;
 
-        return view('pages/quiz_flashcard',$quizData);
+        return view('pages/quiz_flashcard', $quizData);
     }
 
     public function store()
@@ -152,7 +156,7 @@ class Quizlets extends BaseController
 
         $update_state = $verifyStateData['state'];
 
-        switch($score){
+        switch($score) {
             case 1:
                 $update_state = round($update_state/2);
                 break;
@@ -164,22 +168,22 @@ class Quizlets extends BaseController
                 break;
         }
 
-        if($update_state >= 100){
+        if($update_state >= 100) {
             $update_state = 100;
-        }else if($update_state <= 1){
+        } elseif($update_state <= 1) {
             $update_state = 1;
         }
 
         $update_grade = "";
         if ($update_state >= 1 && $update_state <= 3) {
             $update_grade = "F";
-        } else if ($update_state >= 4 && $update_state <= 10) {
+        } elseif ($update_state >= 4 && $update_state <= 10) {
             $update_grade = "D";
-        } else if ($update_state >= 11 && $update_state <= 25) {
+        } elseif ($update_state >= 11 && $update_state <= 25) {
             $update_grade = "C";
-        } else if ($update_state >= 26 && $update_state <= 50) {
+        } elseif ($update_state >= 26 && $update_state <= 50) {
             $update_grade = "B";
-        } else if ($update_state >= 51 && $update_state <= 100) {
+        } elseif ($update_state >= 51 && $update_state <= 100) {
             $update_grade = "A";
         }
 
