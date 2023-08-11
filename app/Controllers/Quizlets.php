@@ -124,6 +124,74 @@ class Quizlets extends BaseController
 
     public function store()
     {
-        
+        $data = $this->request->getPost();
+        $userData = $this->session->userData;
+
+        $u_id          = $userData['u_id'];
+        $s_id   = $data['s_id'];
+        $score   = $data['score'];
+
+        if($s_id === null || $score === null) {
+            return $this->fail("測驗記錄錯誤", 404);
+        }
+
+        $eventlogModel = new EventlogModel();
+        $values = [
+            'u_id'=>$u_id,
+            's_id'=>$s_id,
+            'score'=>$score,
+        ];
+        $eventlogModel->insert($values);
+
+        $stateModel = new StateModel();
+        $verifyStateData = $stateModel->where('s_id', $s_id)->first();
+
+        if($verifyStateData['u_id'] !== $u_id) {
+            return $this->fail("測驗對象錯誤", 404);
+        }
+
+        $update_state = $verifyStateData['state'];
+
+        switch($score){
+            case 1:
+                $update_state = round($update_state/2);
+                break;
+            case 3:
+                $update_state = round($update_state/1.5);
+                break;
+            case 5:
+                $update_state = $update_state + 2;
+                break;
+        }
+
+        if($update_state >= 100){
+            $update_state = 100;
+        }else if($update_state <= 1){
+            $update_state = 1;
+        }
+
+        $update_grade = "";
+        if ($update_state >= 1 && $update_state <= 3) {
+            $update_grade = "F";
+        } else if ($update_state >= 4 && $update_state <= 10) {
+            $update_grade = "D";
+        } else if ($update_state >= 11 && $update_state <= 25) {
+            $update_grade = "C";
+        } else if ($update_state >= 26 && $update_state <= 50) {
+            $update_grade = "B";
+        } else if ($update_state >= 51 && $update_state <= 100) {
+            $update_grade = "A";
+        }
+
+        $updateValues = [
+            'state' => $update_state,
+            'grade' => $update_grade,
+        ];
+        $stateModel->update($verifyStateData['s_id'], $updateValues);
+
+        return $this->respond([
+            "status" => true,
+            "msg"    => "測驗紀錄成功"
+        ]);
     }
 }
