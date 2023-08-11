@@ -170,16 +170,27 @@
 
         e.preventDefault();
         formdata.append("select_book", select_book.toString());
-        myLib1.POST("<?= base_url('/quizlets/generate') ?>",formdata);
+        quizCreateComponent.POST("<?= base_url('/quizlets/new') ?>",formdata);
     })
 
-    let myLib1 = {
+    let quizCreateComponent = {
         POST: (url,formdata) => {
             axios.post(url,formdata)
             .then((response) => {
-                window.location.href = `<?= base_url('/quizlets/flashcard') ?>`;
-            }).catch((e) => {
-                console.log(e);
+                Swal.fire({
+                    icon: 'success',
+                    title: '成功',
+                    text: '您好，即將開始測驗'
+                }).then(function(result) {
+                    window.location.href = `<?= base_url('/quizlets/quizzing')?>`;
+                })
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.response.data.status + ' 錯誤',
+                    text: error.response.data.messages
+                })
             })
         },
     }

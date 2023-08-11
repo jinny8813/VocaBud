@@ -64,6 +64,9 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
 
     $routes->get('/quizlets', 'Quizlets::index');
     $routes->get('/quizlets/new', 'Quizlets::renderCreatePage');
+    $routes->post('/quizlets/new', 'Quizlets::createQuiz');
+    $routes->get('/quizlets/quizzing', 'Quizlets::renderQuizzingPage');
+    $routes->post('/quizlets/quizzing', 'Quizlets::store');
 });
 /*
  * --------------------------------------------------------------------

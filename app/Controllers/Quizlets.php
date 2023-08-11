@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
 use App\Models\BooksModel;
+use App\Models\CardsModel;
 
 class Quizlets extends BaseController
 {
@@ -26,39 +27,45 @@ class Quizlets extends BaseController
         return view('pages/quiz_create', $data);
     }
 
+    public function createQuiz()
+    {
+        $data = $this->request->getPost();
+        $userData = $this->session->userData;
+
+        $u_id          = $userData['u_id'];
+        $select_book   = $data['select_book'];
+        $select_amount = $data['select_amount'];
+
+        if($select_book === null || $select_amount === null) {
+            return $this->fail("書本和測驗數目是必填欄位", 404);
+        }
+
+        $cardsModel = new CardsModel;
+        $quizData['cards'] = $cardsModel->select('cards.*')
+                                        ->select('state.*')
+                                        ->join('state', 'cards.c_id = state.c_id')
+                                        ->where('state.u_id', $u_id)
+                                        ->where('cards.deleted_at', null)
+                                        ->orderBy('title', 'RANDOM')
+                                        ->findAll();
+
+
+        $this->session->set("quizData", $quizData);
+        return $this->respond([
+            "status" => true,
+            "msg"    => "測驗建立成功"
+        ]);
+    }
+
+    public function renderQuizzingPage()
+    {
+        $quizData = $this->session->quizData;
+
+        return view('pages/quiz_flashcard',$quizData);
+    }
+
     public function store()
     {
         
-    }
-
-    public function generateQuiz()
-    {
-        date_default_timezone_set('Asia/Taipei');
-        $date = date('Y-m-d H:i:s');
-
-        $request = \Config\Services::request();
-        $data = $request->getPost();
-
-        $userData = session()->userData;
-
-        $flashcardModel=new FlashcardModel();
-        if($data['main_way'] == "self"){
-            $data1['cards'] = $flashcardModel->getSelfQuiz($date,$data['select_book'],$data['select_old'],$data['select_wrong'],$data['select_state'],$data['select_amount']);
-        }else{
-            $data1['cards'] = $flashcardModel->getSystemQuiz($userData['u_id'], $data['select_book'], $data['select_amount']);
-        }
-
-        if (count($data1['cards'])==0){
-            $this->response->setStatusCode(200)->setJSON("OK");
-        }else{
-            session()->set("quizData", $data1);
-            $this->response->setStatusCode(200)->setJSON("OK");
-        }
-    }
-
-    public function runQuiz()
-    {
-        $data1 = session()->quizData;
-        return view('pages/quiz_flashcard',$data1);
     }
 }
