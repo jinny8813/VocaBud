@@ -67,7 +67,6 @@
 <script>
     const bigArr=<?php echo json_encode($cards); ?>;
     let len =Object.keys(bigArr).length;
-    console.log(bigArr);
 
     let currentIndex=0;
     const theIndex = document.getElementById('theIndex');
@@ -145,7 +144,6 @@
     }
 
     function setNext(){
-        console.log(bigArr[currentIndex]);
         backCard.classList.add('d-none');
         flipCard.classList.remove('d-none');
         theChoice.classList.add('d-none');

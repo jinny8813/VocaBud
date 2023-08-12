@@ -169,7 +169,6 @@
         }
 
         e.preventDefault();
-        console.log(select_book);
         formdata.append("select_book", select_book);
         quizCreateComponent.POST("<?= base_url('/quizlets/new') ?>",formdata);
     })
@@ -178,7 +177,6 @@
         POST: (url,formdata) => {
             axios.post(url,formdata)
             .then((response) => {
-                console.log(response);
                 Swal.fire({
                     icon: 'success',
                     title: '成功',
@@ -188,7 +186,6 @@
                 })
             })
             .catch((error) => {
-                console.log(error);
                 Swal.fire({
                     icon: 'error',
                     title: error.response.data.status + ' 錯誤',
