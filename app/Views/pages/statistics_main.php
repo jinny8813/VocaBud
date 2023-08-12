@@ -47,7 +47,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>持續天數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['consecutive_days'])?></strong></div>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>累積天數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['accumulated_days'])?></strong></div>
                     </div>
                 </div>
             </div>

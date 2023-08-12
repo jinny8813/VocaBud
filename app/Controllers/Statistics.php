@@ -3,6 +3,8 @@
 namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\Database\RawSql;
+
 use App\Models\EventlogModel;
 
 class Statistics extends BaseController
@@ -30,6 +32,28 @@ class Statistics extends BaseController
         $eventlogModel = new EventlogModel();
         $data['weekly_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateSub7,$date);
         $data['the_month_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateMonthFirst,$dateMonthEnd);
+
+        $sql = "dates.date = CAST(eventlog.created_at AS DATE)";
+        $quizzedDays = $eventlogModel->select('dates.date')
+                                    ->join('dates', new RawSql($sql), 'left')
+                                    ->where('eventlog.u_id',$u_id)
+                                    ->where("dates.date <= CAST('{$date}' AS DATE)")
+                                    ->groupBy('dates.date')
+                                    ->findAll();
+        
+        $index = 0;
+        while(true){
+            if(date_format(date_sub(date_create($quizzedDays[$index]['date']), date_interval_create_from_date_string('1 days')), 'Y-m-d') == $quizzedDays[$index+1]['date']){
+                $index++;
+            }else{
+                break;
+            }
+        }
+
+        $data['single_data'] = [
+            'accumulated_days' => count($quizzedDays),
+            'consecutive_days' => $index
+        ];
 
         return $data;
     }
