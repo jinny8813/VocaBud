@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use CodeIgniter\Database\RawSql;
 
 class EventlogModel extends Model
 {
@@ -39,4 +40,21 @@ class EventlogModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function getRangeLogCount($u_id,$start,$end){
+        $sql = "dates.date = CAST(eventlog.created_at AS DATE) AND eventlog.u_id = {$u_id}";
+        $w1  = "dates.date >= CAST('{$start}' AS DATE)";
+        $w2  = "dates.date <= CAST('{$end}' AS DATE)";
+
+        $data = $this->select('dates.date')
+                    ->selectCount('eventlog.e_id', 'count')
+                    ->join('dates', new RawSql($sql), 'right')
+                    ->where($w1)
+                    ->where($w2)
+                    ->groupBy('dates.date')
+                    ->orderBy('dates.date')
+                    ->findAll();
+
+        return $data;
+    }
 }

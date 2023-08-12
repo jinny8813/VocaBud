@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="<?= base_url('../../public/assets/css/style.css') ?>" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.16/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.16/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 </head>
 <body class="font-monospace">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.15/sweetalert2.min.js" integrity="sha512-v7iFZwthE84inVKAa7Ll9s0wQff9H687OqM9vfSSqjcXYZIn1HCNQlekJWVkKpb5xEX1RfMW9frsM8VysesgvA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

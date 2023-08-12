@@ -87,11 +87,11 @@ class Quizlets extends BaseController
                                         ->limit($select_amount * 6/10)
                                         ->find();
 
-        $select_c_ids = array_merge(
+        $select_c_ids = array_values(array_unique(array_merge(
             array_column($query['newcards'], 'c_id'),
             array_column($query['oldcards_date'], 'c_id'),
             array_column($query['oldcards_state'], 'c_id')
-        );
+        )));
 
         $query['randoms'] = $stateModel->select('cards.c_id')
                             ->join('cards', 'cards.c_id = state.c_id')
@@ -103,6 +103,8 @@ class Quizlets extends BaseController
                             ->find();
         $all_c_ids = array_merge(
             array_column($query['newcards'], 'c_id'),
+            array_column($query['oldcards_date'], 'c_id'),
+            array_column($query['oldcards_state'], 'c_id'),
             array_column($query['randoms'], 'c_id')
         );
 
