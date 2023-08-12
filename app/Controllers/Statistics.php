@@ -11,17 +11,10 @@ class Statistics extends BaseController
 
     public function index()
     {
-        return view('pages/statistics_main');
-    }
+        $date = date('Y-m-d');
+        $data['data'] = $this->setDaily($date);
 
-    public function changeDaily()
-    {
-        $request = \Config\Services::request();
-        $data = $request->getPost();
-
-        $data1 = $this->setDaily($data['date']);
-
-        return $this->respond($data1);;
+        return view('pages/statistics_main', $data);
     }
     
     public function setDaily($date)
