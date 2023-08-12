@@ -19,15 +19,18 @@ class Statistics extends BaseController
     
     public function setDaily($date)
     {
-        $userData = session()->userData;
+        $userData = $this->session->userData;
 
-        $dateSub7 = date('Y-m-d', strtotime($date. ' - 6 days'));
+        $u_id = $userData['u_id'];
+
+        $dateSub7       = date('Y-m-d', strtotime($date. ' - 6 days'));
+        $dateMonthFirst = date("Y-m-01", strtotime($date));
+        $dateMonthEnd   = date("Y-m-t", strtotime($date));
+
         $eventlogModel = new EventlogModel();
-        $data1['weekly_log_count'] = $eventlogModel->getRangeLogCount($userData['u_id'],$dateSub7,$date);
+        $data['weekly_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateSub7,$date);
+        $data['the_month_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateMonthFirst,$dateMonthEnd);
 
-        $eventlogModel = new EventlogModel();
-        $data1['the_month_log_count'] = $eventlogModel->getRangeLogCount($userData['u_id'],date("Y-m-01", strtotime($date)),date("Y-m-t", strtotime($date)));
-
-        return $data1;
+        return $data;
     }
 }
