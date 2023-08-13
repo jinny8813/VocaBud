@@ -6,6 +6,8 @@ use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Database\RawSql;
 
 use App\Models\EventlogModel;
+use App\Models\DatesModel;
+use App\Models\BooksModel;
 
 class Statistics extends BaseController
 {
@@ -39,20 +41,59 @@ class Statistics extends BaseController
                                     ->where('eventlog.u_id',$u_id)
                                     ->where("dates.date <= CAST('{$date}' AS DATE)")
                                     ->groupBy('dates.date')
+                                    ->orderBy('dates.date','DESC')
                                     ->findAll();
         
-        $index = 0;
+        $dateCount = 0;
+        $verifyDate = $date;
         while(true){
-            if(date_format(date_sub(date_create($quizzedDays[$index]['date']), date_interval_create_from_date_string('1 days')), 'Y-m-d') == $quizzedDays[$index+1]['date']){
-                $index++;
+            if($dateCount>=count($quizzedDays)){
+                break;
+            }
+            $toverifyDate = $quizzedDays[$dateCount]['date'];
+            if($verifyDate == $toverifyDate){
+                $verifyDate = date_format(date_sub(date_create($verifyDate), date_interval_create_from_date_string('1 days')), 'Y-m-d');
+                $dateCount++;
             }else{
                 break;
             }
         }
 
+        $todayQCount = $eventlogModel->where('eventlog.u_id',$u_id)
+                                    ->where("CAST(eventlog.created_at AS DATE) = CAST('{$date}' AS DATE)")
+                                    ->countAllResults();
+        $totalQCount = $eventlogModel->where('eventlog.u_id',$u_id)
+                                    ->where("CAST(eventlog.created_at AS DATE) <= CAST('{$date}' AS DATE)")
+                                    ->countAllResults();
+
+        $booksModel = new BooksModel();
+        $subQueryBooks = $booksModel->select('b_id')->where('u_id', $u_id)->findAll();
+        $b_ids = implode(",",array_column($subQueryBooks, 'b_id'));
+
+        $subquery = "(Select created_at, COUNT(c_id) AS count 
+                    From cards 
+                    Where deleted_at IS NULL 
+                    AND b_id IN ({$b_ids}) 
+                    Group By CAST(created_at AS DATE)) AS cards";    
+        $sql = "dates.date = CAST(cards.created_at AS DATE)";
+        $w1  = "dates.date >= CAST('{$dateSub7}' AS DATE)";
+        $w2  = "dates.date <= CAST('{$date}' AS DATE)";
+        
+        $datesModel = new DatesModel();
+        $data['weekly_cards_count'] = $datesModel->select('dates.date')
+                                                ->select('cards.count', 'count')
+                                                ->join(new RawSql($subquery), new RawSql($sql), 'left')
+                                                ->where($w1)
+                                                ->where($w2)
+                                                ->groupBy('dates.date')
+                                                ->orderBy('dates.date')
+                                                ->findAll();
+
         $data['single_data'] = [
             'accumulated_days' => count($quizzedDays),
-            'consecutive_days' => $index
+            'consecutive_days' => $dateCount,
+            'today_q_count'    => $todayQCount,
+            'total_q_count'    => $totalQCount
         ];
 
         return $data;
