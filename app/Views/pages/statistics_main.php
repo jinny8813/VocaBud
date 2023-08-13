@@ -97,7 +97,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>新增字卡數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['today_c_count'])?></strong></div>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>累積字卡數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['total_c_count'])?></strong></div>
                     </div>
                 </div>
             </div>

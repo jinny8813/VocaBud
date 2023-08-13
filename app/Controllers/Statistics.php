@@ -8,6 +8,7 @@ use CodeIgniter\Database\RawSql;
 use App\Models\EventlogModel;
 use App\Models\DatesModel;
 use App\Models\BooksModel;
+use App\Models\CardsModel;
 
 class Statistics extends BaseController
 {
@@ -89,11 +90,23 @@ class Statistics extends BaseController
                                                 ->orderBy('dates.date')
                                                 ->findAll();
 
+        $cardsModel = new CardsModel();
+        $todayCCount = $cardsModel->whereIn('b_id',array_column($subQueryBooks, 'b_id'))
+                                ->where("CAST(created_at AS DATE) = CAST('{$date}' AS DATE)")
+                                ->where('deleted_at', null)
+                                ->countAllResults();
+        $totalCCount = $cardsModel->whereIn('b_id',array_column($subQueryBooks, 'b_id'))
+                                ->where("CAST(created_at AS DATE) <= CAST('{$date}' AS DATE)")
+                                ->where('deleted_at', null)
+                                ->countAllResults();
+
         $data['single_data'] = [
             'accumulated_days' => count($quizzedDays),
             'consecutive_days' => $dateCount,
             'today_q_count'    => $todayQCount,
-            'total_q_count'    => $totalQCount
+            'total_q_count'    => $totalQCount,
+            'today_c_count'    => $todayCCount,
+            'total_c_count'    => $totalCCount
         ];
 
         return $data;
