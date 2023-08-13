@@ -6,7 +6,7 @@
     </div>
     <div class="container position-relative">
         <div class="row justify-content-center">
-            <div class="col-md-8 position-absolute top-100 start-50 translate-middle">
+            <div class="col-md-8 col-10 position-absolute top-100 start-50 translate-middle">
                 <div class="card">
                     <div class="card-body">
                         <div class="text-center fs-3"><?= esc($nickname)?>的個人主頁</div>
@@ -15,52 +15,16 @@
             </div>
         </div>
     </div>
-    <div class="container pt-5">
+    <div class="container py-5">
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2"><?= esc($date)?>學習快報</div>
+                <div class="fs-5 mb-2"><?= esc($date)?> 學習快報</div>
             </div>
             <div class="col-md-8 col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-2"><small>本週學習打卡紀錄</small></div>
                         <div id="calender"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>今日測驗數</small></div>
-                        <div class="float-end fs-3"><strong>*200</strong></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>累積測驗數</small></div>
-                        <div class="float-end fs-3"><strong>881003</strong></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>累積字卡數</small></div>
-                        <div class="float-end fs-3"><strong>999</strong></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>累積天數</small></div>
-                        <div class="float-end fs-3"><strong>28</strong></div>
                     </div>
                 </div>
             </div>
@@ -88,7 +52,6 @@
 </section>
 <script>
     const the_week_log_count=<?php echo json_encode($the_week_log_count); ?>;
-    console.log(the_week_log_count);
 
     function getCalender(data){
         let calender = document.getElementById('calender');

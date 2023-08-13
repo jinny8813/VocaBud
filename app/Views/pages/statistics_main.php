@@ -47,7 +47,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>持續天數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['consecutive_days'])?></strong></div>
                     </div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>累積天數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['accumulated_days'])?></strong></div>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>今日測驗數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['today_q_count'])?></strong></div>
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>累積測驗數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['total_q_count'])?></strong></div>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>新增字卡數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['today_c_count'])?></strong></div>
                     </div>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>累積字卡數</small></div>
-                        <div class="float-end fs-3"><strong>0</strong></div>
+                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['total_c_count'])?></strong></div>
                     </div>
                 </div>
             </div>
@@ -134,42 +134,63 @@
         },
     }
 
-    function getBarChart(data){
+    function getBarChart(log, cards){
         new Chart(document.getElementById("barChart"), {
             type: 'bar',
             data: {
-            labels: [data[0].date.slice(-5),
-                        data[1].date.slice(-5),
-                        data[2].date.slice(-5),
-                        data[3].date.slice(-5),
-                        data[4].date.slice(-5),
-                        data[5].date.slice(-5),
-                        data[6].date.slice(-5),],
-            datasets: [
-                {
-                label: "測驗數",
-                backgroundColor: "#5EC7B4",
-                borderColor: "#5EC7B4",
-                data: [data[0].count,
-                        data[1].count,
-                        data[2].count,
-                        data[3].count,
-                        data[4].count,
-                        data[5].count,
-                        data[6].count],
-                    fill:false
-                }
-            ],
+                labels: [log[0].date.slice(-5),
+                        log[1].date.slice(-5),
+                        log[2].date.slice(-5),
+                        log[3].date.slice(-5),
+                        log[4].date.slice(-5),
+                        log[5].date.slice(-5),
+                        log[6].date.slice(-5),],
+                datasets: [
+                    {
+                    label: "測驗數",
+                    backgroundColor: "#95CD7B",
+                    stack: 'Stack 0',
+                    data: [log[0].count,
+                        log[1].count,
+                        log[2].count,
+                        log[3].count,
+                        log[4].count,
+                        log[5].count,
+                        log[6].count],
+                    },
+                    {
+                    label: "新卡數",
+                    backgroundColor: "#E6E164",
+                    stack: 'Stack 0',
+                    data: [cards[0].count,
+                        cards[1].count,
+                        cards[2].count,
+                        cards[3].count,
+                        cards[4].count,
+                        cards[5].count,
+                        cards[6].count],
+                    }
+                ],
             },
             options: {
                 legend: { display: false },
                 scales: {
+        			x: {
+        				stacked: true,
+        			},
+        			y: {
+        				stacked: true
+        			}
+        		},
+                scales: {
+                    xAxes: [{
+                        stacked: true
+                    }],
                     yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
+                        stacked: true,
                     }]
-                }
+                },
+        		responsive: true
             },
         });
     }
@@ -221,7 +242,7 @@
     function renderPage(data){
         changeDate.value = data.weekly_log_count[6].date;
 
-        getBarChart(data.weekly_log_count);
+        getBarChart(data.weekly_log_count, data.weekly_cards_count);
         getCalender(data.the_month_log_count);
     }
 

@@ -120,13 +120,7 @@
             axios.post(url,formdata)
             .then((response) => {
                 if(currentIndex>=len){
-                    Swal.fire({
-                        icon: 'success',
-                        title: '成功',
-                        text: '測驗結束，即將跳轉回測驗大廳'
-                    }).then(function(result) {
-                        window.location.href = `<?= base_url('/quizlets')?>`;
-                    })
+                    window.location.href = `<?= base_url('/quizlets')?>`;
                 }else{
                     setNext();
                 }
