@@ -28,42 +28,10 @@
                 <input type="date" class="form-control input_card" id="changeDate" name="date">
             </div>
         </div>
-
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2">Part.1 打卡紀錄</div>
-            </div>
-            <div class="col-md-8 col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-2"><small>本月學習打卡紀錄</small></div>
-                        <div id="calender"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>持續天數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['consecutive_days'])?></strong></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>累積天數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['accumulated_days'])?></strong></div>
-                    </div>
-                </div>
-            </div>
-        </div>
         
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2">Part.2 翻卡x新卡紀錄</div>
+                <div class="fs-5 mb-2">Part.1 翻卡x新卡紀錄</div>
             </div>
             <div class="col-md-8 col-12">
                 <div class="card">
@@ -79,7 +47,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>今日測驗數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['today_q_count'])?></strong></div>
+                        <div class="float-end fs-3"><strong id="today_q_count"></strong></div>
                     </div>
                 </div>
             </div>
@@ -87,7 +55,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>累積測驗數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['total_q_count'])?></strong></div>
+                        <div class="float-end fs-3"><stron id="total_q_count"></stron></div>
                     </div>
                 </div>
             </div>
@@ -97,7 +65,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>新增字卡數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['today_c_count'])?></strong></div>
+                        <div class="float-end fs-3"><strong id="today_c_count"></strong></div>
                     </div>
                 </div>
             </div>
@@ -105,7 +73,39 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>累積字卡數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['total_c_count'])?></strong></div>
+                        <div class="float-end fs-3"><strong id="total_c_count"></strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-8 col-12">
+                <div class="fs-5 mb-2">Part.2 打卡紀錄</div>
+            </div>
+            <div class="col-md-8 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-2"><small>本月學習打卡紀錄</small></div>
+                        <div id="calender"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-4 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div><small>持續天數</small></div>
+                        <div class="float-end fs-3"><strong id="consecutive_days"></strong></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div><small>累積天數</small></div>
+                        <div class="float-end fs-3"><strong id="accumulated_days"></strong></div>
                     </div>
                 </div>
             </div>
@@ -244,11 +244,21 @@
         calender.innerHTML = calBody;
     }
 
+    function singleData(data){
+        document.getElementById('accumulated_days').textContent = data.accumulated_days;
+        document.getElementById('consecutive_days').textContent = data.consecutive_days;
+        document.getElementById('today_q_count').textContent = data.today_q_count;
+        document.getElementById('total_q_count').textContent = data.total_q_count;
+        document.getElementById('today_c_count').textContent = data.today_c_count;
+        document.getElementById('total_c_count').textContent = data.total_c_count;
+    }
+
     function renderPage(data){
         changeDate.value = data.weekly_log_count[6].date;
 
         getBarChart(data.weekly_log_count, data.weekly_cards_count);
         getCalender(data.the_month_log_count);
+        singleData(data.single_data);
     }
 
     renderPage(defaultData);
