@@ -17,7 +17,6 @@ class Statistics extends BaseController
     public function index()
     {
         $date = date('Y-m-d');
-        print_r($date);
         $data['data'] = $this->setDaily($date);
 
         return view('pages/statistics_main', $data);
@@ -54,6 +53,13 @@ class Statistics extends BaseController
         $eventlogModel = new EventlogModel();
         $data['weekly_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateSub7,$date);
         $data['the_month_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateMonthFirst,$dateMonthEnd);
+
+        $data['daily_log_score'] = $eventlogModel->selectCount('*', 'count')
+                                                ->where('eventlog.u_id',$u_id)
+                                                ->where("CAST(eventlog.created_at AS DATE) = CAST('{$date}' AS DATE)")
+                                                ->groupBy('eventlog.score')
+                                                ->orderBy('eventlog.score')
+                                                ->findAll();
 
         $sql = "dates.date = CAST(eventlog.created_at AS DATE)";
         $quizzedDays = $eventlogModel->select('dates.date')

@@ -28,16 +28,20 @@
                 <input type="date" class="form-control input_card" id="changeDate" name="date">
             </div>
         </div>
-        
+
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2">Part.1 翻卡x新卡紀錄</div>
+                <div class="fs-5 mb-2">Part.1 今日翻卡測驗狀況</div>
             </div>
             <div class="col-md-8 col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="mb-2"><small>近7天學習狀態柱狀圖</small></div>
-                        <div><canvas id="barChart"></canvas></div>
+                        <div class="mb-2"><small>今日測驗狀況圓餅圖</small></div>
+                        <div class="row justify-content-center ">
+                            <div class="col-6">
+                                <canvas id="doughnutChart"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,6 +60,22 @@
                     <div class="card-body">
                         <div><small>累積測驗數</small></div>
                         <div class="float-end fs-3"><stron id="total_q_count"></stron></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-8 col-12">
+                <div class="fs-5 mb-2">Part.2 翻卡測驗x新卡紀錄</div>
+            </div>
+            <div class="col-md-8 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-2"><small>近7天學習狀態柱狀圖</small></div>
+                        <div>
+                            <canvas id="barChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,7 +101,7 @@
 
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2">Part.2 打卡紀錄</div>
+                <div class="fs-5 mb-2">Part.3 打卡紀錄</div>
             </div>
             <div class="col-md-8 col-12">
                 <div class="card">
@@ -137,6 +157,34 @@
                 })
             })
         },
+    }
+
+    function getDoughnutChart(data){
+        new Chart(document.getElementById("doughnutChart"), {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    '忘記',
+                    '模糊',
+                    '熟悉'
+                ],
+                datasets: [{
+                    label: '數量',
+                    data: [data[0].count,
+                        data[1].count,
+                        data[2].count],
+                    backgroundColor: [
+                    '#63AFD9',
+                    '#95CD7B',
+                    '#E6E164'
+                    ],
+                }]
+            },
+            options: {
+                legend: { display: false },
+        		responsive: true
+            },
+        });
     }
 
     function getBarChart(log, cards){
@@ -256,6 +304,7 @@
     function renderPage(data){
         changeDate.value = data.weekly_log_count[6].date;
 
+        getDoughnutChart(data.daily_log_score);
         getBarChart(data.weekly_log_count, data.weekly_cards_count);
         getCalender(data.the_month_log_count);
         singleData(data.single_data);
