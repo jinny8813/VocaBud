@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\API\ResponseTrait;
-use App\Models\UserModel;
+use App\Models\EventlogModel;
 
 class MemberManage extends BaseController
 {
@@ -11,6 +11,18 @@ class MemberManage extends BaseController
 
     public function index()
     {
-        return view('pages/user_home', $this->session->get('userData'));
+        $userData = $this->session->userData;
+
+        $u_id           = $userData['u_id'];
+        $dateWeekFirst = date('Y-m-d', strtotime("monday 0 week"));
+        $dateWeekEnd   = date('Y-m-d', strtotime("sunday 0 week"));
+
+        $eventlogModel = new EventlogModel();
+        $logData['the_week_log_count'] = $eventlogModel->getRangeLogCount($u_id, $dateWeekFirst, $dateWeekEnd);
+
+        $dateData = ['date' => date('Y-m-d')];
+        $data = array_merge($userData, $logData, $dateData);
+
+        return view('pages/user_home', $data);
     }
 }
