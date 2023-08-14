@@ -177,9 +177,9 @@
                             data[1].count,
                             data[2].count],
                         backgroundColor: [
-                        '#63AFD9',
-                        '#95CD7B',
-                        '#E6E164'
+                        '#7781de',
+                        '#63afd9',
+                        '#5ec7b4'
                         ],
                     }]
                 },
