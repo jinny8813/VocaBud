@@ -36,7 +36,7 @@
             <div class="col-md-8 col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="mb-2"><small>今日測驗狀況圓餅圖</small></div>
+                        <div class="mb-2"><small id="doughnutText">今日測驗狀況圓餅圖</small></div>
                         <div class="row justify-content-center ">
                             <div class="col-6">
                                 <canvas id="doughnutChart"></canvas>
@@ -160,31 +160,35 @@
     }
 
     function getDoughnutChart(data){
-        new Chart(document.getElementById("doughnutChart"), {
-            type: 'doughnut',
-            data: {
-                labels: [
-                    '忘記',
-                    '模糊',
-                    '熟悉'
-                ],
-                datasets: [{
-                    label: '數量',
-                    data: [data[0].count,
-                        data[1].count,
-                        data[2].count],
-                    backgroundColor: [
-                    '#63AFD9',
-                    '#95CD7B',
-                    '#E6E164'
+        if(data.length==0){
+            document.getElementById("doughnutText").textContent = "今日無測驗";
+        }else{
+            new Chart(document.getElementById("doughnutChart"), {
+                type: 'doughnut',
+                data: {
+                    labels: [
+                        '忘記',
+                        '模糊',
+                        '熟悉'
                     ],
-                }]
-            },
-            options: {
-                legend: { display: false },
-        		responsive: true
-            },
-        });
+                    datasets: [{
+                        label: '數量',
+                        data: [data[0].count,
+                            data[1].count,
+                            data[2].count],
+                        backgroundColor: [
+                        '#63AFD9',
+                        '#95CD7B',
+                        '#E6E164'
+                        ],
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    responsive: true
+                },
+            });
+        }
     }
 
     function getBarChart(log, cards){
