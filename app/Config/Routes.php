@@ -69,6 +69,7 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->post('/quizlets/quizzing', 'Quizlets::store');
 
     $routes->get('/statistics', 'Statistics::index');
+    $routes->post('/statistics', 'Statistics::changeDaily');
 });
 /*
  * --------------------------------------------------------------------

@@ -120,16 +120,21 @@
         e.preventDefault();
         let formdata= new FormData();
         formdata.append('date',e.target.value);
-        myLib1.POST("<?= base_url('/statistics') ?>",formdata);
+        changeDateComponent.POST("<?= base_url('/statistics') ?>",formdata);
     });
 
-    let myLib1 = {
+    let changeDateComponent = {
         POST: (url,formdata) => {
             axios.post(url,formdata)
             .then((response) => {
-                renderPage(response.data);
-            }).catch((e) => {
-                console.log(e.response.data);
+                renderPage(response.data.data);
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.response.data.status + ' 錯誤',
+                    text: error.response.data.messages.error
+                })
             })
         },
     }

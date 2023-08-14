@@ -17,9 +17,28 @@ class Statistics extends BaseController
     public function index()
     {
         $date = date('Y-m-d');
+        print_r($date);
         $data['data'] = $this->setDaily($date);
 
         return view('pages/statistics_main', $data);
+    }
+
+    public function changeDaily()
+    {
+        $data = $this->request->getPost();
+
+        $date = $data['date'];
+        if($date === null) {
+            return $this->fail("請選擇日期", 404);
+        }
+
+        $changedData = $this->setDaily($date);
+
+        return $this->respond([
+            "status" => true,
+            "msg"    => "書本建立成功",
+            "data"   => $changedData
+        ]);
     }
     
     public function setDaily($date)
