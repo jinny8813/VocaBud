@@ -21,6 +21,24 @@ class Statistics extends BaseController
 
         return view('pages/statistics_main', $data);
     }
+
+    public function changeDaily()
+    {
+        $data = $this->request->getPost();
+
+        $date = $data['date'];
+        if($date === null) {
+            return $this->fail("請選擇日期", 404);
+        }
+
+        $changedData = $this->setDaily($date);
+
+        return $this->respond([
+            "status" => true,
+            "msg"    => "書本建立成功",
+            "data"   => $changedData
+        ]);
+    }
     
     public function setDaily($date)
     {
@@ -35,6 +53,13 @@ class Statistics extends BaseController
         $eventlogModel = new EventlogModel();
         $data['weekly_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateSub7,$date);
         $data['the_month_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateMonthFirst,$dateMonthEnd);
+
+        $data['daily_log_score'] = $eventlogModel->selectCount('*', 'count')
+                                                ->where('eventlog.u_id',$u_id)
+                                                ->where("CAST(eventlog.created_at AS DATE) = CAST('{$date}' AS DATE)")
+                                                ->groupBy('eventlog.score')
+                                                ->orderBy('eventlog.score')
+                                                ->findAll();
 
         $sql = "dates.date = CAST(eventlog.created_at AS DATE)";
         $quizzedDays = $eventlogModel->select('dates.date')

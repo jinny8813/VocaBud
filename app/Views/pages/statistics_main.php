@@ -31,7 +31,77 @@
 
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2">Part.1 打卡紀錄</div>
+                <div class="fs-5 mb-2">Part.1 今日翻卡測驗狀況</div>
+            </div>
+            <div class="col-md-8 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-2"><small>今日測驗狀況圓餅圖</small></div>
+                        <div class="row justify-content-center ">
+                            <div class="col-6">
+                                <canvas id="doughnutChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-4 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div><small>今日測驗數</small></div>
+                        <div class="float-end fs-3"><strong id="today_q_count"></strong></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div><small>累積測驗數</small></div>
+                        <div class="float-end fs-3"><stron id="total_q_count"></stron></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-8 col-12">
+                <div class="fs-5 mb-2">Part.2 翻卡測驗x新卡紀錄</div>
+            </div>
+            <div class="col-md-8 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-2"><small>近7天學習狀態柱狀圖</small></div>
+                        <div>
+                            <canvas id="barChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-4 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div><small>新增字卡數</small></div>
+                        <div class="float-end fs-3"><strong id="today_c_count"></strong></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <div><small>累積字卡數</small></div>
+                        <div class="float-end fs-3"><strong id="total_c_count"></strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-8 col-12">
+                <div class="fs-5 mb-2">Part.3 打卡紀錄</div>
             </div>
             <div class="col-md-8 col-12">
                 <div class="card">
@@ -47,7 +117,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>持續天數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['consecutive_days'])?></strong></div>
+                        <div class="float-end fs-3"><strong id="consecutive_days"></strong></div>
                     </div>
                 </div>
             </div>
@@ -55,57 +125,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>累積天數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['accumulated_days'])?></strong></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2">Part.2 翻卡x新卡紀錄</div>
-            </div>
-            <div class="col-md-8 col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="mb-2"><small>近7天學習狀態柱狀圖</small></div>
-                        <div><canvas id="barChart"></canvas></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>今日測驗數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['today_q_count'])?></strong></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>累積測驗數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['total_q_count'])?></strong></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row justify-content-center mb-3">
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>新增字卡數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['today_c_count'])?></strong></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-6">
-                <div class="card">
-                    <div class="card-body">
-                        <div><small>累積字卡數</small></div>
-                        <div class="float-end fs-3"><strong><?= esc($data['single_data']['total_c_count'])?></strong></div>
+                        <div class="float-end fs-3"><strong id="accumulated_days"></strong></div>
                     </div>
                 </div>
             </div>
@@ -120,18 +140,51 @@
         e.preventDefault();
         let formdata= new FormData();
         formdata.append('date',e.target.value);
-        myLib1.POST("<?= base_url('/statistics') ?>",formdata);
+        changeDateComponent.POST("<?= base_url('/statistics') ?>",formdata);
     });
 
-    let myLib1 = {
+    let changeDateComponent = {
         POST: (url,formdata) => {
             axios.post(url,formdata)
             .then((response) => {
-                renderPage(response.data);
-            }).catch((e) => {
-                console.log(e.response.data);
+                renderPage(response.data.data);
+            })
+            .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.response.data.status + ' 錯誤',
+                    text: error.response.data.messages.error
+                })
             })
         },
+    }
+
+    function getDoughnutChart(data){
+        new Chart(document.getElementById("doughnutChart"), {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    '忘記',
+                    '模糊',
+                    '熟悉'
+                ],
+                datasets: [{
+                    label: '數量',
+                    data: [data[0].count,
+                        data[1].count,
+                        data[2].count],
+                    backgroundColor: [
+                    '#63AFD9',
+                    '#95CD7B',
+                    '#E6E164'
+                    ],
+                }]
+            },
+            options: {
+                legend: { display: false },
+        		responsive: true
+            },
+        });
     }
 
     function getBarChart(log, cards){
@@ -239,11 +292,22 @@
         calender.innerHTML = calBody;
     }
 
+    function singleData(data){
+        document.getElementById('accumulated_days').textContent = data.accumulated_days;
+        document.getElementById('consecutive_days').textContent = data.consecutive_days;
+        document.getElementById('today_q_count').textContent = data.today_q_count;
+        document.getElementById('total_q_count').textContent = data.total_q_count;
+        document.getElementById('today_c_count').textContent = data.today_c_count;
+        document.getElementById('total_c_count').textContent = data.total_c_count;
+    }
+
     function renderPage(data){
         changeDate.value = data.weekly_log_count[6].date;
 
+        getDoughnutChart(data.daily_log_score);
         getBarChart(data.weekly_log_count, data.weekly_cards_count);
         getCalender(data.the_month_log_count);
+        singleData(data.single_data);
     }
 
     renderPage(defaultData);
