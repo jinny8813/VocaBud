@@ -73,6 +73,7 @@ class VisitorManage extends BaseController
         $password   = $data['password'];
         $cpassword  = $data['cpassword'];
         $nickname   = $data['nickname'];
+        $date       = date("Y-m-d H:i:s");
 
         if($email === null || $password === null || $cpassword === null || $nickname === null) {
             return $this->fail("需帳號密碼進行註冊", 404);
@@ -97,7 +98,7 @@ class VisitorManage extends BaseController
             'email'         =>  $email,
             'password_hash' =>  password_hash($password, PASSWORD_DEFAULT),
             'nickname'      =>  $nickname,
-            'create_at'     =>  date('Y-m-d H:i:s'),
+            'created_at'    => $date,
             'uuidv4'        =>  $this->getUuid(),
             'goal'          =>  0,
             'lasting'       =>  30,

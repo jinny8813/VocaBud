@@ -36,8 +36,8 @@ class Quizlets extends BaseController
         $userData = $this->session->userData;
 
         $u_id          = $userData['u_id'];
-        $main_way   = $data['main_way'];
-        $quiz_type   = $data['quiz_type'];
+        $main_way      = $data['main_way'];
+        $quiz_type     = $data['quiz_type'];
         $select_amount = $data['select_amount'];
 
         if($main_way === null || $quiz_type === null) {
@@ -133,9 +133,10 @@ class Quizlets extends BaseController
         $data = $this->request->getPost();
         $userData = $this->session->userData;
 
-        $u_id          = $userData['u_id'];
-        $s_id   = $data['s_id'];
-        $score   = $data['score'];
+        $u_id  = $userData['u_id'];
+        $s_id  = $data['s_id'];
+        $score = $data['score'];
+        $date  = date("Y-m-d H:i:s");
 
         if($s_id === null || $score === null) {
             return $this->fail("測驗記錄錯誤", 404);
@@ -143,9 +144,10 @@ class Quizlets extends BaseController
 
         $eventlogModel = new EventlogModel();
         $values = [
-            'u_id'=>$u_id,
-            's_id'=>$s_id,
-            'score'=>$score,
+            'u_id'       =>$u_id,
+            's_id'       =>$s_id,
+            'score'      =>$score,
+            'created_at' => $date
         ];
         $eventlogModel->insert($values);
 
@@ -190,8 +192,9 @@ class Quizlets extends BaseController
         }
 
         $updateValues = [
-            'state' => $update_state,
-            'grade' => $update_grade,
+            'state'      => $update_state,
+            'grade'      => $update_grade,
+            'updated_at' => $date
         ];
         $stateModel->update($verifyStateData['s_id'], $updateValues);
 

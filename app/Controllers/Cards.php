@@ -41,6 +41,7 @@ class Cards extends BaseController
         $e_sentence     = $data['e_sentence'];
         $c_sentence     = $data['c_sentence'];
         $uuidv4         = $this->getUuid();
+        $date           = date("Y-m-d H:i:s");
 
         if($title === null || $content === null) {
             return $this->fail("需標題內容進行建立", 404);
@@ -61,6 +62,7 @@ class Cards extends BaseController
             'e_sentence'     => $e_sentence,
             'c_sentence'     => $c_sentence,
             'uuidv4'         => $uuidv4,
+            'created_at'     => $date
         ];
         $cardsModel = new CardsModel();
         $cardsModel->insert($values);
@@ -125,6 +127,7 @@ class Cards extends BaseController
         $part_of_speech = $data['part_of_speech'];
         $e_sentence     = $data['e_sentence'];
         $c_sentence     = $data['c_sentence'];
+        $date           = date("Y-m-d H:i:s");
 
         if($title === null || $content === null) {
             return $this->fail("標題內容是必要欄位", 404);
@@ -133,7 +136,7 @@ class Cards extends BaseController
         if($title === " " || $content === " ") {
             return $this->fail("標題內容是必要欄位", 404);
         }
-
+        
         $updateValues = [
             'title'          => $title,
             'content'        => $content,
@@ -142,6 +145,7 @@ class Cards extends BaseController
             'part_of_speech' => $part_of_speech,
             'e_sentence'     => $e_sentence,
             'c_sentence'     => $c_sentence,
+            'updated_at'     => $date
         ];
         $cardsModel->update($verifyCardData['c_id'], $updateValues);
 
