@@ -54,7 +54,8 @@ class Statistics extends BaseController
         $data['weekly_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateSub7,$date);
         $data['the_month_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateMonthFirst,$dateMonthEnd);
 
-        $data['daily_log_score'] = $eventlogModel->selectCount('*', 'count')
+        $data['daily_log_score'] = $eventlogModel->select('eventlog.score')
+                                                ->selectCount('*', 'count')
                                                 ->where('eventlog.u_id',$u_id)
                                                 ->where("CAST(eventlog.created_at AS DATE) = CAST('{$date}' AS DATE)")
                                                 ->groupBy('eventlog.score')

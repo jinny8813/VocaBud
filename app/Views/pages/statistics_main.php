@@ -163,6 +163,17 @@
         if(data.length==0){
             document.getElementById("doughnutText").textContent = "今日無測驗";
         }else{
+            let arr=[0,0,0];
+            for(let i=0;i<data.length;i++){
+                if(data[i].score==5){
+                    arr[2]=parseInt(data[i].count);
+                    break;
+                }
+                if(data[i].score==3)
+                    arr[1]=parseInt(data[i].count);
+                if(data[i].score==1)
+                    arr[0]=parseInt(data[i].count);
+            }
             new Chart(document.getElementById("doughnutChart"), {
                 type: 'doughnut',
                 data: {
@@ -173,9 +184,7 @@
                     ],
                     datasets: [{
                         label: '數量',
-                        data: [data[0].count,
-                            data[1].count,
-                            data[2].count],
+                        data: arr,
                         backgroundColor: [
                         '#7781de',
                         '#63afd9',

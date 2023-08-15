@@ -44,6 +44,7 @@ class Books extends BaseController
         $u_id        = $userData['u_id'];
         $title       = $data['title'];
         $description = $data['description'];
+        $date        = date("Y-m-d H:i:s");
 
         if($title === null || $description === null) {
             return $this->fail("標題內容是必要欄位", 404);
@@ -58,6 +59,7 @@ class Books extends BaseController
             'title'       => $title,
             'description' => $description,
             'uuidv4'      => $this->getUuid(),
+            'created_at'  => $date
         ];
         $booksModel = new BooksModel();
         $booksModel->insert($values);
@@ -116,6 +118,7 @@ class Books extends BaseController
 
         $title       = $data['title'];
         $description = $data['description'];
+        $date        = date("Y-m-d H:i:s");
 
         if($title === null || $description === null) {
             return $this->fail("標題內容是必要欄位", 404);
@@ -128,6 +131,7 @@ class Books extends BaseController
         $updateValues = [
             'title'       => $title,
             'description' => $description,
+            'updated_at'  => $date
         ];
         $booksModel->update($verifyBookData['b_id'], $updateValues);
 

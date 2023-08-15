@@ -29,7 +29,7 @@
                                     <label for="" class="form-label">出題方式</label>
                                 </div>
                                 <div class="col-9">
-                                    <input class="form-check-input" type="radio" name="main_way" id="main_way1" value="system" required>
+                                    <input class="form-check-input" type="radio" name="main_way" id="main_way1" value="system" required checked>
                                     <label class="form-check-label" for="main_way1">系統出題</label>
                                     <br>
                                     <input class="form-check-input" type="radio" name="main_way" id="main_way2" value="self" disabled>
@@ -41,7 +41,7 @@
                                     <label for="" class="form-label">測驗方式</label>
                                 </div>
                                 <div class="col-9">
-                                    <input class="form-check-input" type="radio" name="quiz_type" id="quiz_type1" value="flashcard" required>
+                                    <input class="form-check-input" type="radio" name="quiz_type" id="quiz_type1" value="flashcard" required checked>
                                     <label class="form-check-label" for="quiz_type1">翻卡</label>
                                     <br>
                                     <input class="form-check-input" type="radio" name="quiz_type" id="quiz_type2" value="spelling" disabled>
