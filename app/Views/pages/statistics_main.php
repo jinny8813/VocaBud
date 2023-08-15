@@ -174,8 +174,6 @@
                 if(data[i].score==1)
                     arr[0]=parseInt(data[i].count);
             }
-            console.log(data);
-            console.log(arr);
             new Chart(document.getElementById("doughnutChart"), {
                 type: 'doughnut',
                 data: {
