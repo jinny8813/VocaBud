@@ -70,6 +70,8 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
 
     $routes->get('/statistics', 'Statistics::index');
     $routes->post('/statistics', 'Statistics::changeDaily');
+
+    $routes->get('/achievement', 'Achievements::index');
 });
 /*
  * --------------------------------------------------------------------
