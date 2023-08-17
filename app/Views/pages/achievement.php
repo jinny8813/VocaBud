@@ -22,16 +22,14 @@
     <div class="container py-3">
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2">Part.1 今日翻卡測驗狀況</div>
+                <div class="fs-5 mb-2">Part.1 創建字卡里程碑</div>
             </div>
             <div class="col-md-8 col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="mb-2"><small id="doughnutText">今日測驗狀況圓餅圖</small></div>
-                        <div class="row justify-content-center ">
-                            <div class="col-6">
-                                <canvas id="doughnutChart"></canvas>
-                            </div>
+                        <div class="mb-2"><small>累積創建字卡數目</small></div>
+                        <div>
+                            
                         </div>
                     </div>
                 </div>
@@ -40,14 +38,14 @@
         
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2">Part.2 翻卡測驗x新卡紀錄</div>
+                <div class="fs-5 mb-2">Part.2 翻卡測驗里程碑</div>
             </div>
             <div class="col-md-8 col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="mb-2"><small>近7天學習狀態柱狀圖</small></div>
+                        <div class="mb-2"><small>累積翻卡測驗數目</small></div>
                         <div>
-                            <canvas id="barChart"></canvas>
+                            
                         </div>
                     </div>
                 </div>
@@ -56,13 +54,53 @@
 
         <div class="row justify-content-center mb-3">
             <div class="col-md-8 col-12">
-                <div class="fs-5 mb-2">Part.3 打卡紀錄</div>
+                <div class="fs-5 mb-2">Part.3 金幣抽卡圖鑑</div>
+            </div>
+            <div class="col-md-8 col-12 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-2"><small>動物園</small></div>
+                        <div class="row justify-content-center">                            
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                            <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-8 col-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="mb-2"><small>本月學習打卡紀錄</small></div>
-                        <div id="calender"></div>
+                        <div class="mb-2"><small>美食街</small></div>
+                        <div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-8 col-12">
+                <div class="fs-5 mb-2">Part.3 週期活動圖鑑</div>
+            </div>
+            <div class="col-md-8 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-2"><small>環遊世界</small></div>
+                        <div>
+
+                        </div>
                     </div>
                 </div>
             </div>
