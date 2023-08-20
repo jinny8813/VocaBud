@@ -15,10 +15,11 @@ class MemberManage extends BaseController
 
         $u_id           = $userData['u_id'];
 
-        if(date('l')=='Monday')
+        if(date('l')=='Monday') {
             $dateWeekFirst = date('Y-m-d', strtotime("monday 0 week"));
-        else
+        } else {
             $dateWeekFirst = date('Y-m-d', strtotime("monday -1 week"));
+        }
         $dateWeekEnd   = date('Y-m-d', strtotime("sunday 0 week"));
 
         $eventlogModel = new EventlogModel();

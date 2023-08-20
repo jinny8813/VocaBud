@@ -39,7 +39,7 @@ class Statistics extends BaseController
             "data"   => $changedData
         ]);
     }
-    
+
     public function setDaily($date)
     {
         $userData = $this->session->userData;
@@ -51,12 +51,12 @@ class Statistics extends BaseController
         $dateMonthEnd   = date("Y-m-t", strtotime($date));
 
         $eventlogModel = new EventlogModel();
-        $data['weekly_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateSub7,$date);
-        $data['the_month_log_count'] = $eventlogModel->getRangeLogCount($u_id,$dateMonthFirst,$dateMonthEnd);
+        $data['weekly_log_count'] = $eventlogModel->getRangeLogCount($u_id, $dateSub7, $date);
+        $data['the_month_log_count'] = $eventlogModel->getRangeLogCount($u_id, $dateMonthFirst, $dateMonthEnd);
 
         $data['daily_log_score'] = $eventlogModel->select('eventlog.score')
                                                 ->selectCount('*', 'count')
-                                                ->where('eventlog.u_id',$u_id)
+                                                ->where('eventlog.u_id', $u_id)
                                                 ->where("CAST(eventlog.created_at AS DATE) = CAST('{$date}' AS DATE)")
                                                 ->groupBy('eventlog.score')
                                                 ->orderBy('eventlog.score')
@@ -65,47 +65,47 @@ class Statistics extends BaseController
         $sql = "dates.date = CAST(eventlog.created_at AS DATE)";
         $quizzedDays = $eventlogModel->select('dates.date')
                                     ->join('dates', new RawSql($sql), 'left')
-                                    ->where('eventlog.u_id',$u_id)
+                                    ->where('eventlog.u_id', $u_id)
                                     ->where("dates.date <= CAST('{$date}' AS DATE)")
                                     ->groupBy('dates.date')
-                                    ->orderBy('dates.date','DESC')
+                                    ->orderBy('dates.date', 'DESC')
                                     ->findAll();
-        
+
         $dateCount = 0;
         $verifyDate = $date;
-        while(true){
-            if($dateCount>=count($quizzedDays)){
+        while(true) {
+            if($dateCount>=count($quizzedDays)) {
                 break;
             }
             $toverifyDate = $quizzedDays[$dateCount]['date'];
-            if($verifyDate == $toverifyDate){
+            if($verifyDate == $toverifyDate) {
                 $verifyDate = date_format(date_sub(date_create($verifyDate), date_interval_create_from_date_string('1 days')), 'Y-m-d');
                 $dateCount++;
-            }else{
+            } else {
                 break;
             }
         }
 
-        $todayQCount = $eventlogModel->where('eventlog.u_id',$u_id)
+        $todayQCount = $eventlogModel->where('eventlog.u_id', $u_id)
                                     ->where("CAST(eventlog.created_at AS DATE) = CAST('{$date}' AS DATE)")
                                     ->countAllResults();
-        $totalQCount = $eventlogModel->where('eventlog.u_id',$u_id)
+        $totalQCount = $eventlogModel->where('eventlog.u_id', $u_id)
                                     ->where("CAST(eventlog.created_at AS DATE) <= CAST('{$date}' AS DATE)")
                                     ->countAllResults();
 
         $booksModel = new BooksModel();
         $subQueryBooks = $booksModel->select('b_id')->where('u_id', $u_id)->findAll();
-        $b_ids = implode(",",array_column($subQueryBooks, 'b_id'));
+        $b_ids = implode(",", array_column($subQueryBooks, 'b_id'));
 
         $subquery = "(Select created_at, COUNT(c_id) AS count 
                     From cards 
                     Where deleted_at IS NULL 
                     AND b_id IN ({$b_ids}) 
-                    Group By CAST(created_at AS DATE)) AS cards";    
+                    Group By CAST(created_at AS DATE)) AS cards";
         $sql = "dates.date = CAST(cards.created_at AS DATE)";
         $w1  = "dates.date >= CAST('{$dateSub7}' AS DATE)";
         $w2  = "dates.date <= CAST('{$date}' AS DATE)";
-        
+
         $datesModel = new DatesModel();
         $data['weekly_cards_count'] = $datesModel->select('dates.date')
                                                 ->select('cards.count', 'count')
@@ -117,11 +117,11 @@ class Statistics extends BaseController
                                                 ->findAll();
 
         $cardsModel = new CardsModel();
-        $todayCCount = $cardsModel->whereIn('b_id',array_column($subQueryBooks, 'b_id'))
+        $todayCCount = $cardsModel->whereIn('b_id', array_column($subQueryBooks, 'b_id'))
                                 ->where("CAST(created_at AS DATE) = CAST('{$date}' AS DATE)")
                                 ->where('deleted_at', null)
                                 ->countAllResults();
-        $totalCCount = $cardsModel->whereIn('b_id',array_column($subQueryBooks, 'b_id'))
+        $totalCCount = $cardsModel->whereIn('b_id', array_column($subQueryBooks, 'b_id'))
                                 ->where("CAST(created_at AS DATE) <= CAST('{$date}' AS DATE)")
                                 ->where('deleted_at', null)
                                 ->countAllResults();

@@ -136,7 +136,7 @@ class Cards extends BaseController
         if($title === " " || $content === " ") {
             return $this->fail("標題內容是必要欄位", 404);
         }
-        
+
         $updateValues = [
             'title'          => $title,
             'content'        => $content,

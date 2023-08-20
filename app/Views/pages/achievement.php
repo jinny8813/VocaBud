@@ -60,7 +60,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="mb-2"><small>動物園</small></div>
-                        <div class="row justify-content-center">                            
+                        <div class="row">                            
                             <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
                             <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
                             <img src="<?= base_url('../../public/assets/images/badges/rabbit.jpg') ?>" class="col-md-3 col-2 p-1 rounded-circle w-25 badge_gray" />
