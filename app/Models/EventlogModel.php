@@ -41,7 +41,8 @@ class EventlogModel extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getRangeLogCount($u_id,$start,$end){
+    public function getRangeLogCount($u_id, $start, $end)
+    {
         $sql = "dates.date = CAST(eventlog.created_at AS DATE) AND eventlog.u_id = {$u_id}";
         $w1  = "dates.date >= CAST('{$start}' AS DATE)";
         $w2  = "dates.date <= CAST('{$end}' AS DATE)";

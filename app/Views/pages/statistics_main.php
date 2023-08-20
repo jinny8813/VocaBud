@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 row justify-content-center align-items-center">
                 <div class="col-1 p-0">
-                    <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
+                    <a href="<?= base_url('/home')?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
                 </div>
                 <div class="col-1 p-0">
                     <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-info"></i></a>
@@ -59,7 +59,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div><small>累積測驗數</small></div>
-                        <div class="float-end fs-3"><stron id="total_q_count"></stron></div>
+                        <div class="float-end fs-3"><strong id="total_q_count"></strong></div>
                     </div>
                 </div>
             </div>
@@ -129,6 +129,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <div class="container py-3">  
+        <div class="row justify-content-center mb-3">
+            <a href="<?= base_url('/achievement')?>" class="col-md-8 col-10 btn p-2" id="toAchievement">前往里程碑圖鑑</a>
         </div>
     </div>
 </section>

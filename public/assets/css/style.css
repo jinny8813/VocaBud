@@ -156,4 +156,14 @@ footer .nav-link:hover {
 .dot-fill {
   background-color: #7781de;
   color: white;
+}
+
+.badge_dot {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 2.5rem;
+}
+
+.badge_gray {
+  filter: grayscale(100%);
 }/*# sourceMappingURL=style.css.map */
