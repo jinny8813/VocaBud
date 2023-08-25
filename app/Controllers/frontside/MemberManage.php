@@ -51,45 +51,58 @@ class MemberManage extends BaseController
     {
         $data = $this->request->getJSON(true);
 
-        $cardsModel = new CardsModel();
-        $verifyCardData = $cardsModel->where("uuidv4", $uuidv4)->first();
+        $usersModel = new UsersModel();
+        $verifyUserData = $usersModel->where("uuid", $uuid)->first();
 
-        if($verifyCardData === null) {
-            return $this->fail("查無此字卡", 404);
+        if($verifyUserData === null) {
+            return $this->fail("查無此帳號", 404);
         }
 
-        $title          = $data['title'];
-        $content        = $data['content'];
-        $e_content      = $data['e_content'];
-        $pronunciation  = $data['pronunciation'];
-        $part_of_speech = $data['part_of_speech'];
-        $e_sentence     = $data['e_sentence'];
-        $c_sentence     = $data['c_sentence'];
-        $date           = date("Y-m-d H:i:s");
+        $email      = $data['email'];
+        $password   = $data['password'];
+        $cpassword  = $data['cpassword'];
+        $nickname   = $data['nickname'];
+        $goal      = $data['goal'];
+        $lasting   = $data['lasting'];
+        $date       = date("Y-m-d H:i:s");
 
-        if($title === null || $content === null) {
+        if($email === null || $nickname === null) {
             return $this->fail("標題內容是必要欄位", 404);
         }
 
-        if($title === " " || $content === " ") {
+        if($email === " " || $nickname === " ") {
             return $this->fail("標題內容是必要欄位", 404);
+        }
+
+        if($goal === null || $goal === " " || $goal < 0 || $goal > 99999) {
+            return $this->fail("目標必須是介於0~99999的數字", 404);
+        }
+
+        if($lasting === null || $lasting === " " || $lasting < 0 || $lasting > 999) {
+            return $this->fail("計算期間必須是介於0~999的數字", 404);
+        }
+
+        if($password != $cpassword) {
+            return $this->fail("密碼驗證錯誤", 403);
+        }else{
+            $updateValues = [
+                'password_hash' =>  password_hash($password, PASSWORD_DEFAULT),
+            ];
+            $usersModel->update($verifyUserData['u_id'], $updateValues);
         }
 
         $updateValues = [
-            'title'          => $title,
-            'content'        => $content,
-            'e_content'      => $e_content,
-            'pronunciation'  => $pronunciation,
-            'part_of_speech' => $part_of_speech,
-            'e_sentence'     => $e_sentence,
-            'c_sentence'     => $c_sentence,
-            'updated_at'     => $date
+            'email'       =>  $email,
+            'nickname'    =>  $nickname,
+            'goal'        =>  0,
+            'lasting'     =>  30,
+            'updated_at'  => $date
         ];
-        $cardsModel->update($verifyCardData['c_id'], $updateValues);
+        $usersModel->update($verifyUserData['u_id'], $updateValues);
 
         return $this->respond([
             "status" => true,
-            "msg"    => "字卡修改成功"
+            "msg"    => "個人資料修改成功"
         ]);
     }
 }
