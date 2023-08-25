@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\frontside;
 
+use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
-use App\Models\EventlogModel;
+// use App\Models\EventlogModel;
 
 class MemberManage extends BaseController
 {
@@ -28,6 +29,6 @@ class MemberManage extends BaseController
         // $dateData = ['date' => date('Y-m-d')];
         // $data = array_merge($userData, $logData, $dateData);
 
-        return view('pages/user_home', $userData);
+        return view('pages/frontside/user_home', $userData);
     }
 }

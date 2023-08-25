@@ -40,7 +40,7 @@ $routes->get('/logout', 'VisitorManage::logout');
 $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
 
 $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
-    $routes->get('/home', 'MemberManage::index');
+    $routes->get('/home', 'frontside\MemberManage::index');
 
     $routes->get('/books', 'Books::index');
     $routes->get('/books/new', 'Books::renderCreatePage');
