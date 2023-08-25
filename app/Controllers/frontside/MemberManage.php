@@ -84,7 +84,7 @@ class MemberManage extends BaseController
 
         if($password != $cpassword) {
             return $this->fail("密碼驗證錯誤", 403);
-        }else{
+        }else if($password == $cpassword && $password != null && $password !== " " ){
             $updateValues = [
                 'password_hash' =>  password_hash($password, PASSWORD_DEFAULT),
             ];
@@ -94,11 +94,21 @@ class MemberManage extends BaseController
         $updateValues = [
             'email'       =>  $email,
             'nickname'    =>  $nickname,
-            'goal'        =>  0,
-            'lasting'     =>  30,
+            'goal'        =>  $goal,
+            'lasting'     =>  $lasting,
             'updated_at'  => $date
         ];
         $usersModel->update($verifyUserData['u_id'], $updateValues);
+
+        $userData  = $usersModel->where("u_id", $verifyUserData['u_id'])->first();
+        $this->session->set("userData", [
+            'uuid'      => $userData['uuid'],
+            'email'     => $userData['email'],
+            'nickname'  => $userData['nickname'],
+            'goal'      => $userData['goal'],
+            'lasting'   => $userData['lasting'],
+            'coins'     => $userData['coins'],
+        ]);
 
         return $this->respond([
             "status" => true,
