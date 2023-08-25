@@ -41,7 +41,10 @@ $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}
 
 $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('/home', 'frontside\MemberManage::index');
-    $routes->get('/personalinfo', 'frontside\MemberManage::renderPersonalPage');
+
+    $routes->get('/personal', 'frontside\MemberManage::personalinfo');
+    $routes->get('/personal/(:uuid)', 'frontside\MemberManage::personal/$1');
+    $routes->get('/personal/(:uuid)/edit', 'frontside\MemberManage::renderUpdatePage/$1');
 
     $routes->get('/books', 'Books::index');
     $routes->get('/books/new', 'Books::renderCreatePage');
