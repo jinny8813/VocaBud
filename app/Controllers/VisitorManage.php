@@ -43,7 +43,7 @@ class VisitorManage extends BaseController
 
         if(password_verify($password, $userData['password_hash'])) {
             $this->session->set("userData", [
-                'u_id'      => $userData['u_id'],
+                'uuid'      => $userData['uuid'],
                 'email'     => $userData['email'],
                 'nickname'  => $userData['nickname'],
                 'goal'      => $userData['goal'],
@@ -74,7 +74,6 @@ class VisitorManage extends BaseController
         $password   = $data['password'];
         $cpassword  = $data['cpassword'];
         $nickname   = $data['nickname'];
-        $date       = date("Y-m-d H:i:s");
 
         if($email === null || $password === null || $cpassword === null || $nickname === null) {
             return $this->fail("需帳號密碼進行註冊", 404);
@@ -99,7 +98,6 @@ class VisitorManage extends BaseController
             'email'         =>  $email,
             'password_hash' =>  password_hash($password, PASSWORD_DEFAULT),
             'nickname'      =>  $nickname,
-            'created_at'    => $date,
             'uuid'          =>  $this->getUuid(),
             'goal'          =>  0,
             'lasting'       =>  30,
