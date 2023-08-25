@@ -13,21 +13,21 @@ class MemberManage extends BaseController
     {
         $userData = $this->session->userData;
 
-        $u_id           = $userData['u_id'];
+        // $u_id           = $userData['u_id'];
 
-        if(date('l')=='Monday') {
-            $dateWeekFirst = date('Y-m-d', strtotime("monday 0 week"));
-        } else {
-            $dateWeekFirst = date('Y-m-d', strtotime("monday -1 week"));
-        }
-        $dateWeekEnd   = date('Y-m-d', strtotime("sunday 0 week"));
+        // if(date('l')=='Monday') {
+        //     $dateWeekFirst = date('Y-m-d', strtotime("monday 0 week"));
+        // } else {
+        //     $dateWeekFirst = date('Y-m-d', strtotime("monday -1 week"));
+        // }
+        // $dateWeekEnd   = date('Y-m-d', strtotime("sunday 0 week"));
 
-        $eventlogModel = new EventlogModel();
-        $logData['the_week_log_count'] = $eventlogModel->getRangeLogCount($u_id, $dateWeekFirst, $dateWeekEnd);
+        // $eventlogModel = new EventlogModel();
+        // $logData['the_week_log_count'] = $eventlogModel->getRangeLogCount($u_id, $dateWeekFirst, $dateWeekEnd);
 
-        $dateData = ['date' => date('Y-m-d')];
-        $data = array_merge($userData, $logData, $dateData);
+        // $dateData = ['date' => date('Y-m-d')];
+        // $data = array_merge($userData, $logData, $dateData);
 
-        return view('pages/user_home', $data);
+        return view('pages/user_home', $userData);
     }
 }

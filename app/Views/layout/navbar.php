@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbar">
       <ul class="navbar-nav">
         <li class="nav-item ">
-          <a class="nav-link p-3" href="<?= base_url('/books') ?>">書本列表</a>
+          <a class="nav-link p-3" href="<?= base_url('/books') ?>">我的字卡</a>
         </li>
         <li class="nav-item ">
           <a class="nav-link p-3" href="#">分享廣場</a>
@@ -22,7 +22,7 @@
           <a class="nav-link p-3" href="<?= base_url('/quizlets') ?>">測驗大廳</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link p-3" href="<?= base_url('/statistics') ?>">統計分析</a>
+          <a class="nav-link p-3" href="<?= base_url('/statistics') ?>">統計收集</a>
         </li>
         <li class="nav-item ">
           <a class="nav-link p-3" href="#">個人設定</a>
