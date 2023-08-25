@@ -31,4 +31,9 @@ class MemberManage extends BaseController
 
         return view('pages/frontside/user_home', $userData);
     }
+
+    public function renderPersonalPage(){
+        $userData = $this->session->userData;
+        return view('pages/frontside/personalinfo', $userData);
+    }
 }
