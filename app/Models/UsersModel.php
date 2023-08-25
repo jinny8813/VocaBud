@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class UsersModel extends Model
 {
     protected $table            = 'users';
     protected $primaryKey       = 'u_id';
@@ -13,7 +13,7 @@ class UserModel extends Model
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'u_id','uuidv4', 'email', 'password_hash', 'nickname','goal', 'lasting', 'created_at', 'updated_at', 'deleted_at'
+        'u_id', 'uuid', 'identity', 'email', 'password_hash', 'nickname', 'goal', 'lasting', 'coins', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     // Dates
