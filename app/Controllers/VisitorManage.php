@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
-use App\Models\UserModel;
+use App\Models\UsersModel;
 
 class VisitorManage extends BaseController
 {
@@ -34,8 +34,8 @@ class VisitorManage extends BaseController
             return $this->fail("需帳號密碼進行登入", 404);
         }
 
-        $userModel = new UserModel();
-        $userData  = $userModel->where("email", $email)->first();
+        $usersModel = new UsersModel();
+        $userData  = $usersModel->where("email", $email)->first();
 
         if($userData === null) {
             return $this->fail("查無此帳號", 403);
@@ -47,7 +47,8 @@ class VisitorManage extends BaseController
                 'email'     => $userData['email'],
                 'nickname'  => $userData['nickname'],
                 'goal'      => $userData['goal'],
-                'lasting'   => $userData['lasting']
+                'lasting'   => $userData['lasting'],
+                'coins'     => $userData['coins'],
             ]);
             return $this->respond([
                 "status" => true,
@@ -87,8 +88,8 @@ class VisitorManage extends BaseController
             return $this->fail("密碼驗證錯誤", 403);
         }
 
-        $userModel = new UserModel();
-        $userData  = $userModel->where("email", $email)->first();
+        $usersModel = new UsersModel();
+        $userData  = $usersModel->where("email", $email)->first();
 
         if($userData != null) {
             return $this->fail("帳號已被註冊", 403);
@@ -99,11 +100,13 @@ class VisitorManage extends BaseController
             'password_hash' =>  password_hash($password, PASSWORD_DEFAULT),
             'nickname'      =>  $nickname,
             'created_at'    => $date,
-            'uuidv4'        =>  $this->getUuid(),
+            'uuid'          =>  $this->getUuid(),
             'goal'          =>  0,
             'lasting'       =>  30,
+            'identity'      =>  "member",
+            'coins'         =>  0
         ];
-        $userModel->insert($values);
+        $usersModel->insert($values);
 
         return $this->respond([
             "status" => true,
