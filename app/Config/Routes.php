@@ -46,6 +46,7 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('/personal/(:uuid)', 'frontside\MemberManage::personal/$1');
     $routes->get('/personal/(:uuid)/edit', 'frontside\MemberManage::renderUpdatePage/$1');
     $routes->put('/personal/(:uuid)', 'frontside\MemberManage::update/$1');
+    $routes->delete('/personal/(:uuid)', 'frontside\MemberManage::delete/$1');
 
     $routes->get('/books', 'Books::index');
     $routes->get('/books/new', 'Books::renderCreatePage');

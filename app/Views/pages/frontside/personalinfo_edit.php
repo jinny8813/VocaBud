@@ -75,6 +75,10 @@
                                 <button type="submit" name="submit" class="btn">修改</button>
                             </div>
                         </form>
+                        <br>
+                        <div class="d-flex justify-content-center">
+                            <button id="deleteInfoBtn" class="btn">刪除此帳號</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,6 +107,36 @@
                 })
             })
             .catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: error.response.data.status + ' 錯誤',
+                    text: error.response.data.messages
+                })
+            })
+        },
+    }
+
+    let deleteInfoBtn = document.getElementById("deleteInfoBtn");
+
+    deleteInfoBtn.addEventListener("click",(e) => {
+        e.preventDefault();
+        infoDeleteComponent.Delete("<?= base_url('/personal/'.$uuid) ?>");
+    })
+
+    let infoDeleteComponent = {
+        Delete: (url) => {
+            axios.delete(url)
+            .then((response) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: '成功',
+                    text: '您好，即將為您重新轉跳'
+                }).then(function(result) {
+                    window.location.href = `<?= base_url('/logout') ?>`;
+                })
+            })
+            .catch((error) => {
+                console.log(error);
                 Swal.fire({
                     icon: 'error',
                     title: error.response.data.status + ' 錯誤',

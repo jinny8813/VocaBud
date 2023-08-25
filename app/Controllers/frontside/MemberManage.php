@@ -64,7 +64,6 @@ class MemberManage extends BaseController
         $nickname   = $data['nickname'];
         $goal      = $data['goal'];
         $lasting   = $data['lasting'];
-        $date       = date("Y-m-d H:i:s");
 
         if($email === null || $nickname === null) {
             return $this->fail("標題內容是必要欄位", 404);
@@ -96,7 +95,6 @@ class MemberManage extends BaseController
             'nickname'    =>  $nickname,
             'goal'        =>  $goal,
             'lasting'     =>  $lasting,
-            'updated_at'  => $date
         ];
         $usersModel->update($verifyUserData['u_id'], $updateValues);
 
@@ -113,6 +111,23 @@ class MemberManage extends BaseController
         return $this->respond([
             "status" => true,
             "msg"    => "個人資料修改成功"
+        ]);
+    }
+
+    public function delete($uuid)
+    {
+        $usersModel = new UsersModel();
+        $verifyUserData = $usersModel->where("uuid", $uuid)->first();
+
+        if($verifyUserData === null) {
+            return $this->fail("查無此帳號", 404);
+        }
+
+        $usersModel->delete($verifyUserData['u_id']);
+
+        return $this->respond([
+            "status" => true,
+            "msg"    => "帳號刪除成功"
         ]);
     }
 }
