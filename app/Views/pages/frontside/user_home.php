@@ -1,5 +1,5 @@
-<?= $this->extend("layout/template")?>
-<?= $this->section('content')?>
+<?= $this->extend("layout/frontside/template")?>
+<?= $this->section('frontside_content')?>
 <section class="min-vh-100 bg_light">
     <div class="w-100">
         <img class="img-fluid" src="<?= base_url('../../public/assets/images/banner.jpg') ?>" alt="">
