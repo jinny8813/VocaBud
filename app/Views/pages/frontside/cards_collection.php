@@ -31,7 +31,7 @@
                 <button class="btn btn_the_biggest fs-4 p-2" id="bigBtn"><i class="fa-fw fa-solid fa-toolbox"></i></button>
                 <div id="groupBtn" class="d-none">
                     <div class="d-flex">
-                        <a href="<?= base_url('/books/new') ?>" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
+                        <a href="<?= base_url('/cards/new') ?>" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
                     </div>
                     <div class="d-flex">
                         <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-up-down-left-right"></i></a>

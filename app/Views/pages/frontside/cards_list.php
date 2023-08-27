@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 row justify-content-center align-items-center">
                 <div class="col-1 p-0">
-                    <a href="<?= base_url('/books')?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
+                    <a href="<?= base_url('/cards')?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
                 </div>
                 <div class="col-1 p-0">
                     <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-info"></i></a>
@@ -33,7 +33,7 @@
                 <button class="btn btn_the_biggest fs-4 p-2" id="bigBtn"><i class="fa-fw fa-solid fa-toolbox"></i></button>
                 <div id="groupBtn" class="d-none">
                     <div class="d-flex">
-                        <a href="<?= base_url('perbook/new')?>" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
+                        <a href="<?= base_url('cards/new')?>" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-plus"></i></a>
                     </div>
                     <div class="d-flex">
                         <a href="#" class="btn btn_biggest_down p-2"><i class="fa-fw fa-solid fa-eye"></i></a>

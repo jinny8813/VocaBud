@@ -26,19 +26,15 @@ class Cards extends BaseController
 
     public function renderCreatePage()
     {
-        $bookData = $this->session->bookData;
-
-        return view('pages/perbook_create', $bookData);
+        return view('pages/frontside/cards_create');
     }
 
     public function create()
     {
         $data = $this->request->getPost();
         $userData = $this->session->userData;
-        $bookData = $this->session->bookData;
 
         $u_id           = $userData['u_id'];
-        $b_id           = $bookData['b_id'];
         $title          = $data['title'];
         $content        = $data['content'];
         $e_content      = $data['e_content'];
@@ -46,8 +42,7 @@ class Cards extends BaseController
         $part_of_speech = $data['part_of_speech'];
         $e_sentence     = $data['e_sentence'];
         $c_sentence     = $data['c_sentence'];
-        $uuidv4         = $this->getUuid();
-        $date           = date("Y-m-d H:i:s");
+        $uuid           = $this->getUuid();
 
         if($title === null || $content === null) {
             return $this->fail("需標題內容進行建立", 404);
@@ -59,7 +54,6 @@ class Cards extends BaseController
 
         $values = [
             'u_id'           => $u_id,
-            'b_id'           => $b_id,
             'title'          => $title,
             'content'        => $content,
             'e_content'      => $e_content,
@@ -67,13 +61,12 @@ class Cards extends BaseController
             'part_of_speech' => $part_of_speech,
             'e_sentence'     => $e_sentence,
             'c_sentence'     => $c_sentence,
-            'uuidv4'         => $uuidv4,
-            'created_at'     => $date
+            'uuid'         => $uuid,
         ];
         $cardsModel = new CardsModel();
         $cardsModel->insert($values);
 
-        $thecard = $cardsModel->where("uuidv4", $uuidv4)->first();
+        $thecard = $cardsModel->where("uuid", $uuid)->first();
         $c_id = $thecard['c_id'];
 
         $stateModel = new StateModel();
