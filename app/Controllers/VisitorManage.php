@@ -43,6 +43,7 @@ class VisitorManage extends BaseController
 
         if(password_verify($password, $userData['password_hash'])) {
             $this->session->set("userData", [
+                'u_id'      => $userData['u_id'],
                 'uuid'      => $userData['uuid'],
                 'email'     => $userData['email'],
                 'nickname'  => $userData['nickname'],

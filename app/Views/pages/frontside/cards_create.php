@@ -5,10 +5,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8 row justify-content-center align-items-center">
                 <div class="col-1 p-0">
-                    <a href="<?= base_url('/perbook/'.$b_id) ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
+                    <a href="<?= base_url('/cards') ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
                 </div>
                 <div class="col-10 pt-3 pb-4">
-                    <div class="fs-3 text-center">Let's Create cards</div>
+                    <div class="fs-3 text-center">創建卡片</div>
                 </div>
                 <div class="col-1">
                 </div>
@@ -207,7 +207,7 @@
     document.getElementById("cardCreateForm").addEventListener("submit",(e) => {
         e.preventDefault();
         let formdata= new FormData(cardCreateForm);
-        cardCreateComponent.POST("<?= base_url('/perbook') ?>",formdata);
+        cardCreateComponent.POST("<?= base_url('/cards') ?>",formdata);
     })
 
     let cardCreateComponent = {
@@ -219,7 +219,7 @@
                     title: '成功',
                     text: '您好，即將為您重新轉跳'
                 }).then(function(result) {
-                    window.location.href = `<?= base_url('/perbook')?>`;
+                    window.location.href = `<?= base_url('/cards')?>`;
                 })
             })
             .catch((error) => {

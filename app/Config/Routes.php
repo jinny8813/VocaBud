@@ -48,6 +48,10 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->put('/personal/(:uuid)', 'frontside\MemberManage::update/$1');
     $routes->delete('/personal/(:uuid)', 'frontside\MemberManage::delete/$1');
 
+    $routes->get('/cards', 'frontside\Cards::index');
+    $routes->get('/cards/new', 'frontside\Cards::renderCreatePage');
+    $routes->post('/cards', 'frontside\Cards::create');
+
     $routes->get('/books', 'Books::index');
     $routes->get('/books/new', 'Books::renderCreatePage');
     $routes->post('/books', 'Books::create');
