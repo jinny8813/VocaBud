@@ -39,8 +39,7 @@ $routes->get('/logout', 'VisitorManage::logout');
 
 $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
 
-$routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
-    $routes->get('/backstage', 'backstage\ManageManage::index');
+$routes->group('/', ['filter' => 'MemberAuthFilter'], function ($routes) {
     $routes->get('/home', 'frontside\MemberManage::index');
 
     $routes->get('/personal', 'frontside\MemberManage::personalinfo');
@@ -59,26 +58,6 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
 
     $routes->post('/dictionary', 'frontside\Dictionary::index');
 
-    $routes->get('/books', 'Books::index');
-    $routes->get('/books/new', 'Books::renderCreatePage');
-    $routes->post('/books', 'Books::create');
-
-    $routes->get('/perbook/(:uuid)', 'Books::perBook/$1');
-    $routes->get('/perbook/(:uuid)/edit', 'Books::renderUpdatePage/$1');
-    $routes->put('/perbook/(:uuid)', 'Books::update/$1');
-    $routes->delete('/perbook/(:uuid)', 'Books::delete/$1');
-
-    $routes->get('/perbook', 'Cards::index');
-    $routes->get('/perbook/new', 'Cards::renderCreatePage');
-    $routes->post('/perbook', 'Cards::create');
-
-    $routes->get('/percard/(:uuid)', 'Cards::perCard/$1');
-    $routes->get('/percard/(:uuid)/edit', 'Cards::renderUpdatePage/$1');
-    $routes->put('/percard/(:uuid)', 'Cards::update/$1');
-    $routes->delete('/percard/(:uuid)', 'Cards::delete/$1');
-
-    $routes->post('/dictionary', 'Dictionary::index');
-
     $routes->get('/quizlets', 'Quizlets::index');
     $routes->get('/quizlets/new', 'Quizlets::renderCreatePage');
     $routes->post('/quizlets/new', 'Quizlets::createQuiz');
@@ -89,6 +68,10 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->post('/statistics', 'Statistics::changeDaily');
 
     $routes->get('/achievement', 'Achievements::index');
+});
+
+$routes->group('/', ['filter' => 'ManagerAuthFilter'], function ($routes) {
+    $routes->get('/backstage', 'backstage\ManageManage::index');
 });
 /*
  * --------------------------------------------------------------------
