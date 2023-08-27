@@ -51,6 +51,10 @@ $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
     $routes->get('/cards', 'frontside\Cards::index');
     $routes->get('/cards/new', 'frontside\Cards::renderCreatePage');
     $routes->post('/cards', 'frontside\Cards::create');
+    $routes->get('/cards/(:uuid)', 'frontside\Cards::perCard/$1');
+    $routes->get('/cards/(:uuid)/edit', 'frontside\Cards::renderUpdatePage/$1');
+    $routes->put('/cards/(:uuid)', 'frontside\Cards::update/$1');
+    $routes->delete('/cards/(:uuid)', 'frontside\Cards::delete/$1');
 
     $routes->get('/books', 'Books::index');
     $routes->get('/books/new', 'Books::renderCreatePage');
