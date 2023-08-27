@@ -6,14 +6,14 @@ use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UsersModel;
 
-class ManageManage extends BaseController
+class ManagerManage extends BaseController
 {
     use ResponseTrait;
 
     public function index()
     {
         $userData = $this->session->userData;
-        return view('pages/backstage/manage_home', $userData);
+        return view('pages/backstage/manager_home', $userData);
     }
 
     public function personalinfo(){

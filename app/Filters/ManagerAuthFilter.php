@@ -10,9 +10,10 @@ class ManagerAuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (session()->get('userData')['identity'] === null) {
+        $identity = session()->get('userData')['identity'] ?? null;
+        if ($identity === null) {
             return redirect()->to('/login');
-        }else if(session()->get('userData')['identity'] == "member"){
+        }else if($identity == "member"){
             return redirect()->to('/home');
         }
     }

@@ -71,7 +71,7 @@ $routes->group('/', ['filter' => 'MemberAuthFilter'], function ($routes) {
 });
 
 $routes->group('/', ['filter' => 'ManagerAuthFilter'], function ($routes) {
-    $routes->get('/backstage', 'backstage\ManageManage::index');
+    $routes->get('/backstage', 'backstage\ManagerManage::index');
 });
 /*
  * --------------------------------------------------------------------
