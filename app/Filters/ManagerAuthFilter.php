@@ -6,12 +6,14 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 
-class AuthFilter implements FilterInterface
+class ManagerAuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        if (session()->get('userData') === null) {
+        if (session()->get('userData')['identity'] === null) {
             return redirect()->to('/login');
+        }else if(session()->get('userData')['identity'] == "member"){
+            return redirect()->to('/home');
         }
     }
 

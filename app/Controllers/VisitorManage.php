@@ -12,8 +12,13 @@ class VisitorManage extends BaseController
 
     public function index()
     {
+        $userData = $this->session->userData ?? null;
+        $identity = $userData['identity'] ?? null;
         if($this->session->get("userData") !== null) {
-            return redirect()->to("/home");
+            if($identity == "member")
+                return redirect()->to("/home");
+            else if($identity == "manager")
+                return redirect()->to("/backstage");
         } else {
             return view('pages/visitor_home');
         }
@@ -50,6 +55,7 @@ class VisitorManage extends BaseController
                 'goal'      => $userData['goal'],
                 'lasting'   => $userData['lasting'],
                 'coins'     => $userData['coins'],
+                'identity'  => $userData['identity'],
             ]);
             return $this->respond([
                 "status" => true,

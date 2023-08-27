@@ -188,9 +188,9 @@
                 Swal.fire({
                     icon: 'success',
                     title: '成功',
-                    text: '即將為您轉跳至個人主頁'
+                    text: '即將為您轉跳'
                 }).then(function(result) {
-                    window.location.href = `<?= base_url('/home')?>`;
+                    window.location.href = `<?= base_url('/')?>`;
                 })
             })
             .catch((error) => {
