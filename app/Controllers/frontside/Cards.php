@@ -61,7 +61,8 @@ class Cards extends BaseController
             'part_of_speech' => $part_of_speech,
             'e_sentence'     => $e_sentence,
             'c_sentence'     => $c_sentence,
-            'uuid'         => $uuid,
+            'visibility'     =>"self",
+            'uuid'           => $uuid,
         ];
         $cardsModel = new CardsModel();
         $cardsModel->insert($values);

@@ -207,7 +207,7 @@
     document.getElementById("cardCreateForm").addEventListener("submit",(e) => {
         e.preventDefault();
         let formdata= new FormData(cardCreateForm);
-        cardCreateComponent.POST("<?= base_url('/perbook') ?>",formdata);
+        cardCreateComponent.POST("<?= base_url('/cards') ?>",formdata);
     })
 
     let cardCreateComponent = {
@@ -219,7 +219,7 @@
                     title: '成功',
                     text: '您好，即將為您重新轉跳'
                 }).then(function(result) {
-                    window.location.href = `<?= base_url('/perbook')?>`;
+                    window.location.href = `<?= base_url('/cards')?>`;
                 })
             })
             .catch((error) => {
