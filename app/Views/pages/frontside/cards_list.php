@@ -5,24 +5,21 @@
         <div class="row justify-content-center">
             <div class="col-md-8 row justify-content-center align-items-center">
                 <div class="col-1 p-0">
-                    <a href="<?= base_url('/cards')?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
+                    <a href="<?= base_url('/home')?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
                 </div>
                 <div class="col-1 p-0">
                     <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-info"></i></a>
                 </div>
                 <div class="col-8 p-3">
-                    <div class="fs-3 text-center"><?= $title ?></div>
+                    <div class="fs-3 text-center">所有字卡</div>
                 </div>
-                <div class="col-1">
-                </div>
-                <div class="col-1 p-1">
-                    <a href="<?= base_url('/perbook/'.$uuidv4.'/edit') ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
+                <div class="col-2">
                 </div>
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6 col-10 pb-4">
-                <div class="ellipsis"><?= $description ?></div>
+                <div class="ellipsis">---</div>
             </div>
         </div>
     </div>
@@ -57,7 +54,7 @@
                         </div>
                         <div class="col-10 card-body">
                             <div class="fs-5">
-                                <strong><a href="<?= base_url('percard/'.$row['uuidv4'])?>" class="a_black stretched-link"><?= $row['title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
+                                <strong><a href="<?= base_url('percard/'.$row['uuid'])?>" class="a_black stretched-link"><?= $row['title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
                             </div>
                         </div>
                     </div>

@@ -20,8 +20,8 @@ class Cards extends BaseController
         $cardData['cards'] = $cardsModel ->join('state', 'cards.c_id = state.c_id')
                                     ->where('state.u_id', $u_id)
                                     ->orderBy('cards.c_id', 'DESC')
-                                    ->countAll();
-        return view('pages/frontside/cards_collection', $cardData);
+                                    ->findAll();
+        return view('pages/frontside/cards_list', $cardData);
     }
 
     public function renderCreatePage()
