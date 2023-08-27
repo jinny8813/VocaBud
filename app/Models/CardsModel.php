@@ -13,7 +13,7 @@ class CardsModel extends Model
     protected $useSoftDeletes   = true;
     protected $protectFields    = true;
     protected $allowedFields    = [
-        'c_id', 'uuidv4', 'b_id', 'title', 'part_of_speech', 'pronunciation', 'content', 'e_content', 'e_sentence', 'c_sentence', 'created_at', 'updated_at', 'deleted_at'
+        'c_id', 'uuid', 'u_id', 'visibility', 'title', 'part_of_speech', 'pronunciation', 'content', 'e_content', 'e_sentence', 'c_sentence', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     // Dates

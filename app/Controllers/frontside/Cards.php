@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\frontside;
 
+use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\CardsModel;
 use App\Models\StateModel;
@@ -12,10 +13,15 @@ class Cards extends BaseController
 
     public function index()
     {
-        $bookData = $this->session->bookData;
-        $uuidv4 = $bookData['uuidv4'];
+        $userData = $this->session->userData;
+        $u_id = $userData['u_id'];
 
-        return redirect()->to("/perbook/" . $uuidv4);
+        $cardsModel = new CardsModel();
+        $cardData['cards'] = $cardsModel ->join('state', 'cards.c_id = state.c_id')
+                                    ->where('state.u_id', $u_id)
+                                    ->orderBy('cards.c_id', 'DESC')
+                                    ->countAll();
+        return view('pages/frontside/cards_collection', $cardData);
     }
 
     public function renderCreatePage()
