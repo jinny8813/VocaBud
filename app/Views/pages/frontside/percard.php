@@ -1,5 +1,5 @@
-<?= $this->extend("layout/template")?>
-<?= $this->section('content')?>
+<?= $this->extend("layout/frontside/template")?>
+<?= $this->section('frontside_content')?>
 <section class="min-vh-100 bg_light">
     <div class="container-fluid bg_green bg_green_title">
         <div class="row justify-content-center">

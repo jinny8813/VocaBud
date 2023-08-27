@@ -40,6 +40,7 @@ $routes->get('/logout', 'VisitorManage::logout');
 $routes->addPlaceholder('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
 
 $routes->group('/', ['filter' => 'AuthFilter'], function ($routes) {
+    $routes->get('/backstage', 'backstage\ManageManage::index');
     $routes->get('/home', 'frontside\MemberManage::index');
 
     $routes->get('/personal', 'frontside\MemberManage::personalinfo');
