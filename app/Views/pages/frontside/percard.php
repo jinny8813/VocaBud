@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 row justify-content-center align-items-center">
                 <div class="col-1 p-0">
-                    <a href="<?= base_url('/perbook') ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
+                    <a href="<?= base_url('/cards') ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
                 </div>
                 <div class="col-1 p-0">
                     <a href="#" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-info"></i></a>
@@ -16,7 +16,7 @@
                 <div class="col-1">
                 </div>
                 <div class="col-1 p-1">
-                    <a href="<?= base_url('/percard/'.$uuidv4.'/edit') ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
+                    <a href="<?= base_url('/cards/'.$uuid.'/edit') ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-solid fa-pen-to-square"></i></a>
                 </div>
             </div>
         </div>

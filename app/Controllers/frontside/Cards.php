@@ -85,36 +85,40 @@ class Cards extends BaseController
         ]);
     }
 
-    public function perCard($uuidv4)
+    public function perCard($uuid)
     {
-        $bookData = $this->session->bookData;
+        $userData = $this->session->userData;
 
         $cardsModel = new CardsModel();
-        $cardData = $cardsModel->where("uuidv4", $uuidv4)->first();
+        $cardData = $cardsModel->where("uuid", $uuid)->first();
 
-        if($bookData === null) {
-            return redirect()->to("/books");
-        } elseif($cardData === null) {
-            return redirect()->to("/perbook");
+        if($cardData === null || $cardData['u_id'] != $userData['u_id']) {
+            return redirect()->to("/cards");
         }
 
-        return view('pages/percard', $cardData);
+        return view('pages/frontside/percard', $cardData);
     }
 
-    public function renderUpdatePage($uuidv4)
+    public function renderUpdatePage($uuid)
     {
-        $cardsModel = new CardsModel();
-        $cardData = $cardsModel->where("uuidv4", $uuidv4)->first();
+        $userData = $this->session->userData;
 
-        return view('pages/percard_edit', $cardData);
+        $cardsModel = new CardsModel();
+        $cardData = $cardsModel->where("uuid", $uuid)->first();
+
+        if($cardData === null || $cardData['u_id'] != $userData['u_id']) {
+            return redirect()->to("/cards");
+        }
+
+        return view('pages/frontside/percard_edit', $cardData);
     }
 
-    public function update($uuidv4)
+    public function update($uuid)
     {
         $data = $this->request->getJSON(true);
 
         $cardsModel = new CardsModel();
-        $verifyCardData = $cardsModel->where("uuidv4", $uuidv4)->first();
+        $verifyCardData = $cardsModel->where("uuid", $uuid)->first();
 
         if($verifyCardData === null) {
             return $this->fail("查無此字卡", 404);
@@ -127,7 +131,6 @@ class Cards extends BaseController
         $part_of_speech = $data['part_of_speech'];
         $e_sentence     = $data['e_sentence'];
         $c_sentence     = $data['c_sentence'];
-        $date           = date("Y-m-d H:i:s");
 
         if($title === null || $content === null) {
             return $this->fail("標題內容是必要欄位", 404);
@@ -145,7 +148,6 @@ class Cards extends BaseController
             'part_of_speech' => $part_of_speech,
             'e_sentence'     => $e_sentence,
             'c_sentence'     => $c_sentence,
-            'updated_at'     => $date
         ];
         $cardsModel->update($verifyCardData['c_id'], $updateValues);
 
@@ -155,10 +157,10 @@ class Cards extends BaseController
         ]);
     }
 
-    public function delete($uuidv4)
+    public function delete($uuid)
     {
         $cardsModel = new CardsModel();
-        $verifyCardData = $cardsModel->where("uuidv4", $uuidv4)->first();
+        $verifyCardData = $cardsModel->where("uuid", $uuid)->first();
 
         if($verifyCardData === null) {
             return $this->fail("查無此字卡", 404);

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 row justify-content-center align-items-center">
                 <div class="col-1 p-0">
-                    <a href="<?= base_url('/percard/'.$uuidv4) ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
+                    <a href="<?= base_url('/cards/'.$uuid) ?>" class="btn btn_low_key p-0"><i class="fa-fw fa-regular fa-hand-point-left"></i></a>
                 </div>
                 <div class="col-10 pt-3 pb-4">
                     <div class="fs-3 text-center">修改字卡資料</div>
@@ -99,7 +99,7 @@
     cardEditForm.addEventListener("submit",(e) => {
         e.preventDefault();
         let formdata= new FormData(cardEditForm);
-        cardEditComponent.PUT("<?= base_url('/percard/'.$uuidv4) ?>", JSON.stringify(Object.fromEntries(formdata)));
+        cardEditComponent.PUT("<?= base_url('/cards/'.$uuid) ?>", JSON.stringify(Object.fromEntries(formdata)));
     })
 
     let cardEditComponent = {
@@ -111,7 +111,7 @@
                     title: '成功',
                     text: '您好，即將為您重新轉跳'
                 }).then(function(result) {
-                    window.location.href = `<?= base_url('/percard/'.$uuidv4) ?>`;
+                    window.location.href = `<?= base_url('/cards/'.$uuid) ?>`;
                 })
             })
             .catch((error) => {
@@ -128,7 +128,7 @@
 
     deleteCardBtn.addEventListener("click",(e) => {
         e.preventDefault();
-        cardDeleteComponent.Delete("<?= base_url('/percard/'.$uuidv4) ?>");
+        cardDeleteComponent.Delete("<?= base_url('/cards/'.$uuid) ?>");
     })
 
     let cardDeleteComponent = {
@@ -140,7 +140,7 @@
                     title: '成功',
                     text: '您好，即將為您重新轉跳'
                 }).then(function(result) {
-                    window.location.href = `<?= base_url('/perbook') ?>`;
+                    window.location.href = `<?= base_url('/cards') ?>`;
                 })
             })
             .catch((error) => {
