@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\frontside;
 
+use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
-use PhpParser\Node\Stmt\TryCatch;
 
 class Dictionary extends BaseController
 {
