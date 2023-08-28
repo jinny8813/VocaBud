@@ -16,14 +16,9 @@ class ManagerManage extends BaseController
         return view('pages/backstage/manager_home', $userData);
     }
 
-    public function personalinfo(){
+    public function managerinfo(){
         $userData = $this->session->userData;
-        return view('pages/frontside/personalinfo', $userData);
-    }
-
-    public function personal($uuid){
-        $userData = $this->session->userData;
-        return view('pages/frontside/personalinfo', $userData);
+        return view('pages/backstage/managerinfo', $userData);
     }
 
     public function renderUpdatePage($uuid){

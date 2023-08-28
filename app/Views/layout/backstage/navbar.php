@@ -25,7 +25,7 @@
           <a class="nav-link p-3" href="">意見回饋</a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link p-3" href="">個人設定</a>
+          <a class="nav-link p-3" href="<?= base_url('/managerinfo')?>">人員管理</a>
         </li>
         <li class="nav-item ">
           <a class="nav-link p-3" href="<?= base_url("/logout") ?>">登出</a>
