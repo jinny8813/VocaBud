@@ -101,6 +101,14 @@ class VisitorManage extends BaseController
             return $this->fail("帳號已被註冊", 403);
         }
 
+        $manager  = $usersModel->where("identity", "manager")->countAllResults();
+
+        if($manager == 0) {
+            $identity = "manager";
+        }else{
+            $identity = "member";
+        }
+
         $values = [
             'email'         =>  $email,
             'password_hash' =>  password_hash($password, PASSWORD_DEFAULT),
@@ -108,7 +116,7 @@ class VisitorManage extends BaseController
             'uuid'          =>  $this->getUuid(),
             'goal'          =>  0,
             'lasting'       =>  30,
-            'identity'      =>  "member",
+            'identity'      =>  $identity,
             'coins'         =>  0
         ];
         $usersModel->insert($values);

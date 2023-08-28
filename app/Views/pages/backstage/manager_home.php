@@ -31,7 +31,7 @@
                 <div class="text-center fs-5 py-5"><a class="a_white" href="<?= base_url('/statistics') ?>">意見回饋</a></div>
             </div>
             <div class="col-md-8 col-6" style="background-color:#505c58">
-                <div class="text-center fs-5 py-5"><a class="a_white" href="<?= base_url('/personal/'.$uuid)?>">個人設定</a></div>
+                <div class="text-center fs-5 py-5"><a class="a_white" href="<?= base_url('/managerinfo')?>">人員管理</a></div>
             </div>
         </div>
     </div>
