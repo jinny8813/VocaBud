@@ -5,6 +5,7 @@ namespace App\Controllers\frontside;
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\CardsModel;
+use App\Models\TagsModel;
 use App\Models\StateModel;
 
 class Cards extends BaseController
@@ -26,7 +27,13 @@ class Cards extends BaseController
 
     public function renderCreatePage()
     {
-        return view('pages/frontside/cards_create');
+        $userData = $this->session->userData;
+        $u_id = $userData['u_id'];
+
+        $tagsModel = new TagsModel();
+        $tagsData['tags'] = $tagsModel->where('u_id', $u_id)->findAll();
+
+        return view('pages/frontside/cards_create', $tagsData);
     }
 
     public function create()
@@ -43,6 +50,8 @@ class Cards extends BaseController
         $e_sentence     = $data['e_sentence'];
         $c_sentence     = $data['c_sentence'];
         $uuid           = $this->getUuid();
+        $tags_group     = $data['tags_group'] ?? array();
+        $tag_add        = trim($data['tag_add']);
 
         if($title === null || $content === null) {
             return $this->fail("需標題內容進行建立", 404);
@@ -50,6 +59,25 @@ class Cards extends BaseController
 
         if($title === " " || $content === " ") {
             return $this->fail("需標題內容進行建立", 404);
+        }
+
+        $tag_add_group = explode("_",$tag_add);
+
+        $tagsModel = new TagsModel();
+        for($i=0;$i<count($tag_add_group);$i++){
+            $findTag = $tagsModel->where("u_id", $u_id)->where('tagname', $tag_add_group[$i])->first();
+            $isfound = $findTag['t_id'] ?? null;
+            if($isfound == null){
+                $values = [
+                    'u_id'    => $u_id,
+                    'tagname' => $tag_add_group[$i],
+                ];
+                $tagsModel->insert($values);
+                $thetag = $tagsModel->where("u_id", $u_id)->where("tagname", $tag_add_group[$i])->first();
+                array_push($tags_group, $thetag['t_id']);
+            }else{
+                array_push($tags_group, $isfound);
+            }
         }
 
         $values = [

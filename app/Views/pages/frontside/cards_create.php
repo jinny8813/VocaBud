@@ -125,6 +125,26 @@
                                         <textarea  name="c_sentence" id="c_sentence" class="form-control" rows="4"></textarea>
                                     </div>
                                 </div>
+                                <hr>
+                                <div class="form-group row mb-3">
+                                    <div class="col-3">
+                                        <label for="tags_group" class="form-label">選擇tag</label>
+                                    </div>
+                                    <div class="col-9">
+                                    <?php foreach($tags as $row):?>
+                                        <div class="form-check"><input class="form-check-input" type="checkbox" name="tags_group" value="<?= $row['t_id']?>"><?= $row['tagname']?></div>
+                                    <?php endforeach;?>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-3">
+                                    <div class="col-3">
+                                        <label for="tag_add" class="form-label">新增tag</label>
+                                    </div>
+                                    <div class="col-9">
+                                        <input type="text" name="tag_add" class="form-control" placeholder="請輸入tag，用'_'分開">
+                                    </div>
+                                </div>
+                                <br>
                                 <div class="form-group d-flex justify-content-center">
                                     <button type="submit" name="submit" class="btn">送出</button>
                                 </div>
@@ -223,6 +243,7 @@
                 })
             })
             .catch((error) => {
+                console.log(error);
                 Swal.fire({
                     icon: 'error',
                     title: error.response.data.status + ' 錯誤',
