@@ -7,6 +7,7 @@ use CodeIgniter\API\ResponseTrait;
 use App\Models\CardsModel;
 use App\Models\TagsModel;
 use App\Models\StateModel;
+use App\Models\KeepinglogModel;
 
 class Cards extends BaseController
 {
@@ -50,8 +51,8 @@ class Cards extends BaseController
         $e_sentence     = $data['e_sentence'];
         $c_sentence     = $data['c_sentence'];
         $uuid           = $this->getUuid();
-        $tags_group     = $data['tags_group'] ?? array();
-        $tag_add        = trim($data['tag_add']);
+        $select_tags     = $data['select_tags'];
+        $tag_add        = $data['tag_add'];
 
         if($title === null || $content === null) {
             return $this->fail("需標題內容進行建立", 404);
@@ -61,25 +62,28 @@ class Cards extends BaseController
             return $this->fail("需標題內容進行建立", 404);
         }
 
-        $tag_add_group = explode("_",$tag_add);
-
         $tagsModel = new TagsModel();
-        for($i=0;$i<count($tag_add_group);$i++){
-            $findTag = $tagsModel->where("u_id", $u_id)->where('tagname', $tag_add_group[$i])->first();
-            $isfound = $findTag['t_id'] ?? null;
-            if($isfound == null){
-                $values = [
-                    'u_id'    => $u_id,
-                    'tagname' => $tag_add_group[$i],
-                ];
-                $tagsModel->insert($values);
-                $thetag = $tagsModel->where("u_id", $u_id)->where("tagname", $tag_add_group[$i])->first();
-                array_push($tags_group, $thetag['t_id']);
-            }else{
-                array_push($tags_group, $isfound);
+        $select_tags = explode(",",$select_tags);
+        $tag_add = explode("_",$tag_add);
+        for($i=0;$i<count($tag_add);$i++){
+            $temp = trim($tag_add[$i]);
+            if($temp != ""){
+                $findTag = $tagsModel->where("u_id", $u_id)->where('tagname', $temp)->first();
+                $isfound = $findTag['t_id'] ?? null;
+                if($isfound === null){
+                    $values = [
+                        'u_id'    => $u_id,
+                        'tagname' => $temp,
+                    ];
+                    $tagsModel->insert($values);
+                    $thetag = $tagsModel->where("u_id", $u_id)->where("tagname", $temp)->first();
+                    array_push($select_tags, $thetag['t_id']);
+                }else{
+                    array_push($select_tags, $isfound);
+                }
             }
         }
-
+            
         $values = [
             'u_id'           => $u_id,
             'title'          => $title,
@@ -106,6 +110,17 @@ class Cards extends BaseController
             'grade' => "New",
         ];
         $stateModel->insert($values);
+
+        $keepinglogModel = new KeepinglogModel();
+        for($i=0;$i<count($select_tags);$i++){
+            if($select_tags[$i] != ""){
+                $values = [
+                    't_id'  => $select_tags[$i],
+                    'c_id'  => $c_id,
+                ];
+                $keepinglogModel->insert($values);
+            }
+        }
 
         return $this->respond([
             "status" => true,

@@ -225,8 +225,15 @@
     }
 
     document.getElementById("cardCreateForm").addEventListener("submit",(e) => {
+        let select_tags = new Array();
+        let tags_group = document.getElementsByName('tags_group');  
+        tags_group.forEach((input)=>{
+            if(input.checked)
+                select_tags.push(parseInt(input.value));
+        })
         e.preventDefault();
-        let formdata= new FormData(cardCreateForm);
+        let formdata = new FormData(cardCreateForm);
+        formdata.append("select_tags", select_tags);
         cardCreateComponent.POST("<?= base_url('/cards') ?>",formdata);
     })
 
