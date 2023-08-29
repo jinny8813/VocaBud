@@ -18,11 +18,13 @@
             </div>
         </div>
         <div class="row justify-content-center">
-                
+            <div class="col-md-6 col-10 pb-4">
+                <div>-</div>
+            </div>
         </div>
     </div>
 
-    <div class="container py-3">
+    <div class="container pt-3">
         <div class="row justify-content-center">
             <div class="col-8">
                 <ul class="nav nav-pills" id="pills-tab" role="tablist">
@@ -59,7 +61,7 @@
         </div>
     </div>
 
-    <div class="container py-3">
+    <div class="container pb-3">
         <div class="row justify-content-center my-3">
             <div class="col-md-10">
                 <div class="tab-content" id="pills-tabContent">
@@ -81,10 +83,39 @@
                     </div>
 
                     <div class="tab-pane fade" id="pills-tags" role="tabpanel" aria-labelledby="pills-tags-tab">
-                        222222
+                        <?php foreach($tags as $row):?>
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-3 d-flex align-items-center justify-content-center bg_dark_blue rounded-start">
+                                    <div class="text-center"></div>
+                                </div>
+                                <div class="col-9 card-body">
+                                    <div class="fs-5">
+                                        <strong><a href="#" class="a_black stretched-link"><?= $row['tagname']?></a></strong>
+                                    </div>
+                                    <p class="ellipsis"><?= $row['description']?></p>
+                                    <div><i class="fa-fw fa-solid fa-swatchbook"></i> <?= $row['count']?></div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach;?>
                     </div>
+
                     <div class="tab-pane fade" id="pills-notag" role="tabpanel" aria-labelledby="pills-notag-tab">
-                        3333
+                        <?php foreach($notagcards as $row):?>
+                            <div class="card mb-3">
+                                <div class="row g-0">
+                                    <div class="col-2 d-flex align-items-center justify-content-center rounded-start cardBgColor">
+                                        <div class="text-center cardState" style="color: white;"><?= $row['grade']?></div>
+                                    </div>
+                                    <div class="col-10 card-body">
+                                        <div class="fs-5">
+                                            <strong><a href="<?= base_url('cards/'.$row['uuid'])?>" class="a_black stretched-link"><?= $row['title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach;?>
                     </div>
                 </div>
 
