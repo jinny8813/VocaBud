@@ -177,3 +177,23 @@ footer {
 .badge_gray {
   filter: grayscale(100%);
 }
+
+.bg_nav_link {
+  color: black;
+  &:active {
+    background-color: $color-dark-blue;
+    color: white;
+  }
+}
+
+#pills-tab {
+  .nav-item {
+    .nav-link {
+      color: black;
+      &:focus {
+        background-color: $color-dark-blue;
+        color: white;
+      }
+    }
+  }
+}

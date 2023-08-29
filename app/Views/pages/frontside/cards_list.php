@@ -18,8 +18,24 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <div class="col-md-6 col-10 pb-4">
-                <div class="ellipsis">---</div>
+                
+        </div>
+    </div>
+
+    <div class="container py-3">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link show" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all" type="button" role="tab" aria-controls="pills-all" aria-selected="true">字卡</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-tags-tab" data-bs-toggle="pill" data-bs-target="#pills-tags" type="button" role="tab" aria-controls="pills-tags" aria-selected="false">tags</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-notag-tab" data-bs-toggle="pill" data-bs-target="#pills-notag" type="button" role="tab" aria-controls="pills-notag" aria-selected="false">未分類</button>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -46,20 +62,32 @@
     <div class="container py-3">
         <div class="row justify-content-center my-3">
             <div class="col-md-10">
-                <?php foreach($cards as $row):?>
-                <div class="card mb-3">
-                    <div class="row g-0">
-                        <div class="col-2 d-flex align-items-center justify-content-center rounded-start cardBgColor">
-                            <div class="text-center cardState" style="color: white;"><?= $row['grade']?></div>
-                        </div>
-                        <div class="col-10 card-body">
-                            <div class="fs-5">
-                                <strong><a href="<?= base_url('cards/'.$row['uuid'])?>" class="a_black stretched-link"><?= $row['title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-all" role="tabpanel" aria-labelledby="pills-all-tab">
+                        <?php foreach($cards as $row):?>
+                            <div class="card mb-3">
+                                <div class="row g-0">
+                                    <div class="col-2 d-flex align-items-center justify-content-center rounded-start cardBgColor">
+                                        <div class="text-center cardState" style="color: white;"><?= $row['grade']?></div>
+                                    </div>
+                                    <div class="col-10 card-body">
+                                        <div class="fs-5">
+                                            <strong><a href="<?= base_url('cards/'.$row['uuid'])?>" class="a_black stretched-link"><?= $row['title']?></a></strong> <small>(<?= $row['part_of_speech']?>.)</small>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        <?php endforeach;?>
+                    </div>
+
+                    <div class="tab-pane fade" id="pills-tags" role="tabpanel" aria-labelledby="pills-tags-tab">
+                        222222
+                    </div>
+                    <div class="tab-pane fade" id="pills-notag" role="tabpanel" aria-labelledby="pills-notag-tab">
+                        3333
                     </div>
                 </div>
-                <?php endforeach;?>
+
             </div>
         </div>
     </div>
