@@ -19,11 +19,37 @@ class Cards extends BaseController
         $u_id = $userData['u_id'];
 
         $cardsModel = new CardsModel();
-        $cardData['cards'] = $cardsModel ->join('state', 'cards.c_id = state.c_id')
+        $cardData['cards'] = $cardsModel->join('state', 'cards.c_id = state.c_id')
                                     ->where('state.u_id', $u_id)
                                     ->orderBy('cards.c_id', 'DESC')
                                     ->findAll();
-        return view('pages/frontside/cards_list', $cardData);
+
+        $tagsModel = new TagsModel();     
+        $TagData['tags'] = $tagsModel->select('tags.*')
+                                    ->selectCount('keepinglog.t_id', 'count')
+                                    ->join('keepinglog', 'keepinglog.t_id = tags.t_id', 'left')
+                                    ->where('tags.u_id', $u_id)
+                                    ->groupBy('tags.t_id')
+                                    ->orderBy('tags.t_id', 'DESC')
+                                    ->findAll();
+
+        $temp = $cardsModel->select('cards.c_id')
+                        ->join('keepinglog', 'keepinglog.c_id = cards.c_id')
+                        ->join('tags', 'keepinglog.t_id = tags.t_id')
+                        ->join('state', 'cards.c_id = state.c_id')
+                        ->where('tags.u_id', $u_id)
+                        ->where('state.u_id', $u_id)
+                        ->groupBy('cards.c_id')
+                        ->findAll();
+        $cards_had_tags_str = array_values(array_column($temp, 'c_id'));
+        $cardData['notagcards'] = $cardsModel->join('state', 'cards.c_id = state.c_id')
+                                    ->whereNotIn('cards.c_id', $cards_had_tags_str)
+                                    ->orderBy('cards.c_id', 'DESC')
+                                    ->findAll();
+
+        $data = array_merge($cardData, $TagData);
+
+        return view('pages/frontside/cards_list', $data);
     }
 
     public function renderCreatePage()

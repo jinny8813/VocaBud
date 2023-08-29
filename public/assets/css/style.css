@@ -166,4 +166,20 @@ footer .nav-link:hover {
 
 .badge_gray {
   filter: grayscale(100%);
+}
+
+.bg_nav_link {
+  color: black;
+}
+.bg_nav_link:active {
+  background-color: #505c58;
+  color: white;
+}
+
+#pills-tab .nav-item .nav-link {
+  color: black;
+}
+#pills-tab .nav-item .nav-link:focus {
+  background-color: #505c58;
+  color: white;
 }/*# sourceMappingURL=style.css.map */
