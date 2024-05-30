@@ -8,6 +8,8 @@ import Playground from './pages/Playground';
 import Quizlets from './pages/Quizlets';
 import Statistics from './pages/Statistics';
 import Personal from './pages/Personal';
+import ScrollToTopBtn from './components/ScrollToTopBtn';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
       <Route path="/statistics" element={<Statistics />} />
       <Route path="/personal" element={<Personal />} />
     </Routes>
+    <ScrollToTopBtn />
+    <Footer />
   </Router>
   );
 }
