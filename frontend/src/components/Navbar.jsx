@@ -16,7 +16,7 @@ const Navbar = () => {
         <Outlet />
 
         <button
-          className="p-3 text-white focus:outline-none"
+          className="p-3 text-white focus:outline-none md:hidden"
           onClick={() => setNavbarOpen(!navbarOpen)}
         >
           <i className="fas fa-bars"></i>
@@ -28,16 +28,16 @@ const Navbar = () => {
               <Link className="block p-3 text-white" to="/cards">我的字卡</Link>
             </li>
             <li className="nav-item">
-              <Link className="block p-3 text-white" to="#">分享廣場</Link>
+              <Link className="block p-3 text-white" to="/playground">遊戲廣場</Link>
             </li>
             <li className="nav-item">
-              <Link className="block p-3 text-white" to="#">測驗大廳</Link>
+              <Link className="block p-3 text-white" to="/quizlets">測驗大廳</Link>
             </li>
             <li className="nav-item">
-              <Link className="block p-3 text-white" to="#">統計收集</Link>
+              <Link className="block p-3 text-white" to="/statistics">統計收集</Link>
             </li>
             <li className="nav-item">
-              <Link className="block p-3 text-white" to="#">個人設定</Link>
+              <Link className="block p-3 text-white" to="/personal">個人設定</Link>
             </li>
             <li className="nav-item">
               <Link className="block p-3 text-white" to="#">登出</Link>
