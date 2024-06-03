@@ -1,7 +1,16 @@
-import React from 'react';
+import React from "react";
+import HomeProfile from "../components/HomeProfile";
+import LearningReport from "../components/LearningReport";
+import HomeNavigation from "../components/HomeNavigation";
 
 function Home() {
-  return <h2>Home Page</h2>;
+  return (
+    <div>
+      <HomeProfile />
+      <LearningReport />
+      <HomeNavigation />
+    </div>
+  );
 }
 
 export default Home;

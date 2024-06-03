@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const ScrollToTopBtn = () => {
   return (
     <section>
       <div className="h-8 m-4 fixed bottom-0 right-0 z-50">
         <a href="#" className="text-white">
-          <i class="fa-solid fa-arrow-right"></i>
+          <i class="fa-solid fa-arrow-up"></i>
         </a>
       </div>
     </section>

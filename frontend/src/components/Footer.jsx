@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 w-full">
+    <footer className="bg-brand-darkgreen w-full">
       <div className="p-6 text-center text-white">
         {`Copyright © 2023-${new Date().getFullYear()} VocaBud`}
       </div>
